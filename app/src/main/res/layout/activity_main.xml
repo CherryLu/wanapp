@@ -1,19 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chinamobile.wanapp.MainActivity"
-    tools:layout_editor_absoluteY="25dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:context="com.chinamobile.wanapp.ui.activity.MainActivity">
+
+    <RelativeLayout
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/bottom_area"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="48dp">
+        <RadioGroup
+            android:id="@+id/root_bottom_tab_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/root_bottom_home_tab_1"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawablePadding="2dp"
+                android:drawableTop="@drawable/selector_tab_home"
+                android:gravity="center_horizontal"
+                android:paddingTop="7.5dp"
+                android:text="首页"
+                android:textColor="@color/bottom_tab_txt"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/root_bottom_home_tab_2"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="2dp"
+                android:drawableTop="@drawable/selector_tab_find"
+                android:gravity="center_horizontal"
+                android:paddingTop="7.5dp"
+                android:text="赚钱"
+                android:textColor="@color/bottom_tab_txt"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/root_bottom_home_tab_3"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="2dp"
+                android:drawableTop="@drawable/selector_tab_mine"
+                android:gravity="center_horizontal"
+                android:paddingTop="7.5dp"
+                android:text="我的"
+                android:textColor="@color/bottom_tab_txt"
+                android:textSize="10sp" />
+        </RadioGroup>
+    </RelativeLayout>
+    <View
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/line"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_area"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/line" />
+
+    <FrameLayout
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/container"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        />
+
+
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="48dp"
+    android:layout_alignParentTop="true"
+    android:background="@color/white"
+    android:gravity="center_vertical">
+
+    <RadioGroup
+        android:id="@+id/root_bottom_tab_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/root_bottom_home_tab_1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:gravity="center_horizontal"
+            android:paddingTop="7.5dp"
+            android:text="首页"
+            android:textColor="@color/bottom_tab_txt"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/root_bottom_home_tab_2"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_tab_find"
+            android:gravity="center_horizontal"
+            android:paddingTop="7.5dp"
+            android:text="赚钱"
+            android:textColor="@color/bottom_tab_txt"
+            android:textSize="10sp" />
+
+        <RadioButton
+            android:id="@+id/root_bottom_home_tab_3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="2dp"
+            android:drawableTop="@drawable/selector_tab_mine"
+            android:gravity="center_horizontal"
+            android:paddingTop="7.5dp"
+            android:text="我的"
+            android:textColor="@color/bottom_tab_txt"
+            android:textSize="10sp" />
+    </RadioGroup>
+
+</RelativeLayout>

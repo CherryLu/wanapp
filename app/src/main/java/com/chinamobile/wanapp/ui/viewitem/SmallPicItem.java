@@ -1,6 +1,6 @@
-package com.chinamobile.wanapp.viewitem;
+package com.chinamobile.wanapp.ui.viewitem;
 
-import com.chinamobile.wanapp.BaseItem;
+import com.chinamobile.wanapp.baen.BaseItem;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 

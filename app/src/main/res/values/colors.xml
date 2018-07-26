@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="blue_color">#2689f7</color>
+    <color name="white">#ffffff</color>
+
+    <!-- 底部tag栏文字颜色-->
+    <color name="bottom_tab_txt">#737373</color>
+    <color name="line">#e4e4e4</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.chinamobile.wanapp;
+package com.chinamobile.wanapp.baen;
 
 /**
  * Created by Administrator on 2018/7/25.
