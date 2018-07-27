@@ -1,19 +1,39 @@
 package com.chinamobile.wanapp.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
-import com.chinamobile.wanapp.utils.Navigator;
+import com.chinamobile.wanapp.ui.view.WaitDialog;
 
 /**
  * Created by Administrator on 2018/7/26.
  */
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+    WaitDialog waitDialog;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    if (waitDialog==null){
+                        waitDialog = new WaitDialog(BaseActivity.this);
+                    }
+                    break;
+                case 1:
+                    break;
+
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +84,29 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 rightImageOnClick();
                 break;
 
+        }
+    }
+
+
+    /**
+     * 显示等待dialog
+     * @param str
+     */
+    public void showWait(String str){
+        if (handler!=null){
+            Message message = Message.obtain();
+            message.obj = str;
+            message.what = 0;
+            handler.sendMessage(message);
+        }
+    }
+
+    /**
+     * 隐藏等待dialog
+     */
+    public void hideWaite(){
+        if (handler!=null){
+            handler.sendEmptyMessage(1);
         }
     }
 }

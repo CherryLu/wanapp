@@ -10,4 +10,9 @@
     <!-- 底部tag栏文字颜色-->
     <color name="bottom_tab_txt">#737373</color>
     <color name="line">#e4e4e4</color>
+
+    <color name="background_tab_pressed">#ffd7d7d7</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray_pressed">#ffb5b5b6</color>
+
 </resources>

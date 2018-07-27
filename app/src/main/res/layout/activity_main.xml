@@ -48,7 +48,7 @@
                 android:drawableTop="@drawable/selector_tab_find"
                 android:gravity="center_horizontal"
                 android:paddingTop="7.5dp"
-                android:text="赚钱"
+                android:text="发现"
                 android:textColor="@color/bottom_tab_txt"
                 android:textSize="10sp" />
 
