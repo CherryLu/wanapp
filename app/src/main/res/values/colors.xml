@@ -14,5 +14,9 @@
     <color name="background_tab_pressed">#ffd7d7d7</color>
     <color name="transparent">#00000000</color>
     <color name="gray_pressed">#ffb5b5b6</color>
+    <color name="color_red">#db1813</color>
+    <color name="color_line_gray">#f4f4f4</color>
+
+    <color name="gray_text">#383838</color>
 
 </resources>

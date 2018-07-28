@@ -430,7 +430,6 @@ public class PagerSlidingTabStripExtends extends HorizontalScrollView {
 			}
 		}
 
-		// 选锟叫碉拷时锟斤拷
 		@Override
 		public void onPageSelected(int position) {
 			if (delegatePageListener != null) {
