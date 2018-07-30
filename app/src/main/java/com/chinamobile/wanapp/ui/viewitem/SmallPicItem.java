@@ -1,5 +1,6 @@
 package com.chinamobile.wanapp.ui.viewitem;
 
+import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -12,12 +13,12 @@ public class SmallPicItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public int getItemViewLayoutId() {
-        return 0;
+        return R.layout.item_small_pic;
     }
 
     @Override
     public boolean isForViewType(BaseItem item, int position) {
-        if (item.getType()==0){
+        if (item.getType()==BaseItem.ITEM_SMALL_PIC){
             return true;
         }
         return false;

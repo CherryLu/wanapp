@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <LinearLayout
-        android:paddingLeft="15dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:orientation="horizontal"
@@ -13,13 +13,13 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_height="20dp"
             android:src="@mipmap/ad_icon"/>
         <com.chinamobile.wanapp.ui.view.AutoMarqueeTextView
             android:id="@+id/roll_txt"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textColor="@color/color_red"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
@@ -29,5 +29,10 @@
             android:text="测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动测试滚动"/>
 
     </LinearLayout>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_line_gray"/>
 
 </LinearLayout>

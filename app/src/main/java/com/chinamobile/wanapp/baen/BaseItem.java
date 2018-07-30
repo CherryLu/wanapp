@@ -10,6 +10,7 @@ public class BaseItem {
     public static int ITEM_BANNER = 2;//banner
     public static int ITEM_ROLL = 3;//rolltxt;
     public static int ITEM_TAB_LIST = 4;//tab栏
+    public static int ITEM_SMALL_PIC = 5;//tab栏
 
     private int type; //视图类型 0
 
