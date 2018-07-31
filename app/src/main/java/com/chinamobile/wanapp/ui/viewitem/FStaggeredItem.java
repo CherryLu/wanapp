@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Administrator on 2018/7/30.
  */
 
-public class StaggeredItem implements ItemViewDelegate<BaseItem> {
+public class FStaggeredItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public int getItemViewLayoutId() {
@@ -28,7 +28,7 @@ public class StaggeredItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public boolean isForViewType(BaseItem item, int position) {
-        if (item.getType()==BaseItem.ITEM_CARD_BANNER_TWO){
+        if (item.getType()==BaseItem.ITEM_CARD_BANNER_FIVE){
             return true;
         }
         return false;
@@ -49,7 +49,7 @@ public class StaggeredItem implements ItemViewDelegate<BaseItem> {
         mDatas = new ArrayList<>();
         for (int i =0;i<20;i++){
             BaseItem baseItem = new BaseItem();
-            baseItem.setType(BaseItem.ITEM_CARD_TWO);
+            baseItem.setType(BaseItem.ITEM_CARD_FIVE);
             mDatas.add(baseItem);
         }
     }
@@ -60,7 +60,7 @@ public class StaggeredItem implements ItemViewDelegate<BaseItem> {
         //GridLayoutManager manager = new GridLayoutManager(getContext(),3);
         //StaggeredGridLayoutManager  manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         adapter = new MultiItemTypeAdapter(context,mDatas);
-        adapter.addItemViewDelegate(new ChildSlideItem());
+        adapter.addItemViewDelegate(new SmallChildSlideItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
 

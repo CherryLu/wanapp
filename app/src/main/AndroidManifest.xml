@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.RegisterActivity"/>
+        <activity android:name=".ui.activity.VerificationCodeActivity"/>
+        <activity android:name=".ui.activity.ChangePswActivity"/>
     </application>
 
 </manifest>
