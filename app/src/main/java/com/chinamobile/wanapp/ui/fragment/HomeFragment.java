@@ -1,7 +1,10 @@
 package com.chinamobile.wanapp.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.ui.view.BottomDialog;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
@@ -29,13 +33,30 @@ import butterknife.ButterKnife;
  * Created by 95470 on 2018/7/30.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener  {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    private RecyclerView recyclerView;
+
+    SwipeRefreshLayout refreshLayout;
+
     private MultiItemTypeAdapter adapter;
     private List<BaseItem> mDatas;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    refreshLayout.setRefreshing(false);
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +66,13 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_home, null);
+        refreshLayout = (SwipeRefreshLayout) mRootView;
+        refreshLayout.setOnRefreshListener(this);
         ButterKnife.bind(this, mRootView);
         getData();
         setList();
+        BottomDialog dialog = new BottomDialog(getContext());
+        dialog.show();
         return mRootView;
     }
 
@@ -81,5 +106,12 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        if (handler!=null){
+            handler.sendEmptyMessageDelayed(0,1000);
+        }
     }
 }

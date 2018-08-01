@@ -1,5 +1,7 @@
 package com.chinamobile.wanapp.ui.activity;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,6 +15,8 @@ import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.ui.fragment.FindFragment;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
+
+import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +35,6 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.container)
     FrameLayout container;
 
-
     private HomeFragment homeFragment;
     private FindFragment findFragment;
     private MineFragment mineFragment;
@@ -42,40 +45,28 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         tabCheck(0);
-      //  parseM3U8();
+        parseM3U8();
 
     }
 
 
-    /*private void parseM3U8(){
-        String url = "http://audio2.china-plus.net:31080/10.102.62.10/radios/104992/segment20180731161309-000564.aac";
-
-        URL uri = null;
-        try {
-        uri = new URL(url);
+    private void parseM3U8(){
+        String url = "http://audio2.china-plus.net:31080/10.102.62.10/radios/104992/index_104992.m3u8";
         MediaPlayer player = new MediaPlayer();
-        player.setDataSource(url);
+        try {
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            player.setDataSource(url);
             player.prepare();
-        player.start();
-       *//* HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-        InputStream inputStream = connection.getInputStream();
-        PlaylistParser parser = new PlaylistParser(inputStream, Format.EXT_M3U, Encoding.UTF_8, ParsingMode.LENIENT);
-        Playlist playlist = null;*//*
-*//*
-            playlist = parser.parse();
-            if (playlist.hasMasterPlaylist() && playlist.getMasterPlaylist().hasUnknownTags()) {
-                Log.e("ZX",playlist.getMasterPlaylist().getUnknownTags()+"");
-            } else if (playlist.hasMediaPlaylist() && playlist.getMediaPlaylist().hasUnknownTags()) {
-                Log.e("ZX",playlist.getMediaPlaylist().getUnknownTags()+"");
-            } else {
-                Log.e("ZX","Parsing without unknown tags successful"+"");
-            }*//*
-
+            player.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }*/
+
+
+
+
+    }
 
     private void hideAll(FragmentTransaction transaction){
         if (homeFragment!=null){

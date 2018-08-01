@@ -22,4 +22,6 @@
     <color name="gray_text">#383838</color>
     <!-- 背景色 -->
     <color name="default_bg">#f6f6f6</color>
+    <color name="green">#0C7716</color>
+    <color name="txt_black">#191919</color>
 </resources>
