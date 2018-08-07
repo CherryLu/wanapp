@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-    <include layout="@layout/title_layout"/>
+    <include layout="@layout/title_layout"
+        android:id="@+id/title_layout"/>
     <ScrollView
+        android:layout_below="@id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -80,6 +82,7 @@
                     android:text="官方"/>
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:textColor="#FA5539"
@@ -93,10 +96,57 @@
                 android:background="#EDEDED"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="任务说明"
+                android:textSize="18sp"/>
+            <LinearLayout
+                android:id="@+id/steps_layouy"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+            <LinearLayout
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:orientation="horizontal"
+                android:id="@+id/image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/pic1"
+                    android:src="@mipmap/default_image"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="300dp" />
+                <ImageView
+                    android:id="@+id/pic2"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/default_image"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="300dp" />
+            </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+    <Button
+        android:id="@+id/download"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@color/blue_color"
+        android:text="下载"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
 
-</LinearLayout>
+</RelativeLayout>
