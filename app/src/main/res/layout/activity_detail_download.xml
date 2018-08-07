@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <include layout="@layout/title_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <View
+                android:background="#EDEDED"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
+            <RelativeLayout
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/app_pic"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@mipmap/defaluthead"/>
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#444444"
+                    android:textSize="16sp"
+                    android:id="@+id/app_name"
+                    android:layout_toRightOf="@id/app_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="番薯小组"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/app_name"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#CCCCCC"
+                    android:textSize="12sp"
+                    android:id="@+id/app_size"
+                    android:layout_toRightOf="@id/app_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="19M"/>
+
+                <TextView
+                    android:padding="2dp"
+                    android:background="@drawable/grey_bac"
+                    android:layout_below="@id/app_size"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:id="@+id/app_lable1"
+                    android:layout_toRightOf="@id/app_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="安全"/>
+
+                <TextView
+                    android:padding="2dp"
+                    android:background="@drawable/grey_bac"
+                    android:layout_below="@id/app_size"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:id="@+id/app_lable2"
+                    android:layout_toRightOf="@id/app_lable1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="官方"/>
+
+                <TextView
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="#FA5539"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="+1.10元"/>
+
+            </RelativeLayout>
+            <View
+                android:background="#EDEDED"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
