@@ -7,6 +7,8 @@
     <color name="blue_color">#2689f7</color>
     <color name="white">#ffffff</color>
 
+    <color name="origin">#FF6F00</color>
+
     <!-- 底部tag栏文字颜色-->
     <color name="bottom_tab_txt">#737373</color>
     <color name="line">#e4e4e4</color>

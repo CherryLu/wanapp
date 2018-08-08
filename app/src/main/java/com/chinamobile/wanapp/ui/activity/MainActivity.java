@@ -1,7 +1,5 @@
 package com.chinamobile.wanapp.ui.activity;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,8 +13,7 @@ import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.ui.fragment.FindFragment;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
-
-import java.io.IOException;
+import com.chinamobile.wanapp.utils.Nagivator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,28 +42,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         tabCheck(0);
-        parseM3U8();
-
+        Nagivator.startTaskDetailActivity(this);
     }
 
-
-    private void parseM3U8(){
-        String url = "http://audio2.china-plus.net:31080/10.102.62.10/radios/104992/index_104992.m3u8";
-        MediaPlayer player = new MediaPlayer();
-        try {
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setDataSource(url);
-            player.prepare();
-            player.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-    }
 
     private void hideAll(FragmentTransaction transaction){
         if (homeFragment!=null){

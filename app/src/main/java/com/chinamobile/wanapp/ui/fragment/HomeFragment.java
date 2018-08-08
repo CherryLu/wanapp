@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
-import com.chinamobile.wanapp.ui.view.BottomDialog;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
@@ -71,8 +70,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         ButterKnife.bind(this, mRootView);
         getData();
         setList();
-        BottomDialog dialog = new BottomDialog(getContext());
-        dialog.show();
         return mRootView;
     }
 

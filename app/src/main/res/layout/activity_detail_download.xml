@@ -97,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"/>
             <TextView
+                android:textColor="#383838"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
                 android:layout_width="match_parent"
@@ -104,13 +105,24 @@
                 android:text="任务说明"
                 android:textSize="18sp"/>
             <LinearLayout
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:id="@+id/steps_layouy"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </LinearLayout>
+            <TextView
+                android:textColor="#383838"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="APP截图"
+                android:textSize="18sp"/>
             <LinearLayout
+                android:paddingBottom="20dp"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
                 android:orientation="horizontal"
@@ -142,7 +154,7 @@
         android:id="@+id/download"
         android:textSize="18sp"
         android:textColor="@color/white"
-        android:background="@color/blue_color"
+        android:background="@color/origin"
         android:text="下载"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
