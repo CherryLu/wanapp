@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField("boolean", "LOG_DEBUG", "true")
-        buildConfigField("String", "API_ENDPOINT", "\"http://t.7yun.cn/DSFA/\"")
+        buildConfigField("String", "API_ENDPOINT", "\"http://116.62.142.192:8088/\"")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

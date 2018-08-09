@@ -1,10 +1,13 @@
 package com.chinamobile.wanapp.baen;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Administrator on 2018/7/25.
  */
 
 public class BaseItem {
+
     public static int ITEM_LOGO_MEASSAGE = 0;//logo+消息按钮
     public static int ITEM_ICON4 = 1;//4个icon
     public static int ITEM_BANNER = 2;//banner
@@ -27,4 +30,7 @@ public class BaseItem {
     public void setType(int type) {
         this.type = type;
     }
+
+
+
 }

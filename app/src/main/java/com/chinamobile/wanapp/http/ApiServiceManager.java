@@ -3,10 +3,13 @@ package com.chinamobile.wanapp.http;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.chinamobile.wanapp.BuildConfig;
+import com.chinamobile.wanapp.baen.BaseBean;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.utils.MD5Util;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.BufferedInputStream;
@@ -14,6 +17,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -38,27 +47,54 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiServiceManager {
 
 
+    public static void userRegistApp(String sno, HttpResponse response) {
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("sno", sno);
+        stringMap.put("mobile", "");
+        doGet(stringMap, new HttpCallBack(response));
+
+    }
 
 
+    private static void doGet(Map<String, String> stringMap, Observer<BaseBean> consumer) {
+        String data = getData();
 
-
-
-
-
-
-    public static void doGet(String type, Observer<BaseItem> consumer){
-        //Call<JsonBean> call = getHttpService().create(ApiService.class).postPath(type,"");
-        Observable<BaseItem> observable = getHttpService().create(RetrofitService.class).getGetRequest(type,"41f0c2e26ac4b3bf0b965fb8e70b6449");
-        observable .subscribeOn(Schedulers.io())
+        stringMap.put("regIp", getLocalIpAddress());
+        stringMap.put("status", "true");
+        stringMap.put("create_time", getTime());
+        stringMap.put("update_time", getTime());
+        stringMap.put("invited_by", "11");
+        stringMap.put("timestamp", data);
+        stringMap.put("code", getCode(data));
+        Observable<BaseBean> observable = getHttpService().create(RetrofitService.class).getGetRequest(stringMap);
+        observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);
 
     }
 
-    public static void doPost(String type, Observer<BaseItem> consumer){
-        Map<String,String> map = new HashMap<>();
-        map.put("type",type);
-        map.put("key","41f0c2e26ac4b3bf0b965fb8e70b6449");
+    private static String getData() {
+        Date date = new Date();
+        return date.getTime() + "";
+    }
+
+    private static String getCode(String data) {
+        String key = "yioye@sina.cn";
+        String before = key + data;
+        return MD5Util.lowerMD5(before);
+    }
+
+    private static String getTime() {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date);
+
+    }
+
+    private static void doPost(String type, Observer<BaseItem> consumer) {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        map.put("key", "41f0c2e26ac4b3bf0b965fb8e70b6449");
         Observable<BaseItem> observable = getHttpService().create(RetrofitService.class).getPostRequest(map);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,18 +103,10 @@ public class ApiServiceManager {
     }
 
 
-
-
-
-
-
-
-
-
-    public static void fileDownLoad(final String url){
+    public static void fileDownLoad(final String url) {
         int i = url.lastIndexOf("/");
-        final String title = url.substring(0,i+1);
-        final String name = url.substring(i+1,url.length());
+        final String title = url.substring(0, i + 1);
+        final String name = url.substring(i + 1, url.length());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -104,7 +132,7 @@ public class ApiServiceManager {
                             @Override
                             public void run() {
                                 try {
-                                    if (response==null||response.body()==null){//空地址
+                                    if (response == null || response.body() == null) {//空地址
 
                                         return;
                                     }
@@ -114,8 +142,8 @@ public class ApiServiceManager {
                                     BufferedInputStream bis = new BufferedInputStream(is);
                                     byte[] bytes = new byte[1024];
                                     int len;
-                                    while((len=bis.read(bytes))!=-1){
-                                        fos.write(bytes,0,len);
+                                    while ((len = bis.read(bytes)) != -1) {
+                                        fos.write(bytes, 0, len);
                                         fos.flush();
                                     }
                                     fos.close();
@@ -128,6 +156,7 @@ public class ApiServiceManager {
                             }
                         }).start();
                     }
+
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.printStackTrace();//下载失败
@@ -139,8 +168,7 @@ public class ApiServiceManager {
     }
 
 
-
-    private static Retrofit getHttpService(){
+    private static Retrofit getHttpService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -151,21 +179,41 @@ public class ApiServiceManager {
     }
 
 
-    private static OkHttpClient getClient(){
+    private static OkHttpClient getClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.e("HttpClient",message);
+                Log.e("HttpClient", message);
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(interceptor);
         builder.retryOnConnectionFailure(true)
                 .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60,TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
                 .build();
 
         return builder.build();
     }
+
+
+    private static String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+
+    }
+
 }

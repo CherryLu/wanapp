@@ -3,6 +3,7 @@ package com.chinamobile.wanapp.ui.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -10,6 +11,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.baen.BaseBean;
+import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
 import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
@@ -17,6 +22,7 @@ import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.subjects.AsyncSubject;
 
 public class MainActivity extends BaseActivity {
 
@@ -42,7 +48,24 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         tabCheck(0);
         //Nagivator.startTaskDetailShareActivity(this);
+        getData();
+    }
 
+    private void getData(){
+        ApiServiceManager.userRegistApp("", new HttpResponse() {
+            @Override
+            public void onNext(BaseBean baseItem) {
+                if (baseItem!=null){
+                    Log.e("HTTP",baseItem.getCode()+"");
+                    Log.e("HTTP",baseItem.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
 

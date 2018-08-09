@@ -1,6 +1,7 @@
 package com.chinamobile.wanapp.http;
 
 
+import com.chinamobile.wanapp.baen.BaseBean;
 import com.chinamobile.wanapp.baen.BaseItem;
 
 import java.util.Map;
@@ -22,11 +23,11 @@ import retrofit2.http.Streaming;
 
 public interface RetrofitService {
 
-    @GET("api/zt_user")
+    @GET("User/register")
     Observable<BaseItem> getGetRequest(@Query("data") String data, @Query("key") String key);
 
-    @GET("api/zt_user")
-    Observable<BaseItem> getGetRequest(@QueryMap Map<String, String> map);
+    @GET("User/register")
+    Observable<BaseBean> getGetRequest(@QueryMap Map<String, String> map);
 
     @FormUrlEncoded
     @POST("api/zt_user")
