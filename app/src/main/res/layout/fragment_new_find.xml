@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/tab_layout"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:background="@drawable/blue_line"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <TextView
+            android:id="@+id/tab1"
+            android:background="@drawable/blue_bac_left"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="促销商品"/>
+        <TextView
+            android:id="@+id/tab2"
+            android:textColor="@color/blue_color"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="活动推广"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_marginTop="40dp"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    
+
+</android.support.constraint.ConstraintLayout>

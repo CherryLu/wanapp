@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
+import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 
 public class Nagivator {
 
@@ -26,4 +27,18 @@ public class Nagivator {
         Intent intent = new Intent(context, TaskDetailsActivity.class);
         context.startActivity(intent);
     }
+
+
+    /**
+     * 跳转分享任务详情页
+     * @param context
+     */
+    public static void startTaskDetailShareActivity(Context context){
+        Intent intent = new Intent(context, TaskDetailsShareActivity.class);
+        context.startActivity(intent);
+    }
+
+
+
+
 }
