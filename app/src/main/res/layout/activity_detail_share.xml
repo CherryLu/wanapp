@@ -17,6 +17,9 @@
         >
 
         <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -33,9 +36,48 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/app_pic"
                 android:text="学生赚-手机赚钱" />
+            <TextView
+                android:textSize="12sp"
+                android:layout_below="@+id/app_name"
+                android:id="@+id/app_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/app_pic"
+                android:text="2018-07-02 15:48:32" />
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp"
+                android:layout_below="@+id/app_time"
+                android:id="@+id/image_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:src="@mipmap/default_image"/>
+            </LinearLayout>
 
         </RelativeLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/origin_bac"
+        android:textSize="12sp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="规则"/>
 
 
     <TextView
@@ -43,10 +85,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:background="@drawable/origin_conner_bac"
-        android:paddingBottom="10dp"
-        android:paddingLeft="80dp"
-        android:paddingRight="80dp"
-        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:paddingTop="15dp"
         android:text="分享"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

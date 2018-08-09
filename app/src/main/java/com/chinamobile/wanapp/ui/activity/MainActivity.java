@@ -10,10 +10,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
-import com.chinamobile.wanapp.ui.fragment.FindFragment;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
-import com.chinamobile.wanapp.utils.Nagivator;
+import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +32,7 @@ public class MainActivity extends BaseActivity {
     FrameLayout container;
 
     private HomeFragment homeFragment;
-    private FindFragment findFragment;
+    private NewFindFragment findFragment;
     private MineFragment mineFragment;
 
     @Override
@@ -42,7 +41,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         tabCheck(0);
-        Nagivator.startTaskDetailActivity(this);
+        //Nagivator.startTaskDetailShareActivity(this);
+
     }
 
 
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity {
             case 1:
                 tabText2.setTextColor(getResources().getColor(R.color.blue_color));
                 if (findFragment==null){
-                    findFragment = new FindFragment();
+                    findFragment = new NewFindFragment();
                     transaction.add(R.id.container,findFragment,"find");
                 }
                 transaction.show(findFragment);

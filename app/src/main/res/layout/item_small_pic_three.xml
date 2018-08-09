@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/item_pic"
+            android:scaleType="fitXY"
+            android:src="@mipmap/default_image"
+            android:layout_width="100dp"
+            android:layout_height="70dp" />
+        <TextView
+            android:textColor="@color/gray_text"
+            android:layout_marginTop="5dp"
+            android:id="@+id/maintitle"
+            android:layout_marginLeft="15dp"
+            android:maxLines="1"
+            android:layout_toRightOf="@id/item_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题标题标题标题"/>
+        <TextView
+            android:textColor="@color/gray_text"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:layout_below="@id/maintitle"
+            android:id="@+id/subtitle"
+            android:layout_marginLeft="15dp"
+            android:lines="1"
+            android:layout_toRightOf="@id/item_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余10份"/>
+
+        <LinearLayout
+            android:layout_below="@id/maintitle"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginRight="10dp"
+                android:textColor="@color/gray_text"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="晒单返现"/>
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:textSize="18sp"
+                android:text="20%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_red"/>
+
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_line_gray"/>
+
+</LinearLayout>
