@@ -1,28 +1,26 @@
 package com.chinamobile.wanapp.ui.viewitem;
 
-import android.util.Log;
+import android.view.View;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 /**
- * Created by Administrator on 2018/7/25.
+ * Created by Administrator on 2018/8/12.
  */
 
-public class SmallPicThreelineItem implements ItemViewDelegate<BaseItem> {
-
-
+public class RewardTask implements ItemViewDelegate<BaseItem> {
     @Override
     public int getItemViewLayoutId() {
-        return R.layout.item_small_pic_three;
+        return R.layout.item_paihang_task;
     }
 
     @Override
     public boolean isForViewType(BaseItem item, int position) {
-        Log.e("ZX","position : "+position+"    getType"+item.getType());
-        if (item.getType()==BaseItem.ITEM_SMALL_PIC_THREE){
+        if (item.getType()==BaseItem.ITEM_REWARD_LIST){
             return true;
         }
         return false;

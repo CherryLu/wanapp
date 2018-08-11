@@ -1,8 +1,6 @@
 package com.chinamobile.wanapp.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -30,27 +28,13 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SaleFragment extends BaseFragment implements OnRefreshListener  {
+public class ActivityFragment extends BaseFragment implements OnRefreshListener  {
 
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     @Bind(R.id.swiplayout)
     SwipeRefreshLayout swiplayout;
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 100:
-                    if (swiplayout!=null){
-                        swiplayout.setRefreshing(false);
-                    }
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +67,7 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener  {
 
     private void setList() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
         adapter = new MultiItemTypeAdapter(getContext(), mDatas);
         adapter.addItemViewDelegate(new StaggeredItem());
         adapter.addItemViewDelegate(new FStaggeredItem());
@@ -106,6 +91,6 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener  {
 
     @Override
     public void onRefresh() {
-        handler.sendEmptyMessageDelayed(100,1000);
+
     }
 }

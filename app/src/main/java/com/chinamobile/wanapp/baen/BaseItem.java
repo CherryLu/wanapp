@@ -20,7 +20,11 @@ public class BaseItem {
     public static int ITEM_CARD_TWO = 9;//两个可见可滑动
     public static int ITEM_CARD_FIVE = 10;//5个可见可滑动
     public static int ITEM_ICON3 = 11;//4个icon
-    public static int ITEM_BIG_PIC = 12;//4个icon
+    public static int ITEM_BIG_PIC = 12;//大图
+    public static int ITEM_SMALL_PIC_THREE= 13;//小图 三行数据
+    public static int ITEM_TWO_CARD= 14;//小图 三行数据
+    public static int ITEM_REWARD_LIST= 15;//每日任务
+    public static int ITEM_PERSON_LIST= 13;//每日任务
     private int type; //视图类型 0
 
     public int getType() {

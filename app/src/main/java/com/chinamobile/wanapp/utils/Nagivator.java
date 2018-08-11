@@ -7,6 +7,8 @@ import android.content.Intent;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.ui.activity.GuideActivity;
 import com.chinamobile.wanapp.ui.activity.MainActivity;
+import com.chinamobile.wanapp.ui.activity.PersonSortActivity;
+import com.chinamobile.wanapp.ui.activity.RewardActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 
@@ -57,6 +59,12 @@ public class Nagivator {
      */
     public static void startGuideActivity(Context context){
         Intent intent = new Intent(context, GuideActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    public static void startRewardActivity(Context context){
+        Intent intent = new Intent(context, PersonSortActivity.class);
         context.startActivity(intent);
     }
 

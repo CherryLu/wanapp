@@ -19,6 +19,7 @@ import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
 import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
+import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -82,6 +83,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         adapter.addItemViewDelegate(new TopMessageItem());
         adapter.addItemViewDelegate(new TabListItem());
         adapter.addItemViewDelegate(new SmallPicItem());
+        adapter.addItemViewDelegate(new TwoCardItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
 
@@ -91,10 +93,53 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void getData(){
         mDatas = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            BaseItem baseItem = new BaseItem();
-            baseItem.setType(i);
-            mDatas.add(baseItem);
+        for (int i =0;i<6;i++){
+            switch (i){
+                case 0:{
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.setType(0);
+                    mDatas.add(baseItem);
+                }
+                    break;
+                case 1:
+                {
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.setType(1);
+                    mDatas.add(baseItem);
+                }
+                    break;
+                case 2:
+                {
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.setType(2);
+                    mDatas.add(baseItem);
+                }
+                    break;
+                case 3:
+                {
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.setType(14);
+                    mDatas.add(baseItem);
+                }
+                    break;
+                case 4:
+                {
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.setType(3);
+                    mDatas.add(baseItem);
+                }
+                    break;
+                case 5:
+                {
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.setType(4);
+                    mDatas.add(baseItem);
+                }
+                    break;
+
+            }
+
+
         }
     }
 

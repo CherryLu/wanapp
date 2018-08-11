@@ -38,6 +38,8 @@ public class StartActivity extends BaseActivity {
             Nagivator.startGuideActivity(this);
         }
 
+        //finish();
+
     }
 
 
@@ -81,7 +83,6 @@ public class StartActivity extends BaseActivity {
 
     private void getImei() {
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        @SuppressLint("MissingPermission")
         String imei = telephonyManager.getDeviceId();
         Log.e("IMEI",imei);
     }

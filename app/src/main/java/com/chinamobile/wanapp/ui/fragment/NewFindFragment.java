@@ -3,6 +3,8 @@ package com.chinamobile.wanapp.ui.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +30,48 @@ public class NewFindFragment extends BaseFragment {
     @Bind(R.id.container)
     FrameLayout container;
 
+    SaleFragment saleFragment;
+    ActivityFragment activityFragment;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void hideAll(FragmentTransaction transaction){
+        if (saleFragment!=null){
+            transaction.hide(saleFragment);
+        }
+
+        if (activityFragment!=null){
+            transaction.hide(activityFragment);
+        }
+
+    }
+
+    private void setFragment(int which){
+        FragmentManager manager = getChildFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        hideAll(transaction);
+        if (which==0){
+            if (saleFragment==null){
+                saleFragment = new SaleFragment();
+                transaction.add(R.id.container,saleFragment,"sale");
+            }
+            transaction.show(saleFragment);
+        }else {
+            if (activityFragment==null){
+                activityFragment = new ActivityFragment();
+                transaction.add(R.id.container,activityFragment,"activity");
+            }
+            transaction.show(activityFragment);
+        }
+
+        transaction.commit();
+
+
+
     }
 
 
@@ -39,8 +80,11 @@ public class NewFindFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView= inflater.inflate(R.layout.fragment_new_find, null);
         ButterKnife.bind(this, mRootView);
+        setFragment(0);
         return mRootView;
     }
+
+
 
     @Override
     public void onDestroyView() {
@@ -53,9 +97,11 @@ public class NewFindFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tab1:
                 setPosition(0);
+                setFragment(0);
                 break;
             case R.id.tab2:
                 setPosition(1);
+                setFragment(1);
                 break;
         }
     }
