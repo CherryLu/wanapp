@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.ui.activity.GuideActivity;
+import com.chinamobile.wanapp.ui.activity.MainActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 
@@ -35,6 +37,26 @@ public class Nagivator {
      */
     public static void startTaskDetailShareActivity(Context context){
         Intent intent = new Intent(context, TaskDetailsShareActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 跳转主页
+     * @param context
+     */
+    public static void startMainActivity(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 跳转引导页
+     * @param context
+     */
+    public static void startGuideActivity(Context context){
+        Intent intent = new Intent(context, GuideActivity.class);
         context.startActivity(intent);
     }
 

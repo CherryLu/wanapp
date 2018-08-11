@@ -28,6 +28,7 @@
         <activity android:name=".ui.activity.ChangePswActivity"/>
         <activity android:name=".ui.activity.TaskDetailsActivity"/>
         <activity android:name=".ui.activity.TaskDetailsShareActivity"/>
+        <activity android:name=".ui.activity.GuideActivity"/>
     </application>
 
 </manifest>
