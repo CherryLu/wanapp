@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.ui.adapter.LeftAdapter;
+import com.chinamobile.wanapp.ui.callback.LeftCallBack;
 import com.chinamobile.wanapp.ui.viewitem.BigPicItem;
 import com.chinamobile.wanapp.ui.viewitem.FStaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon3Item;
@@ -30,20 +32,22 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SaleFragment extends BaseFragment implements OnRefreshListener  {
+public class SaleFragment extends BaseFragment implements OnRefreshListener,LeftCallBack {
 
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     @Bind(R.id.swiplayout)
     SwipeRefreshLayout swiplayout;
+    @Bind(R.id.left_list)
+    RecyclerView leftList;
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 100:
-                    if (swiplayout!=null){
+                    if (swiplayout != null) {
                         swiplayout.setRefreshing(false);
                     }
                     break;
@@ -61,12 +65,36 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener  {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_find, null);
+        mRootView = inflater.inflate(R.layout.fragment_find_left, null);
         ButterKnife.bind(this, mRootView);
-
+        swiplayout.setOnRefreshListener(this);
+        setLeft();
         getData();
         setList();
         return mRootView;
+    }
+
+    private LeftAdapter leftAdapter;
+
+    private void setLeft() {
+        leftAdapter = new LeftAdapter(getContext(), getStrings());
+        leftAdapter.setCallBack(this);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        leftList.setLayoutManager(manager);
+        leftList.setAdapter(leftAdapter);
+    }
+
+
+    private List<String> getStrings() {
+        List<String> strings = new ArrayList<>();
+        strings.add("母婴");
+        strings.add("家居");
+        strings.add("饰品");
+        strings.add("实物");
+        strings.add("母婴");
+
+        return strings;
+
     }
 
     private MultiItemTypeAdapter adapter;
@@ -106,6 +134,11 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener  {
 
     @Override
     public void onRefresh() {
-        handler.sendEmptyMessageDelayed(100,1000);
+        handler.sendEmptyMessageDelayed(100, 1000);
+    }
+
+    @Override
+    public void leftItemClick() {
+
     }
 }

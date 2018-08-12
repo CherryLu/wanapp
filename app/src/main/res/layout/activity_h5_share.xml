@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include layout="@layout/title_layout"
+        android:id="@+id/ttt"/>
+    <WebView
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:background="@drawable/top_line"
+            android:textColor="@color/gray_text"
+            android:padding="5dp"
+            android:maxLines="2"
+            android:text="分享赚钱啊分享赚钱啊分享赚钱啊分享赚钱啊分享赚钱啊分享赚钱啊分享赚钱啊"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/share"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:textColor="@color/white"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:background="@drawable/origin_noconner_bac"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="分享"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

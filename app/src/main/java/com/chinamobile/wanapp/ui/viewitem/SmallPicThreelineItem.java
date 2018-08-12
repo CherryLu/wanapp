@@ -1,9 +1,11 @@
 package com.chinamobile.wanapp.ui.viewitem;
 
 import android.util.Log;
+import android.view.View;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -30,6 +32,11 @@ public class SmallPicThreelineItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
-
+        holder.getConvertView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Nagivator.startH5TaskShareActivity(v.getContext());
+            }
+        });
     }
 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
+        android:layout_marginTop="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:scaleType="fitXY"
@@ -11,5 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:src="@mipmap/default_image"/>
-
+    <TextView
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/txt"
+        android:lines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="标题标题标题标题标题标题标题标题标题标题标题"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </LinearLayout>

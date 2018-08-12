@@ -1,8 +1,14 @@
 package com.chinamobile.wanapp.ui.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,17 +18,19 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseBean;
-import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
 import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
+import com.chinamobile.wanapp.utils.UserManager;
+
+import java.util.ArrayList;
+import java.util.concurrent.locks.LockSupport;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.subjects.AsyncSubject;
 
 public class MainActivity extends BaseActivity {
 
@@ -47,17 +55,67 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         tabCheck(0);
-        //Nagivator.startTaskDetailShareActivity(this);
-        getData();
+        /*if (Build.VERSION.SDK_INT >= 23) {
+            askPermission();
+        } else {
+            initData();
+        }*/
+
     }
 
-    private void getData(){
-        ApiServiceManager.userRegistApp("", new HttpResponse() {
+
+
+    private void initData(){
+        getImei();
+
+    }
+
+    private void getImei() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        String imei = telephonyManager.getDeviceId();
+        Log.e("IMEI",imei);
+
+        getData(imei);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void askPermission() {
+        ArrayList<String> permissions = new ArrayList<String>();
+        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(android.Manifest.permission.READ_PHONE_STATE);
+        }
+        if (permissions != null && permissions.size() > 0) {
+            String[] st = new String[permissions.size()];
+            for (int i = 0; i < permissions.size(); i++) {
+                st[i] = permissions.get(i);
+            }
+            requestPermissions(st, 1);
+        } else {//初始化
+            initData();
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults != null && grantResults.length > 0) {
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    this.finish();
+                    return;
+                }
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        initData();
+    }
+
+    private void getData(String sno){
+        ApiServiceManager.userRegistApp(sno, new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
                 if (baseItem!=null){
-                    Log.e("HTTP",baseItem.getCode()+"");
-                    Log.e("HTTP",baseItem.getMsg());
+                    UserManager.getInstance().setUserBean(baseItem.getUserBeans());
                 }
             }
 

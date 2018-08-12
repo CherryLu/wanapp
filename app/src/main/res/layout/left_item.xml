@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/re_view"
+            android:background="@color/blue_color"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:maxLines="2"
+            android:paddingLeft="10dp"
+            android:gravity="center"
+            android:paddingBottom="17dp"
+            android:paddingTop="17dp"
+            android:text="热门推荐"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/gray_text"/>
+    </LinearLayout>
+
+</LinearLayout>

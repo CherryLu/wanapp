@@ -22,6 +22,7 @@
     <color name="color_line_gray">#f4f4f4</color>
 
     <color name="gray_text">#383838</color>
+    <color name="color_txt_deep_black">#333333</color>
     <!-- 背景色 -->
     <color name="default_bg">#f6f6f6</color>
     <color name="green">#0C7716</color>

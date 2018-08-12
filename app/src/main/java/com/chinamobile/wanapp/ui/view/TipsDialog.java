@@ -57,6 +57,7 @@ public class TipsDialog extends Dialog implements View.OnClickListener {
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
+        closePic = findViewById(R.id.close_pic);
         closePic.setOnClickListener(this);
     }
 

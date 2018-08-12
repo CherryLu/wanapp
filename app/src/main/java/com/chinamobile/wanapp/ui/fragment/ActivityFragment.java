@@ -60,7 +60,7 @@ public class ActivityFragment extends BaseFragment implements OnRefreshListener 
         mDatas = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             BaseItem baseItem = new BaseItem();
-            baseItem.setType(BaseItem.ITEM_SMALL_PIC_THREE);
+            baseItem.setType(BaseItem.ITEM_BIG_PIC);
             mDatas.add(baseItem);
         }
     }

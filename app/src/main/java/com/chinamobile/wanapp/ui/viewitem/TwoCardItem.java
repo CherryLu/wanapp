@@ -39,5 +39,15 @@ public class TwoCardItem implements ItemViewDelegate<BaseItem> {
                 Nagivator.startRewardActivity(view.getContext());
             }
         });
+
+        CardView cv_content1 = holder.getConvertView().findViewById(R.id.cv_content1);
+
+
+        cv_content1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Nagivator.startTaskShareActivity(view.getContext());
+            }
+        });
     }
 }

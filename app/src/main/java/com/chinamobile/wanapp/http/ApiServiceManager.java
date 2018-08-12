@@ -1,9 +1,6 @@
 package com.chinamobile.wanapp.http;
 
-import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.chinamobile.wanapp.BuildConfig;
@@ -45,20 +42,39 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiServiceManager {
+    private static final String USER_REGIST = "User/register";
 
+    private static final String GET_HOME = "User/UserHomeSel";
+
+    /**
+     * 登录注册接口
+     * @param sno IMEI号
+     * @param response
+     */
 
     public static void userRegistApp(String sno, HttpResponse response) {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("sno", sno);
+        stringMap.put("id", sno);
         stringMap.put("mobile", "");
-        doGet(stringMap, new HttpCallBack(response));
+        doGet(USER_REGIST,stringMap, new HttpCallBack(response));
 
     }
 
+    /**
+     * 获取首页数据
+     * @param id
+     * @param response
+     */
+    public static void getHomeData(String id, HttpResponse response){
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("id", id);
+        doGet(GET_HOME,stringMap, new HttpCallBack(response));
+    }
 
-    private static void doGet(Map<String, String> stringMap, Observer<BaseBean> consumer) {
+
+    private static void doGet(String action,Map<String, String> stringMap, Observer<BaseBean> consumer) {
         String data = getData();
-
         stringMap.put("regIp", getLocalIpAddress());
         stringMap.put("status", "true");
         stringMap.put("create_time", getTime());
@@ -66,7 +82,7 @@ public class ApiServiceManager {
         stringMap.put("invited_by", "11");
         stringMap.put("timestamp", data);
         stringMap.put("code", getCode(data));
-        Observable<BaseBean> observable = getHttpService().create(RetrofitService.class).getGetRequest(stringMap);
+        Observable<BaseBean> observable = getHttpService().create(RetrofitService.class).getGetRequest(action,stringMap);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);

@@ -26,9 +26,14 @@ public interface RetrofitService {
     @GET("User/register")
     Observable<BaseItem> getGetRequest(@Query("data") String data, @Query("key") String key);
 
-    @GET("User/register")
-    Observable<BaseBean> getGetRequest(@QueryMap Map<String, String> map);
+   /* @GET("User/register")*/
 
+    @GET("{act}")
+    Observable<BaseBean> getGetRequest(@Path("act") String act,@QueryMap Map<String, String> map);
+
+    /*@GET("User/UserHomeSel")
+    Observable<BaseBean> getGetRequest(@QueryMap Map<String, String> map);
+*/
     @FormUrlEncoded
     @POST("api/zt_user")
     Observable<BaseItem> getPostRequest(@Query("data") String data, @Query("key") String key);

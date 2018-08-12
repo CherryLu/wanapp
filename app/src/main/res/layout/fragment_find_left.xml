@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swiplayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+     <LinearLayout
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+             <android.support.v7.widget.RecyclerView
+                 android:layout_weight="1"
+                 android:id="@+id/left_list"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"/>
+             <View
+                 android:layout_width="1dp"
+                 android:layout_height="match_parent"
+                 android:background="#f4f4f4"/>
+             <android.support.v7.widget.RecyclerView
+                 android:layout_weight="0.2"
+                 android:id="@+id/recyclerview"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"/>
+
+     </LinearLayout>
+
+
+
+</android.support.v4.widget.SwipeRefreshLayout>

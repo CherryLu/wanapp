@@ -28,7 +28,7 @@
                 android:scaleType="matrix"
                 android:id="@+id/iv_cover"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:src="@mipmap/header_back" />
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="周计划"
+                android:text="每日福利"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
@@ -77,7 +77,7 @@
                 android:scaleType="matrix"
                 android:id="@+id/iv_cover1"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:src="@mipmap/header_back" />
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="月计划"
+                android:text="周计划"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="每月完成指标"
+                android:text="周计划"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
