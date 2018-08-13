@@ -57,11 +57,10 @@ public class MainActivity extends BaseActivity {
 
 
     private void getData(){
-        ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
+        ApiServiceManager.getHomeData("", new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
                 if (baseItem!=null){
-                    Log.e("ZXZX", "id : "+baseItem.getHomeBean().getJanm_res().get(0).getTitle());
                     getListData(baseItem.getHomeBean());
                     tabCheck(0);
                 }
@@ -86,7 +85,7 @@ public class MainActivity extends BaseActivity {
                 case 0: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_LOGO_MEASSAGE);
-                    item.setTopMessage(homeBean.getMbm_res().get(0));
+                   // item.setTopMessage(homeBean.getMbm_res().get(0));
                     baseItems.add(item);
                 }
                     break;
@@ -122,7 +121,7 @@ public class MainActivity extends BaseActivity {
                 case 5:{
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_TAB_LIST);
-                    item.setDataList(homeBean.getJjp_res());
+                    item.setFirstData(homeBean.getJjp_res());
                     item.setDataList(homeBean.getJamm_res());
                     baseItems.add(item);
                 }

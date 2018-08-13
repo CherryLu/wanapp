@@ -23,7 +23,6 @@ public class SmallPicThreelineItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public boolean isForViewType(BaseItem item, int position) {
-        Log.e("ZX","position : "+position+"    getType"+item.getType());
         if (item.getType()==BaseItem.ITEM_SMALL_PIC_THREE){
             return true;
         }

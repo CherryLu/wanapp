@@ -6,6 +6,7 @@ import android.util.Log;
 import com.chinamobile.wanapp.BuildConfig;
 import com.chinamobile.wanapp.baen.BaseBean;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.MD5Util;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -46,6 +47,9 @@ public class ApiServiceManager {
 
     private static final String GET_HOME = "User/UserHomeSel";
 
+    private static final String GET_OPENAPP = "User/AppOpenImage";
+
+
     /**
      * 登录注册接口
      * @param sno IMEI号
@@ -69,6 +73,33 @@ public class ApiServiceManager {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("id", id);
         doGet(GET_HOME,stringMap, new HttpCallBack(response));
+    }
+
+
+
+
+    /**
+     *获取开屏数据
+     * @param id
+     * @param response
+     */
+    public static void getAPPOpen(String id,HttpResponse response){
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("sno", id);
+        doGet(GET_OPENAPP,stringMap, new HttpCallBack(response));
+    }
+
+
+    /**
+     *获取列表
+     * @param mid 列表标志
+     * @param response
+     */
+    public static void getDataList(String mid,HttpResponse response){
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("mid", mid);
+        stringMap.put("count_end", "20");
+        doGet(GET_OPENAPP,stringMap, new HttpCallBack(response));
     }
 
 
@@ -199,7 +230,7 @@ public class ApiServiceManager {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.e("HttpClient", message);
+                LogUtils.e("Http",message);
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

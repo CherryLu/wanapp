@@ -22,15 +22,20 @@ public class BaseBean implements Serializable {
 
 
     //用户信息
-    @SerializedName("userData")
+    //@SerializedName("userData")
     private List<UserBean> userBeans;
 
     //首页信息
-    @SerializedName("homeData")
+    //@SerializedName("userData")
     private HomeBean homeBean;
 
 
+    @SerializedName("userData")
+    private ConfigData configData;
 
+    public ConfigData getConfigData() {
+        return configData;
+    }
 
     public int getCode() {
         return code;

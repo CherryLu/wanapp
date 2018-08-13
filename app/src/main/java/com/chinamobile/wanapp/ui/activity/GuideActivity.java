@@ -94,7 +94,6 @@ public class GuideActivity extends BaseActivity {
             {
                 currentPosition = position;
                 pointView.setSelectedPosition(position);
-                Log.d(TAG, " onPageSelected position = " + position);
             }
 
             @Override
@@ -129,7 +128,7 @@ public class GuideActivity extends BaseActivity {
                         }
                         catch (Exception e)
                         {
-                            Log.e("Exception", e + "");
+                            e.printStackTrace();
                         }
                         break;
                 }
@@ -150,7 +149,6 @@ public class GuideActivity extends BaseActivity {
             View view = createItemView(position);
             container.removeView(view);
             container.addView(view);
-            Log.d(TAG, " instantiateItem position = " + position + ",view pos = " + position % MAX_CACHE_COUNT + ",container size = " + container.getChildCount());
             return view;
         }
 
@@ -159,7 +157,6 @@ public class GuideActivity extends BaseActivity {
         {
             // 不在此处删除（在此处删除，显示可能会有问题），在instantiateItem里addView前删除
             // container.removeView(viewList.get(position % MAX_CACHE_COUNT));
-            Log.d(TAG, " destroyItem position = " + position);
         }
 
         @Override

@@ -30,6 +30,7 @@ public class SmallPicItem implements ItemViewDelegate<TaskData> {
 
     @Override
     public void convert(ViewHolder holder, TaskData taskData, int position) {
+
         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

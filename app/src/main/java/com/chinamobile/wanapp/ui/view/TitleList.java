@@ -98,6 +98,9 @@ public class TitleList extends LinearLayout {
     }
 
     private void initList(List<TaskData> mDatas) {
+        if (mDatas==null){
+            return;
+        }
         for (int i=0;i<mDatas.size();i++){
             mDatas.get(i).setType(BaseItem.ITEM_SMALL_PIC);
         }

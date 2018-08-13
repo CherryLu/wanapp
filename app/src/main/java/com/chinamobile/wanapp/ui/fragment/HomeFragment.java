@@ -16,7 +16,6 @@ import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
-import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
 import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
@@ -80,7 +79,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         adapter.addItemViewDelegate(new RollTextItem());
         adapter.addItemViewDelegate(new TopMessageItem());
         adapter.addItemViewDelegate(new TabListItem());
-        adapter.addItemViewDelegate(new SmallPicItem());
         adapter.addItemViewDelegate(new TwoCardItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);

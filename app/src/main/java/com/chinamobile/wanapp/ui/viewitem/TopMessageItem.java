@@ -25,6 +25,8 @@ public class TopMessageItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
-        holder.setText(R.id.request_code, "账户余额："+baseItem.getTopMessage().getTitle());
+       // holder.setText(R.id.request_code, "账户余额："+baseItem.getTopMessage().getTitle());
+
+        holder.setText(R.id.request_code, "账户余额：100");
     }
 }

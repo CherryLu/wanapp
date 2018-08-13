@@ -4,21 +4,30 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseBean;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
+import com.chinamobile.wanapp.utils.GlideUtil;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.SharedPreferencesUtils;
 import com.chinamobile.wanapp.utils.UserManager;
 
 import java.util.ArrayList;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/8/9.
@@ -27,19 +36,28 @@ import java.util.ArrayList;
 public class StartActivity extends BaseActivity {
 
 
-    private Handler handler = new Handler(){
+    @Bind(R.id.image)
+    ImageView image;
+    @Bind(R.id.ader_timer_txt)
+    TextView aderTimerTxt;
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 200:
+
                     boolean guide = (boolean) SharedPreferencesUtils.getParam(StartActivity.this, "GUIDE", false);
                     if (guide) {//首页
                         Nagivator.startMainActivity(StartActivity.this);
                     } else {//引导页
+
                         Nagivator.startGuideActivity(StartActivity.this);
                     }
-
                     finish();
+                    break;
+
+                case 300:
+                    getOpenAPP(UserManager.getInstance().getId());
                     break;
             }
             super.handleMessage(msg);
@@ -55,10 +73,13 @@ public class StartActivity extends BaseActivity {
             initData();
         }
 
+        setContentView(R.layout.activity_start);
+        ButterKnife.bind(this);
+
     }
 
 
-    private void initData(){
+    private void initData() {
         getImei();
 
     }
@@ -66,20 +87,76 @@ public class StartActivity extends BaseActivity {
     private void getImei() {
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         String imei = telephonyManager.getDeviceId();
-        Log.e("IMEI",imei);
 
-        getData(imei);
+        //handler.sendEmptyMessageDelayed(200,3000);
+        // getData(imei);
+
+        //getOpenAPP("10000055");
+        getLsit();
     }
 
-    private void getData(String sno){
+    CountDownTimer timer = new CountDownTimer(4000, 1000) {
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (aderTimerTxt.getVisibility()== View.GONE){
+                aderTimerTxt.setVisibility(View.VISIBLE);
+            }
+            aderTimerTxt.setText(millisUntilFinished / 1000 + "s");
+        }
+
+        @Override
+        public void onFinish() {
+           if (handler!=null){
+               handler.sendEmptyMessage(200);
+           }
+        }
+    };
+
+    private void getOpenAPP(String id) {
+        ApiServiceManager.getAPPOpen(id, new HttpResponse() {
+            @Override
+            public void onNext(BaseBean baseItem) {
+                if (baseItem != null) {
+                    if (baseItem.getConfigData() != null && baseItem.getConfigData().getJas_res() != null && baseItem.getConfigData().getJas_res().size() > 0) {
+                        GlideUtil.loadImageView(StartActivity.this, baseItem.getConfigData().getJas_res().get(0).getStartimgUrl(), image);
+                        timer.start();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+
+    private void getLsit(){
+        ApiServiceManager.getDataList("0", new HttpResponse() {
+            @Override
+            public void onNext(BaseBean baseItem) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+    private void getData(String sno) {
         ApiServiceManager.userRegistApp(sno, new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
-                if (baseItem!=null){
+                if (baseItem != null) {
                     UserManager.getInstance().setUserBean(baseItem.getUserBeans());
                 }
 
-                handler.sendEmptyMessage(200);
+                handler.sendEmptyMessage(300);
 
 
             }
@@ -91,11 +168,12 @@ public class StartActivity extends BaseActivity {
         });
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void askPermission() {
         ArrayList<String> permissions = new ArrayList<String>();
         if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissions.add(android.Manifest.permission.READ_PHONE_STATE);
+            permissions.add(Manifest.permission.READ_PHONE_STATE);
         }
         if (permissions != null && permissions.size() > 0) {
             String[] st = new String[permissions.size()];
@@ -124,8 +202,12 @@ public class StartActivity extends BaseActivity {
     }
 
 
+    @OnClick(R.id.ader_timer_txt)
+    public void onClick() {
+        timer.cancel();
+        if (handler!=null){
+            handler.sendEmptyMessage(200);
+        }
 
-
-
-
+    }
 }

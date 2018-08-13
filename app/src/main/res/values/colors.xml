@@ -8,7 +8,7 @@
     <color name="white">#ffffff</color>
 
     <color name="origin">#FF6F00</color>
-
+    <color name="transparent50_0">#80000000</color>
     <!-- 底部tag栏文字颜色-->
     <color name="bottom_tab_txt">#737373</color>
     <color name="line">#e4e4e4</color>
