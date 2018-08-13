@@ -3,8 +3,10 @@ package com.chinamobile.wanapp.baen;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TaskData {
+public class TaskData implements Serializable {
 
     @SerializedName("id")
     private String id;
@@ -52,6 +54,17 @@ public class TaskData {
 
     @SerializedName("member")
     private Member member;
+
+
+    private int type; //视图类型 0
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
 
     public String getId() {

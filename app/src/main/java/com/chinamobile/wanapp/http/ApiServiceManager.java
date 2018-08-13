@@ -55,7 +55,6 @@ public class ApiServiceManager {
     public static void userRegistApp(String sno, HttpResponse response) {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("sno", sno);
-        stringMap.put("id", sno);
         stringMap.put("mobile", "");
         doGet(USER_REGIST,stringMap, new HttpCallBack(response));
 

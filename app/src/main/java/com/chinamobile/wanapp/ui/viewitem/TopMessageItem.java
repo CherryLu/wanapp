@@ -2,7 +2,6 @@ package com.chinamobile.wanapp.ui.viewitem;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
-import com.chinamobile.wanapp.utils.UserManager;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -26,6 +25,6 @@ public class TopMessageItem implements ItemViewDelegate<BaseItem> {
 
     @Override
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
-        holder.setText(R.id.request_code, UserManager.getInstance().getId());
+        holder.setText(R.id.request_code, "账户余额："+baseItem.getTopMessage().getTitle());
     }
 }

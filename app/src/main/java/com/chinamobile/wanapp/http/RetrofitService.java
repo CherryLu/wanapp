@@ -29,7 +29,7 @@ public interface RetrofitService {
    /* @GET("User/register")*/
 
     @GET("{act}")
-    Observable<BaseBean> getGetRequest(@Path("act") String act,@QueryMap Map<String, String> map);
+    Observable<BaseBean> getGetRequest(@Path(value = "act",encoded =true ) String act,@QueryMap Map<String, String> map);
 
     /*@GET("User/UserHomeSel")
     Observable<BaseBean> getGetRequest(@QueryMap Map<String, String> map);

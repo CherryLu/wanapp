@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -12,7 +13,7 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
  * Created by Administrator on 2018/7/25.
  */
 
-public class SmallPicItem implements ItemViewDelegate<BaseItem> {
+public class SmallPicItem implements ItemViewDelegate<TaskData> {
 
     @Override
     public int getItemViewLayoutId() {
@@ -20,7 +21,7 @@ public class SmallPicItem implements ItemViewDelegate<BaseItem> {
     }
 
     @Override
-    public boolean isForViewType(BaseItem item, int position) {
+    public boolean isForViewType(TaskData item, int position) {
         if (item.getType()==BaseItem.ITEM_SMALL_PIC){
             return true;
         }
@@ -28,7 +29,7 @@ public class SmallPicItem implements ItemViewDelegate<BaseItem> {
     }
 
     @Override
-    public void convert(ViewHolder holder, BaseItem baseItem, int position) {
+    public void convert(ViewHolder holder, TaskData taskData, int position) {
         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,4 +37,5 @@ public class SmallPicItem implements ItemViewDelegate<BaseItem> {
             }
         });
     }
+
 }

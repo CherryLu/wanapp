@@ -38,24 +38,19 @@ public class BannerItem implements ItemViewDelegate<BaseItem>,OnBannerListener {
     @Override
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
         List<String> imageArrary = new ArrayList<>();
-        imageArrary.add("http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg");
-        imageArrary.add("http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg");
-        imageArrary.add("http://img0.imgtn.bdimg.com/it/u=3972169330,4211815266&fm=214&gp=0.jpg");
+        for (int i=0;i<baseItem.getDataList().size();i++){
+            imageArrary.add(baseItem.getDataList().get(i).getImgUrl());
+        }
 
-        List<String> titleArrary = new ArrayList<>();
-        titleArrary.add("标题一");
-        titleArrary.add("标题二");
-        titleArrary.add("标题三");
+
 
         Banner banner = holder.getConvertView().findViewById(R.id.banner);
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
         banner.setImages(imageArrary);
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.RotateDown);
-        //设置标题集合（当banner样式有显示title时）
-        banner.setBannerTitles(titleArrary);
         //设置轮播时间
         banner.setDelayTime(3000);
         //设置指示器位置（当banner模式中有指示器时）

@@ -3,9 +3,11 @@ package com.chinamobile.wanapp.baen;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserBean {
+public class UserBean implements Serializable {
 
     @SerializedName("id")
     private String id;

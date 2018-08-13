@@ -13,13 +13,14 @@
         android:layout_height="wrap_content">
         <ImageView
             android:layout_centerVertical="true"
-            android:src="@mipmap/logo_default"
+            android:src="@mipmap/account_money"
             android:id="@+id/header_pic"
             android:scaleType="fitXY"
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
         <TextView
+            android:lines="1"
             android:id="@+id/request_code"
             android:textSize="16sp"
             android:textColor="@color/blue_color"
@@ -28,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="邀请码 100001"/>
+            android:text="余额 100001"/>
         <TextView
             android:id="@+id/message_btn"
             android:paddingRight="15dp"

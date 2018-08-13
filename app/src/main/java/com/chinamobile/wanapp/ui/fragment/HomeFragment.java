@@ -24,7 +24,6 @@ import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,7 +40,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     SwipeRefreshLayout refreshLayout;
 
     private MultiItemTypeAdapter adapter;
-    private List<BaseItem> mDatas;
 
     private Handler handler = new Handler(){
         @Override
@@ -61,7 +59,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
+    ArrayList<BaseItem> baseItems;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,14 +67,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         refreshLayout = (SwipeRefreshLayout) mRootView;
         refreshLayout.setOnRefreshListener(this);
         ButterKnife.bind(this, mRootView);
-        getData();
+        baseItems = (ArrayList<BaseItem>) getArguments().getSerializable("LIST");
         setList();
         return mRootView;
     }
 
     private void setList(){
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        adapter = new MultiItemTypeAdapter(getContext(),mDatas);
+        adapter = new MultiItemTypeAdapter(getContext(),baseItems);
         adapter.addItemViewDelegate(new BannerItem());
         adapter.addItemViewDelegate(new Icon4Item());
         adapter.addItemViewDelegate(new RollTextItem());
@@ -91,57 +89,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         recyclerview.setAdapter(adapter);
     }
 
-    private void getData(){
-        mDatas = new ArrayList<>();
-        for (int i =0;i<6;i++){
-            switch (i){
-                case 0:{
-                    BaseItem baseItem = new BaseItem();
-                    baseItem.setType(0);
-                    mDatas.add(baseItem);
-                }
-                    break;
-                case 1:
-                {
-                    BaseItem baseItem = new BaseItem();
-                    baseItem.setType(1);
-                    mDatas.add(baseItem);
-                }
-                    break;
-                case 2:
-                {
-                    BaseItem baseItem = new BaseItem();
-                    baseItem.setType(2);
-                    mDatas.add(baseItem);
-                }
-                    break;
-                case 3:
-                {
-                    BaseItem baseItem = new BaseItem();
-                    baseItem.setType(14);
-                    mDatas.add(baseItem);
-                }
-                    break;
-                case 4:
-                {
-                    BaseItem baseItem = new BaseItem();
-                    baseItem.setType(3);
-                    mDatas.add(baseItem);
-                }
-                    break;
-                case 5:
-                {
-                    BaseItem baseItem = new BaseItem();
-                    baseItem.setType(4);
-                    mDatas.add(baseItem);
-                }
-                    break;
-
-            }
-
-
-        }
-    }
 
 
     @Override

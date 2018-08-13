@@ -3,13 +3,14 @@ package com.chinamobile.wanapp.baen;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/8/6.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BaseBean {
+public class BaseBean implements Serializable {
 
     @SerializedName("code")
     private int code;
@@ -18,8 +19,18 @@ public class BaseBean {
     @SerializedName("msg")
     private String msg;
 
+
+
+    //用户信息
     @SerializedName("userData")
     private List<UserBean> userBeans;
+
+    //首页信息
+    @SerializedName("homeData")
+    private HomeBean homeBean;
+
+
+
 
     public int getCode() {
         return code;
@@ -35,5 +46,10 @@ public class BaseBean {
            return userBeans.get(0);
         }
         return null;
+    }
+
+
+    public HomeBean getHomeBean() {
+        return homeBean;
     }
 }

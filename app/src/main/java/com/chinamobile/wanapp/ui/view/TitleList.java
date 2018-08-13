@@ -12,16 +12,11 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
-import com.chinamobile.wanapp.ui.viewitem.BannerItem;
-import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
-import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
+import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
-import com.chinamobile.wanapp.ui.viewitem.TabListItem;
-import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,7 +25,6 @@ import java.util.List;
 
 public class TitleList extends LinearLayout {
 
-    private HashMap<Integer,List<BaseItem>> listHashMap;
     public TitleList(Context context) {
         super(context);
         inttView(context);
@@ -81,41 +75,36 @@ public class TitleList extends LinearLayout {
             title_area.addView(textView);
         }
 
-        setList(getData());
-
     }
 
-    private List<BaseItem> getData(){
-        List<BaseItem> baseItems = new ArrayList<>();
+
+
+    private List<TaskData> getData(){
+        List<TaskData> baseItems = new ArrayList<>();
         for (int i =0;i<5;i++){
-            BaseItem item = new BaseItem();
+            TaskData item = new TaskData();
             item.setType(5);
             baseItems.add(item);
         }
-
         return baseItems;
     }
 
-    private void addListData(HashMap<Integer,List<BaseItem>> listHashMap){
-        this.listHashMap = listHashMap;
-    }
-
-    private void setList(int position){
-        if (listHashMap!=null){
-            List<BaseItem> items = listHashMap.get(position);
-
-        }
-    }
     MultiItemTypeAdapter adapter;
 
-    private void setList(List<BaseItem> mDatas){
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+    public void setDefaultData(List<TaskData> mDatas){
+        initList(mDatas);
         adapter = new MultiItemTypeAdapter(getContext(),mDatas);
-        adapter.addItemViewDelegate(new BannerItem());
-        adapter.addItemViewDelegate(new Icon4Item());
-        adapter.addItemViewDelegate(new RollTextItem());
-        adapter.addItemViewDelegate(new TopMessageItem());
-        adapter.addItemViewDelegate(new TabListItem());
+        setList();
+    }
+
+    private void initList(List<TaskData> mDatas) {
+        for (int i=0;i<mDatas.size();i++){
+            mDatas.get(i).setType(BaseItem.ITEM_SMALL_PIC);
+        }
+    }
+
+    private void setList(){
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
         adapter.addItemViewDelegate(new SmallPicItem());
         contain_list.setLayoutManager(manager);
         contain_list.setAdapter(adapter);

@@ -19,20 +19,22 @@
             android:paddingTop="6.5dp" >
 
             <ImageView
-                android:background="@color/blue_color"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/newhand"
                 android:id="@+id/icon_pic1"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:scaleType="fitXY" />
 
             <TextView
-                android:text="标题"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/icon_pic1"
+                android:text="新手任务"
                 android:layout_centerInParent="true"
                 android:id="@+id/icon_txt1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/gray_text"
                 android:textSize="12sp" />
         </RelativeLayout>
 
@@ -44,20 +46,22 @@
             android:paddingTop="6.5dp" >
 
             <ImageView
-                android:background="@color/blue_color"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/qiandao"
                 android:id="@+id/icon_pic2"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:scaleType="fitXY" />
 
             <TextView
-                android:text="标题"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/gray_text"
+                android:layout_below="@id/icon_pic2"
+                android:text="签到"
                 android:layout_centerInParent="true"
                 android:id="@+id/icon_txt2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:textSize="12sp" />
         </RelativeLayout>
 
@@ -69,20 +73,22 @@
             android:paddingTop="6.5dp" >
 
             <ImageView
-                android:background="@color/blue_color"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/yaoqing"
                 android:id="@+id/icon_pic3"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:scaleType="fitXY" />
 
             <TextView
-                android:text="标题"
+                android:layout_below="@id/icon_pic3"
+                android:layout_marginTop="2dp"
+                android:text="邀人"
                 android:layout_centerInParent="true"
                 android:id="@+id/icon_txt3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/gray_text"
                 android:textSize="12sp" />
         </RelativeLayout>
 
@@ -94,20 +100,22 @@
             android:paddingTop="6.5dp" >
 
             <ImageView
-                android:background="@color/blue_color"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/paihang"
                 android:id="@+id/icon_pic4"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:scaleType="fitXY" />
 
             <TextView
-                android:text="标题"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/icon_pic4"
+                android:text="排行榜"
                 android:layout_centerInParent="true"
                 android:id="@+id/icon_txt4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/gray_text"
                 android:textSize="12sp" />
         </RelativeLayout>
 

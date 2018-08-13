@@ -49,8 +49,6 @@ public class StartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        handler.sendEmptyMessageDelayed(200,3000);
-
         if (Build.VERSION.SDK_INT >= 23) {
             askPermission();
         } else {
@@ -74,12 +72,15 @@ public class StartActivity extends BaseActivity {
     }
 
     private void getData(String sno){
-        ApiServiceManager.userRegistApp("10000055", new HttpResponse() {
+        ApiServiceManager.userRegistApp(sno, new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
                 if (baseItem!=null){
                     UserManager.getInstance().setUserBean(baseItem.getUserBeans());
                 }
+
+                handler.sendEmptyMessage(200);
+
 
             }
 

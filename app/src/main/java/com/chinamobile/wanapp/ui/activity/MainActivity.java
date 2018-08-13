@@ -1,14 +1,8 @@
 package com.chinamobile.wanapp.ui.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -18,6 +12,8 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseBean;
+import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.HomeBean;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
@@ -26,7 +22,6 @@ import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
 import com.chinamobile.wanapp.utils.UserManager;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.LockSupport;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,69 +49,23 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        tabCheck(0);
-        /*if (Build.VERSION.SDK_INT >= 23) {
-            askPermission();
-        } else {
-            initData();
-        }*/
-
+        getData();
     }
 
 
 
-    private void initData(){
-        getImei();
-
-    }
-
-    private void getImei() {
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        String imei = telephonyManager.getDeviceId();
-        Log.e("IMEI",imei);
-
-        getData(imei);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void askPermission() {
-        ArrayList<String> permissions = new ArrayList<String>();
-        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissions.add(android.Manifest.permission.READ_PHONE_STATE);
-        }
-        if (permissions != null && permissions.size() > 0) {
-            String[] st = new String[permissions.size()];
-            for (int i = 0; i < permissions.size(); i++) {
-                st[i] = permissions.get(i);
-            }
-            requestPermissions(st, 1);
-        } else {//初始化
-            initData();
-        }
-    }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (grantResults != null && grantResults.length > 0) {
-            for (int i = 0; i < grantResults.length; i++) {
-                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                    this.finish();
-                    return;
-                }
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        initData();
-    }
-
-    private void getData(String sno){
-        ApiServiceManager.userRegistApp(sno, new HttpResponse() {
+    private void getData(){
+        ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
                 if (baseItem!=null){
-                    UserManager.getInstance().setUserBean(baseItem.getUserBeans());
+                    Log.e("ZXZX", "id : "+baseItem.getHomeBean().getJanm_res().get(0).getTitle());
+                    getListData(baseItem.getHomeBean());
+                    tabCheck(0);
                 }
+
             }
 
             @Override
@@ -124,6 +73,63 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private ArrayList<BaseItem> baseItems;
+    private void getListData(HomeBean homeBean){
+        baseItems = new ArrayList<>();
+        if (homeBean==null){
+            return;
+        }
+        for (int i=0;i<6;i++){
+            switch (i){
+                case 0: {
+                    BaseItem item = new BaseItem();
+                    item.setType(BaseItem.ITEM_LOGO_MEASSAGE);
+                    item.setTopMessage(homeBean.getMbm_res().get(0));
+                    baseItems.add(item);
+                }
+                    break;
+                case 1: {
+                    BaseItem item = new BaseItem();
+                    item.setType(BaseItem.ITEM_ICON4);
+                    baseItems.add(item);
+                }
+                break;
+                case 2:{
+                    BaseItem item = new BaseItem();
+                    item.setType(BaseItem.ITEM_BANNER);
+                    item.setDataList(homeBean.getJabm_res());
+                    baseItems.add(item);
+                }
+                    break;
+
+                case 3:{
+                    BaseItem item = new BaseItem();
+                    item.setType(BaseItem.ITEM_TWO_CARD);
+                    baseItems.add(item);
+                }
+                    break;
+
+                case 4:{
+                    BaseItem item = new BaseItem();
+                    item.setType(BaseItem.ITEM_ROLL);
+                    item.setTopMessage(homeBean.getJanm_res().get(0));
+                    baseItems.add(item);
+
+                }
+                break;
+                case 5:{
+                    BaseItem item = new BaseItem();
+                    item.setType(BaseItem.ITEM_TAB_LIST);
+                    item.setDataList(homeBean.getJjp_res());
+                    item.setDataList(homeBean.getJamm_res());
+                    baseItems.add(item);
+                }
+                    break;
+
+            }
+        }
     }
 
 
@@ -164,6 +170,9 @@ public class MainActivity extends BaseActivity {
                 tabText1.setTextColor(getResources().getColor(R.color.blue_color));
                 if (homeFragment==null){
                     homeFragment = new HomeFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("LIST", baseItems);
+                    homeFragment.setArguments(bundle);
                     transaction.add(R.id.container,homeFragment,"home");
                 }
                 transaction.show(homeFragment);

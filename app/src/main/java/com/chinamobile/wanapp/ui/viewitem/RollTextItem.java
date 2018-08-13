@@ -25,6 +25,6 @@ public class RollTextItem  implements ItemViewDelegate<BaseItem> {
 
     @Override
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
-
+        holder.setText(R.id.roll_txt,baseItem.getTopMessage().getTitle());
     }
 }

@@ -31,9 +31,12 @@ public class TabListItem implements ItemViewDelegate<BaseItem> {
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
         TitleList titleList = holder.getConvertView().findViewById(R.id.titleList);
         List<String> titleArrary = new ArrayList<>();
-        titleArrary.add("标题一");
-        titleArrary.add("标题二");
-        titleArrary.add("标题三");
+        for (int i=0;i<baseItem.getDataList().size();i++){
+            titleArrary.add(baseItem.getDataList().get(i).getMname());
+        }
         titleList.addTitle(titleArrary);
+
+        titleList.setDefaultData(baseItem.getFirstData());
+
     }
 }
