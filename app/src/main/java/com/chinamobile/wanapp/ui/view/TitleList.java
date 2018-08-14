@@ -12,12 +12,20 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.BaseTaskList;
 import com.chinamobile.wanapp.baen.TaskData;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
+import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
+import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 /**
  * Created by 95470 on 2018/7/28.
@@ -51,6 +59,12 @@ public class TitleList extends LinearLayout {
         //addView(view);
     }
 
+    List<String> mids;
+
+    public void setMids(List<String> mids) {
+        this.mids = mids;
+    }
+
     public void addTitle(List<String> strings){
         if (title_area!=null){
             title_area.removeAllViews();
@@ -61,24 +75,59 @@ public class TitleList extends LinearLayout {
         }
 
         for (int i =0;i<strings.size();i++){
+            final int position = i;
             TextView textView = (TextView) View.inflate(getContext(),R.layout.module_textview,null);
             textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
             textView.setText(strings.get(i));
-
             if (i==0){
                 textView.setTextSize(sp2px(50));
             }
-
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    setSelection(position);
                 }
             });
-
             title_area.addView(textView);
         }
 
+    }
+
+    private void setSelection(int position){
+
+        for (int i=0;i< title_area.getChildCount();i++){
+            TextView textView = (TextView) title_area.getChildAt(i);
+            if (i==position){
+                textView.setTextSize(sp2px(50));
+            }else {
+                textView.setTextSize(sp2px(40));
+            }
+        }
+        String mid = mids.get(position);
+        ApiServiceManager.getDataList(mid, new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseTaskList baseTaskList = gson.fromJson(json,BaseTaskList.class);
+                    if (baseTaskList!=null){
+                        setDefaultData(baseTaskList.getTaskDatas());
+                    }else {
+                        setDefaultData(new ArrayList<TaskData>());
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    setDefaultData(new ArrayList<TaskData>());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
 
@@ -88,18 +137,6 @@ public class TitleList extends LinearLayout {
 
     }
 
-
-
-
-        private List<TaskData> getData(){
-        List<TaskData> baseItems = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            TaskData item = new TaskData();
-            item.setType(5);
-            baseItems.add(item);
-        }
-        return baseItems;
-    }
 
     MultiItemTypeAdapter adapter;
 
@@ -121,8 +158,10 @@ public class TitleList extends LinearLayout {
     private void setList(){
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         adapter.addItemViewDelegate(new SmallPicItem());
+        EmptyWrapper wrapper = new EmptyWrapper(adapter);
+        wrapper.setEmptyView(R.layout.empty_view);
         contain_list.setLayoutManager(manager);
-        contain_list.setAdapter(adapter);
+        contain_list.setAdapter(wrapper);
     }
 
 

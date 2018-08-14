@@ -5,18 +5,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
-import com.chinamobile.wanapp.ui.viewitem.BannerItem;
-import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RewardTask;
-import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
-import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
-import com.chinamobile.wanapp.ui.viewitem.TabListItem;
-import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
-import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
+import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -38,55 +35,77 @@ public class RewardActivity extends BaseActivity {
     RecyclerView recyclerview;
     @Bind(R.id.get_reward)
     Button getReward;
+    @Bind(R.id.back_image)
+    ImageView backImage;
+    @Bind(R.id.main_title)
+    TextView mainTitle;
+    @Bind(R.id.right_txt)
+    TextView rightTxt;
+    @Bind(R.id.right_image)
+    ImageView rightImage;
 
     private MultiItemTypeAdapter adapter;
     private List<BaseItem> mDatas;
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     break;
             }
             super.handleMessage(msg);
         }
     };
-
+    int type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward);
         ButterKnife.bind(this);
-        setTitleBar("每日任务");
+        type = getIntent().getIntExtra("TYPE",0);
+        if (type==0){
+            setTitleBar("每日任务");
+        }else {
+            setTitleBar("新手任务");
+        }
+
         getData();
         setList();
     }
 
-    private void setList(){
+    private void setList() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        adapter = new MultiItemTypeAdapter(this,mDatas);
+        adapter = new MultiItemTypeAdapter(this, mDatas);
         adapter.addItemViewDelegate(new RewardTask());
 
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
 
         recyclerview.setLayoutManager(manager);
-        recyclerview.setAdapter(adapter);
+        recyclerview.setAdapter(wrapper);
     }
 
-    private void getData(){
+    private void getData() {
         mDatas = new ArrayList<>();
-        for (int i =0;i<6;i++){
-         BaseItem baseItem = new BaseItem();
-         baseItem.setType(BaseItem.ITEM_REWARD_LIST);
-         mDatas.add(baseItem);
+        for (int i = 0; i < 6; i++) {
+            BaseItem baseItem = new BaseItem();
+            baseItem.setType(BaseItem.ITEM_REWARD_LIST);
+            mDatas.add(baseItem);
 
 
         }
     }
 
-    @OnClick(R.id.get_reward)
-    public void onClick() {
+
+    @OnClick({R.id.back_image, R.id.get_reward})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_image:
+                Nagivator.finishActivity(this);
+                break;
+            case R.id.get_reward:
+                break;
+        }
     }
 }

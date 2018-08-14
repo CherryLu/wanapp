@@ -10,34 +10,40 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.ui.view.WaitDialog;
+import com.chinamobile.wanapp.utils.AlertHelper;
 
 /**
  * Created by Administrator on 2018/7/26.
  */
 
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener{
-    WaitDialog waitDialog;
+
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 0:
-                    if (waitDialog==null){
-                        waitDialog = new WaitDialog(BaseActivity.this);
+                    if (alertHelper!=null){
+                        alertHelper.showLoading();
                     }
+
                     break;
                 case 1:
+                    if (alertHelper!=null){
+                        alertHelper.dissmiss();
+                    }
                     break;
 
             }
             super.handleMessage(msg);
         }
     };
-
+    public AlertHelper alertHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        alertHelper = new AlertHelper(this);
 
     }
 
@@ -90,14 +96,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 显示等待dialog
-     * @param str
      */
-    public void showWait(String str){
+    public void showWait(){
         if (handler!=null){
-            Message message = Message.obtain();
-            message.obj = str;
-            message.what = 0;
-            handler.sendMessage(message);
+            handler.sendEmptyMessage(0);
         }
     }
 

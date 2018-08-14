@@ -121,7 +121,7 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
         wrapper.setEmptyView(R.layout.empty_view);
 
         recyclerview.setLayoutManager(manager);
-        recyclerview.setAdapter(adapter);
+        recyclerview.setAdapter(wrapper);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.chinamobile.wanapp.ui.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.PhoneNumberUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -18,6 +19,7 @@ import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
 import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
+import com.chinamobile.wanapp.ui.view.MainDialog;
 import com.chinamobile.wanapp.utils.UserManager;
 import com.google.gson.Gson;
 
@@ -59,6 +61,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void getData(){
+        showWait();
         ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
@@ -69,6 +72,8 @@ public class MainActivity extends BaseActivity {
                     if (data!=null){
                         getListData(data.getHomeBean());
                         tabCheck(0);
+                        hideWaite();
+                        showMainDialog(data);
                     }
 
                 } catch (IOException e) {
@@ -81,22 +86,17 @@ public class MainActivity extends BaseActivity {
                 e.printStackTrace();
             }
         });
-       /* ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
-            @Override
-            public void onNext(BaseBean baseItem) {
-                BaseHomeData homeData = (BaseHomeData) baseItem;
-                if (baseItem!=null){
-                    getListData(homeData.getHomeBean());
-                    tabCheck(0);
-                }
+    }
 
-            }
+    private void showMainDialog(BaseHomeData homeBean){
+        if (homeBean== null){
+            return;
+        }
+        if (homeBean.getHomeBean()!=null&&homeBean.getHomeBean().getJadm_res()!=null&&homeBean.getHomeBean().getJadm_res().get(0)!=null){
+            MainDialog dialog = new MainDialog(this,homeBean.getHomeBean().getJadm_res().get(0));
+            dialog.show();
+        }
 
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        });*/
     }
 
     private ArrayList<BaseItem> baseItems;

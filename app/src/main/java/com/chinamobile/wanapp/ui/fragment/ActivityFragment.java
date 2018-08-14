@@ -78,7 +78,7 @@ public class ActivityFragment extends BaseFragment implements OnRefreshListener 
         wrapper.setEmptyView(R.layout.empty_view);
 
         recyclerview.setLayoutManager(manager);
-        recyclerview.setAdapter(adapter);
+        recyclerview.setAdapter(wrapper);
     }
 
     @Override

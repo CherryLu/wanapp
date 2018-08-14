@@ -58,4 +58,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-jackson:2.0.2'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
+    //sweetalert
+    compile 'cn.pedant.sweetalert:library:1.3'
+
 }

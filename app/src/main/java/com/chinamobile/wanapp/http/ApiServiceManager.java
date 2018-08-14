@@ -49,6 +49,8 @@ public class ApiServiceManager {
 
     private static final String GET_TASKLIST = "User/AppHomeTaskGet";
 
+    private static final String GET_TASK_DETAIL = "User/AppHomeTaskGetTwo";
+
 
     /**
      * 登录注册接口
@@ -60,6 +62,11 @@ public class ApiServiceManager {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("sno", sno);
         stringMap.put("mobile", "");
+        stringMap.put("regIp", getLocalIpAddress());
+        stringMap.put("status", "true");
+        stringMap.put("create_time", getTime());
+        stringMap.put("update_time", getTime());
+        stringMap.put("invited_by", "11");
         doGet(USER_REGIST,stringMap, new HttpCallBack(response));
 
     }
@@ -72,6 +79,11 @@ public class ApiServiceManager {
     public static void getHomeData(String id, HttpResponse response){
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("id", id);
+        stringMap.put("regIp", getLocalIpAddress());
+        stringMap.put("status", "true");
+        stringMap.put("create_time", getTime());
+        stringMap.put("update_time", getTime());
+        stringMap.put("invited_by", "11");
         doGet(GET_HOME,stringMap, new HttpCallBack(response));
     }
 
@@ -98,8 +110,19 @@ public class ApiServiceManager {
     public static void getDataList(String mid,HttpResponse response){
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("mid", mid);
+        stringMap.put("uid", "");
         stringMap.put("count_end", "20");
         doGet(GET_TASKLIST,stringMap, new HttpCallBack(response));
+    }
+
+    /**
+     * 获取任务详情
+     */
+    public static void getTaskDetail(String mid,HttpResponse response){
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("uid", mid);
+        stringMap.put("count_end", "20");
+        doGet(GET_TASK_DETAIL,stringMap, new HttpCallBack(response));
     }
 
 
@@ -123,11 +146,6 @@ public class ApiServiceManager {
 
     private static void doGet(String action,Map<String, String> stringMap, Observer<ResponseBody> consumer) {
         String data = getData();
-        stringMap.put("regIp", getLocalIpAddress());
-        stringMap.put("status", "true");
-        stringMap.put("create_time", getTime());
-        stringMap.put("update_time", getTime());
-        stringMap.put("invited_by", "11");
         stringMap.put("timestamp", data);
         stringMap.put("code", getCode(data));
         Observable<ResponseBody> observable = getHttpService().create(RetrofitService.class).getGetRequest(action,stringMap);

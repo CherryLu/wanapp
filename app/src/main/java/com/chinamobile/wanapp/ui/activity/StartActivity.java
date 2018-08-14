@@ -49,7 +49,6 @@ public class StartActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 200:
-
                     boolean guide = (boolean) SharedPreferencesUtils.getParam(StartActivity.this, "GUIDE", false);
                     if (guide) {//首页
                         Nagivator.startMainActivity(StartActivity.this);
@@ -256,8 +255,9 @@ public class StartActivity extends BaseActivity {
 
     @OnClick(R.id.ader_timer_txt)
     public void onClick() {
-        timer.cancel();
+
         if (handler!=null){
+            timer.cancel();
             handler.sendEmptyMessage(200);
         }
 

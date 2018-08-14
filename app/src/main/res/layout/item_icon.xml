@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
+            android:id="@+id/layout1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -39,6 +40,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -93,6 +95,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -65,6 +65,6 @@ public class FStaggeredItem implements ItemViewDelegate<BaseItem> {
         wrapper.setEmptyView(R.layout.empty_view);
 
         recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(wrapper);
     }
 }

@@ -84,7 +84,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         wrapper.setEmptyView(R.layout.empty_view);
 
         recyclerview.setLayoutManager(manager);
-        recyclerview.setAdapter(adapter);
+        recyclerview.setAdapter(wrapper);
     }
 
 

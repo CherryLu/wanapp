@@ -72,6 +72,16 @@ public class Nagivator {
         context.startActivity(intent);
     }
 
+    /**
+     * 每日任务
+     * @param context
+     */
+    public static void startEveryRewardActivity(Context context){
+        Intent intent = new Intent(context, RewardActivity.class);
+        intent.putExtra("TYPE",1);
+        context.startActivity(intent);
+    }
+
 
     /**
      * 收益排行
