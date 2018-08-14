@@ -1,7 +1,7 @@
 package com.chinamobile.wanapp.http;
 
 
-import com.chinamobile.wanapp.baen.BaseBean;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/9.
@@ -9,7 +9,7 @@ import com.chinamobile.wanapp.baen.BaseBean;
 
 public interface HttpResponse{
 
-    void onNext(BaseBean baseItem);
+    void onNext(ResponseBody body);
     void onError(Throwable e);
 
 

@@ -3,7 +3,6 @@ package com.chinamobile.wanapp.ui.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -11,7 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
-import com.chinamobile.wanapp.baen.BaseBean;
+import com.chinamobile.wanapp.baen.BaseHomeData;
 import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.baen.HomeBean;
 import com.chinamobile.wanapp.http.ApiServiceManager;
@@ -20,12 +19,15 @@ import com.chinamobile.wanapp.ui.fragment.HomeFragment;
 import com.chinamobile.wanapp.ui.fragment.MineFragment;
 import com.chinamobile.wanapp.ui.fragment.NewFindFragment;
 import com.chinamobile.wanapp.utils.UserManager;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends BaseActivity {
 
@@ -57,11 +59,34 @@ public class MainActivity extends BaseActivity {
 
 
     private void getData(){
-        ApiServiceManager.getHomeData("", new HttpResponse() {
+        ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseHomeData data = gson.fromJson(json,BaseHomeData.class);
+                    if (data!=null){
+                        getListData(data.getHomeBean());
+                        tabCheck(0);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+        });
+       /* ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
+                BaseHomeData homeData = (BaseHomeData) baseItem;
                 if (baseItem!=null){
-                    getListData(baseItem.getHomeBean());
+                    getListData(homeData.getHomeBean());
                     tabCheck(0);
                 }
 
@@ -71,7 +96,7 @@ public class MainActivity extends BaseActivity {
             public void onError(Throwable e) {
 
             }
-        });
+        });*/
     }
 
     private ArrayList<BaseItem> baseItems;

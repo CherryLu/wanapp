@@ -1,7 +1,6 @@
 package com.chinamobile.wanapp.http;
 
 
-import com.chinamobile.wanapp.baen.BaseBean;
 import com.chinamobile.wanapp.baen.BaseItem;
 
 import java.util.Map;
@@ -29,7 +28,7 @@ public interface RetrofitService {
    /* @GET("User/register")*/
 
     @GET("{act}")
-    Observable<BaseBean> getGetRequest(@Path(value = "act",encoded =true ) String act,@QueryMap Map<String, String> map);
+    Observable<ResponseBody> getGetRequest(@Path(value = "act",encoded =true ) String act, @QueryMap Map<String, String> map);
 
     /*@GET("User/UserHomeSel")
     Observable<BaseBean> getGetRequest(@QueryMap Map<String, String> map);

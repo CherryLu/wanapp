@@ -1,10 +1,8 @@
 package com.chinamobile.wanapp.http;
 
 import android.os.Environment;
-import android.util.Log;
 
 import com.chinamobile.wanapp.BuildConfig;
-import com.chinamobile.wanapp.baen.BaseBean;
 import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.MD5Util;
@@ -48,6 +46,8 @@ public class ApiServiceManager {
     private static final String GET_HOME = "User/UserHomeSel";
 
     private static final String GET_OPENAPP = "User/AppOpenImage";
+
+    private static final String GET_TASKLIST = "User/AppHomeTaskGet";
 
 
     /**
@@ -99,11 +99,29 @@ public class ApiServiceManager {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("mid", mid);
         stringMap.put("count_end", "20");
-        doGet(GET_OPENAPP,stringMap, new HttpCallBack(response));
+        doGet(GET_TASKLIST,stringMap, new HttpCallBack(response));
     }
 
 
-    private static void doGet(String action,Map<String, String> stringMap, Observer<BaseBean> consumer) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private static void doGet(String action,Map<String, String> stringMap, Observer<ResponseBody> consumer) {
         String data = getData();
         stringMap.put("regIp", getLocalIpAddress());
         stringMap.put("status", "true");
@@ -112,7 +130,7 @@ public class ApiServiceManager {
         stringMap.put("invited_by", "11");
         stringMap.put("timestamp", data);
         stringMap.put("code", getCode(data));
-        Observable<BaseBean> observable = getHttpService().create(RetrofitService.class).getGetRequest(action,stringMap);
+        Observable<ResponseBody> observable = getHttpService().create(RetrofitService.class).getGetRequest(action,stringMap);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer);

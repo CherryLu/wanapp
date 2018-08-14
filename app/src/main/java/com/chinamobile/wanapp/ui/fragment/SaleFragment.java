@@ -19,7 +19,6 @@ import com.chinamobile.wanapp.ui.callback.LeftCallBack;
 import com.chinamobile.wanapp.ui.viewitem.BigPicItem;
 import com.chinamobile.wanapp.ui.viewitem.FStaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon3Item;
-import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
 import com.chinamobile.wanapp.ui.viewitem.StaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.TitleItem;
@@ -116,7 +115,6 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
         adapter.addItemViewDelegate(new FStaggeredItem());
         adapter.addItemViewDelegate(new TitleItem());
         adapter.addItemViewDelegate(new BigPicItem());
-        adapter.addItemViewDelegate(new SmallPicItem());
         adapter.addItemViewDelegate(new Icon3Item());
         adapter.addItemViewDelegate(new SmallPicThreelineItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);

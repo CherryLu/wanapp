@@ -16,7 +16,6 @@ import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.ui.viewitem.BigPicItem;
 import com.chinamobile.wanapp.ui.viewitem.FStaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon3Item;
-import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
 import com.chinamobile.wanapp.ui.viewitem.StaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.TitleItem;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
@@ -168,7 +167,6 @@ public class FindFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         adapter.addItemViewDelegate(new FStaggeredItem());
         adapter.addItemViewDelegate(new TitleItem());
         adapter.addItemViewDelegate(new BigPicItem());
-        adapter.addItemViewDelegate(new SmallPicItem());
         adapter.addItemViewDelegate(new Icon3Item());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);

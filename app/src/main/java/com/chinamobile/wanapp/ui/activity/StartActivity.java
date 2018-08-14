@@ -15,19 +15,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
-import com.chinamobile.wanapp.baen.BaseBean;
+import com.chinamobile.wanapp.baen.BaseConfigData;
+import com.chinamobile.wanapp.baen.BaseUserData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.utils.GlideUtil;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.SharedPreferencesUtils;
 import com.chinamobile.wanapp.utils.UserManager;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/9.
@@ -50,7 +54,6 @@ public class StartActivity extends BaseActivity {
                     if (guide) {//首页
                         Nagivator.startMainActivity(StartActivity.this);
                     } else {//引导页
-
                         Nagivator.startGuideActivity(StartActivity.this);
                     }
                     finish();
@@ -89,10 +92,10 @@ public class StartActivity extends BaseActivity {
         String imei = telephonyManager.getDeviceId();
 
         //handler.sendEmptyMessageDelayed(200,3000);
-        // getData(imei);
+         getData(imei);
 
         //getOpenAPP("10000055");
-        getLsit();
+        //getLsit();
     }
 
     CountDownTimer timer = new CountDownTimer(4000, 1000) {
@@ -116,10 +119,53 @@ public class StartActivity extends BaseActivity {
     private void getOpenAPP(String id) {
         ApiServiceManager.getAPPOpen(id, new HttpResponse() {
             @Override
+            public void onNext(ResponseBody body) {
+                try {
+
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseConfigData  configData = gson.fromJson(json,BaseConfigData.class);
+                    if (configData!=null){
+                        if (configData.getConfigData() != null && configData.getConfigData().getJas_res() != null && configData.getConfigData().getJas_res().size() > 0) {
+                            GlideUtil.loadImageView(StartActivity.this, configData.getConfigData().getJas_res().get(0).getStartimgUrl(), image);
+                            timer.start();
+                        }else {
+                            if (handler!=null){
+                                handler.sendEmptyMessage(200);
+                            }
+
+                        }
+                    }else {
+                        if (handler!=null){
+                            handler.sendEmptyMessage(200);
+                        }
+
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                    if (handler!=null){
+                        handler.sendEmptyMessage(200);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                if (handler!=null){
+                    handler.sendEmptyMessage(200);
+                }
+            }
+        });
+       /* ApiServiceManager.getAPPOpen(id, new HttpResponse() {
+            @Override
             public void onNext(BaseBean baseItem) {
+                BaseConfigData configData = (BaseConfigData) baseItem;
                 if (baseItem != null) {
-                    if (baseItem.getConfigData() != null && baseItem.getConfigData().getJas_res() != null && baseItem.getConfigData().getJas_res().size() > 0) {
-                        GlideUtil.loadImageView(StartActivity.this, baseItem.getConfigData().getJas_res().get(0).getStartimgUrl(), image);
+                    if (configData.getConfigData() != null && configData.getConfigData().getJas_res() != null && configData.getConfigData().getJas_res().size() > 0) {
+                        GlideUtil.loadImageView(StartActivity.this, configData.getConfigData().getJas_res().get(0).getStartimgUrl(), image);
                         timer.start();
                     }
 
@@ -130,12 +176,12 @@ public class StartActivity extends BaseActivity {
             public void onError(Throwable e) {
 
             }
-        });
+        });*/
     }
 
 
     private void getLsit(){
-        ApiServiceManager.getDataList("0", new HttpResponse() {
+      /*  ApiServiceManager.getDataList("0", new HttpResponse() {
             @Override
             public void onNext(BaseBean baseItem) {
 
@@ -145,20 +191,26 @@ public class StartActivity extends BaseActivity {
             public void onError(Throwable e) {
 
             }
-        });
+        });*/
     }
 
     private void getData(String sno) {
         ApiServiceManager.userRegistApp(sno, new HttpResponse() {
             @Override
-            public void onNext(BaseBean baseItem) {
-                if (baseItem != null) {
-                    UserManager.getInstance().setUserBean(baseItem.getUserBeans());
+            public void onNext(ResponseBody body) {
+
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseUserData baseUserData = gson.fromJson(json,BaseUserData.class);
+                    if (baseUserData!=null){
+                        UserManager.getInstance().setUserBean(baseUserData.getUserBeans());
+                        handler.sendEmptyMessage(300);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                handler.sendEmptyMessage(300);
-
-
             }
 
             @Override

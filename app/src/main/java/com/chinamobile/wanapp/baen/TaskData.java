@@ -99,7 +99,7 @@ public class TaskData implements Serializable {
         return jobTags;
     }
 
-    public int getJzGain() {
+    public double getJzGain() {
         return jzGain;
     }
 

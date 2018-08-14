@@ -65,6 +65,10 @@ public class TitleList extends LinearLayout {
             textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
             textView.setText(strings.get(i));
 
+            if (i==0){
+                textView.setTextSize(sp2px(50));
+            }
+
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,8 +82,16 @@ public class TitleList extends LinearLayout {
     }
 
 
+    public int sp2px(int spValue) {
+        final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue / fontScale + 0.5f);
 
-    private List<TaskData> getData(){
+    }
+
+
+
+
+        private List<TaskData> getData(){
         List<TaskData> baseItems = new ArrayList<>();
         for (int i =0;i<5;i++){
             TaskData item = new TaskData();

@@ -1,22 +1,22 @@
 package com.chinamobile.wanapp.http;
 
 import com.chinamobile.wanapp.baen.BaseBean;
-import com.chinamobile.wanapp.baen.BaseItem;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 
 
 /**
  * Created by Administrator on 2018/8/9.
  */
 
-public class HttpCallBack implements Observer<BaseBean> {
+public class HttpCallBack implements Observer<ResponseBody> {
     private HttpResponse response;
 
     public HttpCallBack(HttpResponse response) {
         this.response = response;
+
     }
 
     @Override
@@ -25,11 +25,12 @@ public class HttpCallBack implements Observer<BaseBean> {
     }
 
     @Override
-    public void onNext(BaseBean value) {
+    public void onNext(ResponseBody value) {
         if (response!=null){
             response.onNext(value);
         }
     }
+
 
     @Override
     public void onError(Throwable e) {
