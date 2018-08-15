@@ -10,6 +10,7 @@ import com.chinamobile.wanapp.ui.activity.H5ShareActivity;
 import com.chinamobile.wanapp.ui.activity.MainActivity;
 import com.chinamobile.wanapp.ui.activity.PersonSortActivity;
 import com.chinamobile.wanapp.ui.activity.RewardActivity;
+import com.chinamobile.wanapp.ui.activity.SignActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 
@@ -118,6 +119,15 @@ public class Nagivator {
      */
     public static void startTaskShareActivity(Context context){
         Intent intent = new Intent(context, H5ShareActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转签到页面
+     * @param context
+     */
+    public static void startSignActivity(Context context){
+        Intent intent = new Intent(context, SignActivity.class);
         context.startActivity(intent);
     }
 

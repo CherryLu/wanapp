@@ -12,20 +12,27 @@ import android.view.ViewGroup;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.BaseTaskList;
+import com.chinamobile.wanapp.baen.TaskData;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.BigPicItem;
 import com.chinamobile.wanapp.ui.viewitem.FStaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon3Item;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
 import com.chinamobile.wanapp.ui.viewitem.StaggeredItem;
 import com.chinamobile.wanapp.ui.viewitem.TitleItem;
+import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 
 public class ActivityFragment extends BaseFragment implements OnRefreshListener  {
 
@@ -46,37 +53,58 @@ public class ActivityFragment extends BaseFragment implements OnRefreshListener 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_find, null);
         ButterKnife.bind(this, mRootView);
-
         getData();
-        setList();
         return mRootView;
     }
 
     private MultiItemTypeAdapter adapter;
-    private List<BaseItem> mDatas;
+    private List<TaskData> mDatas;
 
     private void getData() {
-        mDatas = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            BaseItem baseItem = new BaseItem();
-            baseItem.setType(BaseItem.ITEM_BIG_PIC);
-            mDatas.add(baseItem);
+        ApiServiceManager.getDataList("200", new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseTaskList taskList = gson.fromJson(json,BaseTaskList.class);
+                    mDatas = new ArrayList<TaskData>();
+                    mDatas.addAll(taskList.getTaskDatas());
+                    setData();
+                    setList();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+
+    }
+
+
+    private void setData(){
+        if (mDatas==null){
+            return;
         }
+        for (int i=0;i<mDatas.size();i++){
+            mDatas.get(i).setType(BaseItem.ITEM_BIG_PIC);
+        }
+
+
     }
 
     private void setList() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         adapter = new MultiItemTypeAdapter(getContext(), mDatas);
-        adapter.addItemViewDelegate(new StaggeredItem());
-        adapter.addItemViewDelegate(new FStaggeredItem());
-        adapter.addItemViewDelegate(new TitleItem());
-        adapter.addItemViewDelegate(new BigPicItem());
-        adapter.addItemViewDelegate(new Icon3Item());
         adapter.addItemViewDelegate(new SmallPicThreelineItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
-
         recyclerview.setLayoutManager(manager);
         recyclerview.setAdapter(wrapper);
     }

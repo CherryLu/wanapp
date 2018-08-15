@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_layout"/>
+    <RelativeLayout
+        android:background="@mipmap/qiandao_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/sign_btn"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/sign_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout1_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期一"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout2_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期二"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout3"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout3_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期三"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout4"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout4_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期四"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout5"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout5_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期五"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout6"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout6_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期六"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout7"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/layout7_image"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/qiandao_packet_close"
+                android:layout_width="30dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textColor="@color/gray_text"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期日"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

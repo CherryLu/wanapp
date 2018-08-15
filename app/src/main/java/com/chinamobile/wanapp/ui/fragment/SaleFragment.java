@@ -116,7 +116,6 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
         adapter.addItemViewDelegate(new TitleItem());
         adapter.addItemViewDelegate(new BigPicItem());
         adapter.addItemViewDelegate(new Icon3Item());
-        adapter.addItemViewDelegate(new SmallPicThreelineItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
 

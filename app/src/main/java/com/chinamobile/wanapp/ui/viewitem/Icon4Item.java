@@ -44,8 +44,7 @@ public class Icon4Item implements ItemViewDelegate<BaseItem> {
         layout2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertHelper helper = new AlertHelper(view.getContext());
-                helper.showSuccess();
+                Nagivator.startSignActivity(view.getContext());
             }
         });
 
