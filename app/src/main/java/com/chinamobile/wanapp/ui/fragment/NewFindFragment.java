@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.baen.TaskData;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +36,8 @@ public class NewFindFragment extends BaseFragment {
     SaleFragment saleFragment;
     ActivityFragment activityFragment;
 
+
+    ArrayList<TaskData> dataList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class NewFindFragment extends BaseFragment {
         if (which==0){
             if (saleFragment==null){
                 saleFragment = new SaleFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("LIST",dataList);
+                saleFragment.setArguments(bundle);
                 transaction.add(R.id.container,saleFragment,"sale");
             }
             transaction.show(saleFragment);
@@ -80,6 +88,7 @@ public class NewFindFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView= inflater.inflate(R.layout.fragment_new_find, null);
         ButterKnife.bind(this, mRootView);
+        dataList = (ArrayList<TaskData>) getArguments().getSerializable("LIST");
         setFragment(0);
         return mRootView;
     }

@@ -31,8 +31,8 @@ public class AutoMarqueeTextView extends android.support.v7.widget.AppCompatText
         return true;
     }
     @Override
-    protected void onFocusChanged(boolean focused, int direction,
-                                  Rect previouslyFocusedRect) {//这个方法必须删除其方法体内的实现，也就是让他空实现，也就是说，TextView的焦点获取状态永远都不会改变
+    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {//这个方法必须删除其方法体内的实现，也就是让他空实现，也就是说，TextView的焦点获取状态永远都不会改变
+
     }
 
 

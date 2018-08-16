@@ -3,7 +3,6 @@ package com.chinamobile.wanapp.ui.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.telephony.PhoneNumberUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -110,7 +109,7 @@ public class MainActivity extends BaseActivity {
                 case 0: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_LOGO_MEASSAGE);
-                   // item.setTopMessage(homeBean.getMbm_res().get(0));
+                    item.setTopMessage(homeBean.getMbm_res().get(0));
                     baseItems.add(item);
                 }
                     break;
@@ -205,6 +204,11 @@ public class MainActivity extends BaseActivity {
                 tabText2.setTextColor(getResources().getColor(R.color.blue_color));
                 if (findFragment==null){
                     findFragment = new NewFindFragment();
+                    Bundle bundle = new Bundle();
+                    ArrayList list = new ArrayList();
+                    list.addAll(baseItems.get(5).getDataList());
+                    bundle.putSerializable("LIST", list);
+                    findFragment.setArguments(bundle);
                     transaction.add(R.id.container,findFragment,"find");
                 }
                 transaction.show(findFragment);

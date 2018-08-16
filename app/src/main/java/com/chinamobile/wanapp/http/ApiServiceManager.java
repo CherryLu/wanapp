@@ -6,6 +6,7 @@ import com.chinamobile.wanapp.BuildConfig;
 import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.MD5Util;
+import com.chinamobile.wanapp.utils.UserManager;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.BufferedInputStream;
@@ -50,6 +51,10 @@ public class ApiServiceManager {
     private static final String GET_TASKLIST = "User/AppHomeTaskGet";
 
     private static final String GET_TASK_DETAIL = "User/AppHomeTaskGetTwo";
+
+    private static final String GET_SIGN_TASK = "User/SignInSelc";
+
+    private static final String SING_APP = "User/SignInInse";
 
 
     /**
@@ -126,6 +131,31 @@ public class ApiServiceManager {
     }
 
 
+    /**
+     * 获取签到详情
+     * @param response
+     */
+    public static void getSignData(HttpResponse response){
+        Map<String,String> stringStringMap = new HashMap<>();
+        stringStringMap.put("uid", UserManager.getInstance().getId());
+        doGet(GET_SIGN_TASK,stringStringMap, new HttpCallBack(response));
+    }
+
+
+    /**
+     * 签到
+     * @param response
+     */
+    public static void getSign(HttpResponse response){
+        Map<String,String> stringStringMap = new HashMap<>();
+        stringStringMap.put("uid", UserManager.getInstance().getId());
+        doGet(SING_APP,stringStringMap, new HttpCallBack(response));
+    }
+
+
+
+
+
 
 
 
@@ -183,6 +213,21 @@ public class ApiServiceManager {
                 .subscribe(consumer);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public static void fileDownLoad(final String url) {

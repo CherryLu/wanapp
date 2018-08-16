@@ -55,6 +55,9 @@ public class TaskData implements Serializable {
     @SerializedName("member")
     private Member member;
 
+    @SerializedName("pid")
+    private String pid;
+
 
     private int type; //视图类型 0
 
@@ -127,4 +130,9 @@ public class TaskData implements Serializable {
     public Member getMember() {
         return member;
     }
+
+    public String getPid() {
+        return pid;
+    }
+
 }

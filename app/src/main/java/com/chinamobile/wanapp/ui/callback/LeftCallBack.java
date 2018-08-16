@@ -2,5 +2,5 @@ package com.chinamobile.wanapp.ui.callback;
 
 public interface LeftCallBack {
 
-    void leftItemClick();
+    void leftItemClick(int position);
 }

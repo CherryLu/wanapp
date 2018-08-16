@@ -33,8 +33,10 @@ public class TabListItem implements ItemViewDelegate<BaseItem> {
         List<String> titleArrary = new ArrayList<>();
         List<String> midList = new ArrayList<>();
         for (int i=0;i<baseItem.getDataList().size();i++){
-            titleArrary.add(baseItem.getDataList().get(i).getMname());
-            midList.add(baseItem.getDataList().get(i).getId());
+            if ("1".equals(baseItem.getDataList().get(i).getPid())){
+                titleArrary.add(baseItem.getDataList().get(i).getMname());
+                midList.add(baseItem.getDataList().get(i).getId());
+            }
         }
         titleList.addTitle(titleArrary);
         titleList.setMids(midList);

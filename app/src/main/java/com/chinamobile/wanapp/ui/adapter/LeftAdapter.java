@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.baen.TitleBean;
 import com.chinamobile.wanapp.ui.callback.LeftCallBack;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
     private Context context;
-    private List<String> recommends;
+    private List<TitleBean> recommends;
 
     private LeftCallBack callBack;
 
@@ -25,7 +26,7 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
         this.callBack = callBack;
     }
 
-    public LeftAdapter(Context context, List<String> recommends) {
+    public LeftAdapter(Context context, List<TitleBean> recommends) {
         this.context = context;
         this.recommends = recommends;
     }
@@ -40,9 +41,9 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
 
     @Override
     public void onBindViewHolder(LViewHolder holder, final int position) {
+        final TitleBean bean = recommends.get(position);
 
-
-        if (position==0){
+        if (bean.isSelect()){
             holder.title.setTextColor(context.getResources().getColor(R.color.color_txt_deep_black));
             holder.re_view.setVisibility(View.VISIBLE);
         }else {
@@ -51,14 +52,15 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
         }
 
 
-        holder.title.setText(recommends.get(position));
+        holder.title.setText(recommends.get(position).getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setAllFalse();
+                bean.setSelect(true);
                 notifyDataSetChanged();
                 if (callBack!=null){
-                    callBack.leftItemClick();
+                    callBack.leftItemClick(position);
                 }
             }
         });
@@ -71,9 +73,9 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
         if (recommends==null){
             return;
         }
-       /* for (int i =0;i<recommends.size();i++){
+        for (int i =0;i<recommends.size();i++){
             recommends.get(i).setSelect(false);
-        }*/
+        }
     }
 
     @Override

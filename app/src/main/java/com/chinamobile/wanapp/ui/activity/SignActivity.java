@@ -1,6 +1,5 @@
 package com.chinamobile.wanapp.ui.activity;
 
-import android.app.Activity;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.utils.AlertHelper;
-import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.Nagivator;
 
 import java.util.Date;
@@ -20,6 +20,7 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/15.
@@ -75,11 +76,11 @@ public class SignActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qiandao);
         ButterKnife.bind(this);
+        getData();
         imageViews = new ImageView[]{layout1Image,layout2Image,layout3Image,layout4Image,layout5Image,layout6Image,layout7Image};
         mAnimation = AnimationUtils.loadAnimation(this,R.anim. balloonscale);
         signBtn.setAnimation(mAnimation );
         mAnimation.start();
-
         Date date = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -90,6 +91,21 @@ public class SignActivity extends BaseActivity {
             weekday = weekday-1;
         }
 
+    }
+
+
+    private void getData(){
+        ApiServiceManager.getSignData(new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     @OnClick({R.id.back_image, R.id.sign_btn})

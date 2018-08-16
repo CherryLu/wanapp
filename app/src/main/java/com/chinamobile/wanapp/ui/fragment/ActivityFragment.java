@@ -17,11 +17,6 @@ import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.BigPicItem;
-import com.chinamobile.wanapp.ui.viewitem.FStaggeredItem;
-import com.chinamobile.wanapp.ui.viewitem.Icon3Item;
-import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
-import com.chinamobile.wanapp.ui.viewitem.StaggeredItem;
-import com.chinamobile.wanapp.ui.viewitem.TitleItem;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -61,7 +56,7 @@ public class ActivityFragment extends BaseFragment implements OnRefreshListener 
     private List<TaskData> mDatas;
 
     private void getData() {
-        ApiServiceManager.getDataList("200", new HttpResponse() {
+        ApiServiceManager.getDataList("1000", new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
@@ -102,7 +97,7 @@ public class ActivityFragment extends BaseFragment implements OnRefreshListener 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         adapter = new MultiItemTypeAdapter(getContext(), mDatas);
-        adapter.addItemViewDelegate(new SmallPicThreelineItem());
+        adapter.addItemViewDelegate(new BigPicItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
         recyclerview.setLayoutManager(manager);

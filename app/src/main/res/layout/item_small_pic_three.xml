@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
-        android:paddingTop="10dp"
+        android:paddingTop="15dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -31,11 +30,12 @@
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/item_pic"
             android:layout_below="@id/maintitle"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/lable1"
                 android:textSize="10sp"
                 android:padding="5dp"
                 android:background="@drawable/bottom_coner_bac"
@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="自营"/>
             <TextView
+                android:id="@+id/lable2"
                 android:textSize="10sp"
                 android:padding="5dp"
                 android:layout_marginLeft="10dp"
@@ -59,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:textSize="14sp"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/gray_text"
                 android:layout_alignParentRight="true"
@@ -66,20 +68,15 @@
                 android:layout_height="wrap_content"
                 android:text="返现"/>
             <TextView
+                android:id="@+id/fanxian"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:text="20%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_red"/>
-
         </LinearLayout>
-
-
-
-
-
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
