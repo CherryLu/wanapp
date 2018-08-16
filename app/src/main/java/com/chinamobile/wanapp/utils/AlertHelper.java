@@ -47,10 +47,25 @@ public class AlertHelper {
      * 显示成功
      */
     public void showSuccess(){
-        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setTitleText("提示")
+                .setContentText("签到成功")
+                .setConfirmText("确定")
+                .show();
 
-        mDialog .setTitleText("签到成功")
-                .setConfirmText("确定").show();
+    }
+
+    /**
+     * 显示提示
+     */
+    public void showSTips(String msg){
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setTitleText("提示")
+                .setContentText(msg)
+                .setConfirmText("确定")
+                .show();
 
     }
 

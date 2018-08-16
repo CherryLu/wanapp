@@ -10,12 +10,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.baen.BaseSignBean;
+import com.chinamobile.wanapp.baen.SignData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.utils.AlertHelper;
 import com.chinamobile.wanapp.utils.Nagivator;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -93,19 +102,46 @@ public class SignActivity extends BaseActivity {
 
     }
 
-
+    List<SignData> signDatas  = new ArrayList<SignData>();
     private void getData(){
         ApiServiceManager.getSignData(new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseSignBean signBean = gson.fromJson(json,BaseSignBean.class);
+                    signDatas.addAll(signBean.getSignBean().getSignData());
+                    initView();
 
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    initView();
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                e.printStackTrace();
+                initView();
             }
         });
+    }
+
+
+    private void initView(){
+        if (signDatas==null){
+            return;
+        }
+        for (int i=0;i<signDatas.size();i++){
+            int day = signDatas.get(i).getData();
+            if (day>0&&day<7){
+                imageViews[weekday-1].setImageResource(R.mipmap.qiandao_packet_open);
+            }
+
+
+        }
     }
 
     @OnClick({R.id.back_image, R.id.sign_btn})
@@ -115,13 +151,43 @@ public class SignActivity extends BaseActivity {
                 Nagivator.finishActivity(this);
                 break;
             case R.id.sign_btn:
+                signTodat();
 
-                AlertHelper helper = new AlertHelper(view.getContext());
-                helper.showSuccess();
-
-                imageViews[weekday-1].setImageResource(R.mipmap.qiandao_packet_open);
 
                 break;
         }
+    }
+
+
+    private void signTodat(){
+        ApiServiceManager.getSign(new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    JSONObject object = new JSONObject(json);
+                    JSONObject object1 = (JSONObject) object.get("userData");
+                    String str = object1.getString("flag");
+                    if ("签到成功".equals(str)){
+                      alertHelper.showSuccess();
+                     imageViews[weekday-1].setImageResource(R.mipmap.qiandao_packet_open);
+                    }else if ("已经签到".equals(str)){
+                        alertHelper.showSTips("今日已经签到，请改日再来");
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    alertHelper.showSTips("今日已经签到，请改日再来");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    alertHelper.showSTips("今日已经签到，请改日再来");
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                alertHelper.showSTips("今日已经签到，请改日再来");
+            }
+        });
     }
 }
