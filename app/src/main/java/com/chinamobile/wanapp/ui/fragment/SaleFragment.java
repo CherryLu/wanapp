@@ -21,6 +21,7 @@ import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.adapter.LeftAdapter;
 import com.chinamobile.wanapp.ui.callback.LeftCallBack;
+import com.chinamobile.wanapp.ui.callback.TaskCallBack;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;

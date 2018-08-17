@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:layout_marginBottom="10dp">
     <include layout="@layout/title_layout"
         android:id="@+id/title_layout"/>
     <ScrollView
@@ -41,7 +42,7 @@
                     android:layout_toRightOf="@id/app_pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="番薯小组"/>
+                    android:text=""/>
 
                 <TextView
                     android:layout_marginTop="5dp"
@@ -66,7 +67,7 @@
                     android:layout_toRightOf="@id/app_pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="安全"/>
+                    android:text=""/>
 
                 <TextView
                     android:padding="2dp"
@@ -79,9 +80,10 @@
                     android:layout_toRightOf="@id/app_lable1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="官方"/>
+                    android:text=""/>
 
                 <TextView
+                    android:id="@+id/getmoney"
                     android:textStyle="bold"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
@@ -89,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="+1.10元"/>
+                    android:text=""/>
 
             </RelativeLayout>
             <View
@@ -121,36 +123,26 @@
                 android:layout_height="wrap_content"
                 android:text="APP截图"
                 android:textSize="18sp"/>
-            <LinearLayout
+            <HorizontalScrollView
                 android:paddingBottom="20dp"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
-                android:orientation="horizontal"
-                android:id="@+id/image_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/pic1"
-                    android:src="@mipmap/default_image"
-                    android:scaleType="fitXY"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp" />
-                <ImageView
-                    android:id="@+id/pic2"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/default_image"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp" />
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/image_layout"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
         </LinearLayout>
 
     </ScrollView>
     <Button
+        android:visibility="gone"
         android:id="@+id/download"
         android:textSize="18sp"
         android:textColor="@color/white"

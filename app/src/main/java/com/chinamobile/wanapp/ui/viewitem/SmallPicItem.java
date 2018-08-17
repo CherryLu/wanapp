@@ -18,6 +18,9 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 public class SmallPicItem implements ItemViewDelegate<TaskData> {
 
+
+
+
     @Override
     public int getItemViewLayoutId() {
         return R.layout.item_small_pic;
@@ -32,7 +35,7 @@ public class SmallPicItem implements ItemViewDelegate<TaskData> {
     }
 
     @Override
-    public void convert(ViewHolder holder, TaskData taskData, int position) {
+    public void convert(ViewHolder holder, final TaskData taskData, int position) {
         if (taskData==null){
             return;
         }
@@ -46,7 +49,8 @@ public class SmallPicItem implements ItemViewDelegate<TaskData> {
         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nagivator.startTaskDownloadActivity(v.getContext());
+                Nagivator.startTaskOClick(v.getContext(),taskData);
+
             }
         });
     }

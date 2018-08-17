@@ -69,6 +69,20 @@ public class AlertHelper {
 
     }
 
+
+    /**
+     * 错误提示
+     */
+    public void showError(String msg){
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setTitleText("提示")
+                .setContentText(msg)
+                .setConfirmText("确定")
+                .show();
+
+    }
+
     public void alert(String title, String msg, String sureMsg, final IAlertListener iAlertListener){
         SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
         mDialog.setCancelable(false);

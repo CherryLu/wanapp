@@ -18,7 +18,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 public class SmallPicThreelineItem implements ItemViewDelegate<TaskData> {
 
-
     @Override
     public int getItemViewLayoutId() {
         return R.layout.item_small_pic_three;
@@ -33,7 +32,7 @@ public class SmallPicThreelineItem implements ItemViewDelegate<TaskData> {
     }
 
     @Override
-    public void convert(ViewHolder holder, TaskData taskData, int position) {
+    public void convert(ViewHolder holder, final TaskData taskData, int position) {
         holder.setText(R.id.maintitle,taskData.getTitle());
         holder.setText(R.id.lable1,taskData.getJobTags().split(";")[0]);
         holder.setText(R.id.lable2,taskData.getJobTags().split(";")[1]);
@@ -43,9 +42,7 @@ public class SmallPicThreelineItem implements ItemViewDelegate<TaskData> {
         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Nagivator.startH5TaskShareActivity(v.getContext());
-
+                Nagivator.startTaskOClick(v.getContext(),taskData);
             }
         });
     }

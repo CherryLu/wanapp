@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.ui.activity.GuideActivity;
 import com.chinamobile.wanapp.ui.activity.H5ShareActivity;
 import com.chinamobile.wanapp.ui.activity.MainActivity;
@@ -13,6 +14,8 @@ import com.chinamobile.wanapp.ui.activity.RewardActivity;
 import com.chinamobile.wanapp.ui.activity.SignActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
+import com.chinamobile.wanapp.ui.activity.WeeksPlanActivity;
+import com.chinamobile.wanapp.ui.view.ShareDialog;
 
 public class Nagivator {
 
@@ -29,8 +32,9 @@ public class Nagivator {
      * 跳转任务详情页
      * @param context
      */
-    public static void startTaskDetailActivity(Context context){
+    public static void startTaskDetailActivity(Context context,TaskData taskData){
         Intent intent = new Intent(context, TaskDetailsActivity.class);
+        intent.putExtra("TASK",taskData);
         context.startActivity(intent);
     }
 
@@ -129,6 +133,57 @@ public class Nagivator {
     public static void startSignActivity(Context context){
         Intent intent = new Intent(context, SignActivity.class);
         context.startActivity(intent);
+    }
+
+    /**
+     * 跳转周计划
+     * @param context
+     */
+    public static void startWeeksPlan(Context context){
+        Intent intent = new Intent(context, WeeksPlanActivity.class);
+        context.startActivity(intent);
+
+    }
+
+
+    /**
+     * 任务点击类型
+     * @param context
+     * @param taskData
+     */
+    public static void startTaskOClick(Context context, TaskData taskData){
+        AlertHelper helper = new AlertHelper(context);
+        if (context==null||taskData==null){
+            helper.showError("数据异常，无法解析");
+            return;
+        }
+      String[] strs =  taskData.getParam().split("=");
+        if (strs.length>1){
+            String page = strs[1];
+            switch (page){
+                case "101"://分享
+                    ShareDialog dialog = new ShareDialog(context);
+                    dialog.show();
+                    break;
+                case "102":
+                    Nagivator.startTaskDetailShareActivity(context);
+                    break;
+                case "103":
+                    Nagivator.startTaskDetailActivity(context,taskData);
+                    break;
+                case "104":
+                    break;
+                default:
+                    helper.showError("数据异常，无法解析");
+                    break;
+            }
+        }else {
+            helper.showError("数据异常，无法解析");
+
+        }
+
+
+
     }
 
 

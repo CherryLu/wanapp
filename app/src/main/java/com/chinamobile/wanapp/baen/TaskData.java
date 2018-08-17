@@ -34,7 +34,7 @@ public class TaskData implements Serializable {
     private String jobTags;
 
     @SerializedName("jzGain")
-    private int  jzGain;
+    private double  jzGain = 0d;
 
     @SerializedName("limiteCount")
     private int limiteCount;
@@ -57,6 +57,25 @@ public class TaskData implements Serializable {
 
     @SerializedName("pid")
     private String pid;
+
+    @SerializedName("fid")
+    private String fid;
+
+
+    @SerializedName("jobStr")
+    private String jobStr;
+
+    @SerializedName("notice")
+    private String notice;
+
+    @SerializedName("rules")
+    private String rules;
+
+    @SerializedName("sampleimgUrl")
+    private String sampleimgUrl;
+
+
+
 
 
     private int type; //视图类型 0
@@ -135,4 +154,24 @@ public class TaskData implements Serializable {
         return pid;
     }
 
+
+    public String getFid() {
+        return fid;
+    }
+
+    public String getJobStr() {
+        return jobStr;
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public String getRules() {
+        return rules;
+    }
+
+    public String getSampleimgUrl() {
+        return sampleimgUrl;
+    }
 }

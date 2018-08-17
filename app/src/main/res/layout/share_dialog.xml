@@ -2,15 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
         android:textSize="16sp"
         android:textColor="@color/gray_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="分享"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
     <LinearLayout
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
@@ -120,9 +124,10 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"/>
+        android:layout_height="1dp"/>
 
     <Button
+        android:textColor="@color/gray_text"
         android:id="@+id/cancle"
         android:textSize="16sp"
         android:background="@color/white"

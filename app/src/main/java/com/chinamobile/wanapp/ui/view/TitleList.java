@@ -17,7 +17,6 @@ import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
-import com.chinamobile.wanapp.utils.LogUtils;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -76,7 +75,6 @@ public class TitleList extends LinearLayout {
         }
 
         for (int i =0;i<strings.size();i++){
-            LogUtils.e("ZXZXZX",strings.get(i));
             final int position = i;
             TextView textView = (TextView) View.inflate(getContext(),R.layout.module_textview,null);
             textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
