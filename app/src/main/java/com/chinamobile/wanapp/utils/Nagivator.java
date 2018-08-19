@@ -14,6 +14,7 @@ import com.chinamobile.wanapp.ui.activity.RewardActivity;
 import com.chinamobile.wanapp.ui.activity.SignActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
+import com.chinamobile.wanapp.ui.activity.UploadActivity;
 import com.chinamobile.wanapp.ui.activity.WeeksPlanActivity;
 import com.chinamobile.wanapp.ui.view.ShareDialog;
 
@@ -143,6 +144,17 @@ public class Nagivator {
         Intent intent = new Intent(context, WeeksPlanActivity.class);
         context.startActivity(intent);
 
+    }
+
+    /**
+     * 跳转上传页面
+     * @param activity
+     * @param taskData
+     */
+    public static void startUploadActivity(Activity activity,TaskData taskData){
+        Intent intent = new Intent(activity, UploadActivity.class);
+        intent.putExtra("FT",taskData);
+        activity.startActivityForResult(intent,100);
     }
 
 

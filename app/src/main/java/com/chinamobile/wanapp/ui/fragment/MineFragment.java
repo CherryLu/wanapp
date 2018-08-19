@@ -25,18 +25,8 @@ public class MineFragment extends BaseFragment {
 
     @Bind(R.id.header_image)
     ImageView headerImage;
-    @Bind(R.id.login_txt)
-    TextView loginTxt;
     @Bind(R.id.login_area)
     RelativeLayout loginArea;
-    @Bind(R.id.user_level)
-    TextView userLevel;
-    @Bind(R.id.level_add)
-    TextView levelAdd;
-    @Bind(R.id.txt3)
-    TextView txt3;
-    @Bind(R.id.get)
-    ImageView get;
     @Bind(R.id.renwujilu)
     LinearLayout renwujilu;
     @Bind(R.id.wodeshouyi)
@@ -51,6 +41,48 @@ public class MineFragment extends BaseFragment {
     LinearLayout xiugaimima;
     @Bind(R.id.login_out)
     Button loginOut;
+    @Bind(R.id.request_code)
+    TextView requestCode;
+    @Bind(R.id.request_all)
+    TextView requestAll;
+    @Bind(R.id.message_btn)
+    TextView messageBtn;
+    @Bind(R.id.login_name)
+    TextView loginName;
+    @Bind(R.id.login_code)
+    TextView loginCode;
+    @Bind(R.id.login_lv)
+    TextView loginLv;
+    @Bind(R.id.login_lv_up)
+    TextView loginLvUp;
+    @Bind(R.id.login_quanyi)
+    TextView loginQuanyi;
+    @Bind(R.id.login_yaoqing)
+    TextView loginYaoqing;
+    @Bind(R.id.icon_pic1)
+    ImageView iconPic1;
+    @Bind(R.id.icon_txt1)
+    TextView iconTxt1;
+    @Bind(R.id.layout1)
+    RelativeLayout layout1;
+    @Bind(R.id.icon_pic2)
+    ImageView iconPic2;
+    @Bind(R.id.icon_txt2)
+    TextView iconTxt2;
+    @Bind(R.id.layout2)
+    RelativeLayout layout2;
+    @Bind(R.id.icon_pic3)
+    ImageView iconPic3;
+    @Bind(R.id.icon_txt3)
+    TextView iconTxt3;
+    @Bind(R.id.layout3)
+    RelativeLayout layout3;
+    @Bind(R.id.icon_pic4)
+    ImageView iconPic4;
+    @Bind(R.id.icon_txt4)
+    TextView iconTxt4;
+    @Bind(R.id.layout4)
+    RelativeLayout layout4;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +92,7 @@ public class MineFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         mRootView = inflater.inflate(R.layout.fragment_mine, null);
+        mRootView = inflater.inflate(R.layout.fragment_mine, null);
         ButterKnife.bind(this, mRootView);
         return mRootView;
     }
@@ -71,22 +103,10 @@ public class MineFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.header_image, R.id.login_txt, R.id.login_area, R.id.user_level, R.id.level_add, R.id.txt3, R.id.get, R.id.renwujilu, R.id.wodeshouyi, R.id.yonghufankui, R.id.guanyuwomen, R.id.xinshoubangzhu, R.id.xiugaimima, R.id.login_out})
+    @OnClick({R.id.header_image, R.id.login_area, R.id.renwujilu, R.id.wodeshouyi, R.id.yonghufankui, R.id.guanyuwomen, R.id.xinshoubangzhu, R.id.xiugaimima, R.id.login_out,R.id.layout1, R.id.layout2, R.id.layout3, R.id.layout4})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.header_image:
-                break;
-            case R.id.login_txt:
-                break;
-            case R.id.login_area:
-                break;
-            case R.id.user_level:
-                break;
-            case R.id.level_add:
-                break;
-            case R.id.txt3:
-                break;
-            case R.id.get:
                 break;
             case R.id.renwujilu:
                 break;
@@ -102,6 +122,15 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.login_out:
                 break;
+            case R.id.layout1:
+                break;
+            case R.id.layout2:
+                break;
+            case R.id.layout3:
+                break;
+            case R.id.layout4:
+                break;
         }
     }
+
 }

@@ -173,7 +173,7 @@ public class TaskDetailsActivity extends BaseActivity {
     }
 
 
-    private View getStepView(int positin, TaskData taskData) {
+    private View getStepView(int positin, final TaskData taskData) {
 
         if (taskData == null) {
             return null;
@@ -192,6 +192,121 @@ public class TaskDetailsActivity extends BaseActivity {
         step_money.setText("+" + (taskData.getJzGain() / 100) + "元");
 
 
+        step_completion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Nagivator.startUploadActivity(TaskDetailsActivity.this,taskData);
+
+            }
+        });
+
         return view;
+    }
+
+
+
+    private void doAction(TaskData taskData){
+        if (taskData==null){
+            return;
+        }
+        switch (taskData.getAction()){
+            case "1":// 邀请好友
+
+                break;
+            case "2"://下载
+
+                break;
+            case "3"://注册任务
+
+                break;
+
+            case "4"://好评任务
+
+                break;
+            case "5"://完成分享任务
+
+                break;
+            case "6"://完成试用任务
+
+                break;
+            case "7"://完成每日签到
+
+                break;
+            case "8"://完成成功提现
+
+                break;
+            case "9"://完成新手任务
+
+                break;
+            case "10"://完成每日福利
+                break;
+
+            case "11"://完成周计划
+
+                break;
+            case "12"://完成晒单任务
+
+                break;
+            case "13"://分享呗有效点击
+
+                break;
+
+            case "101"://APP 分享朋友圈
+                break;
+            case "102"://APP 分享微信群或QQ群
+                break;
+            case "103"://APP 分享微信群或QQ群(10人以上)
+                break;
+            case "104"://APP 分享微信群或QQ群(30人以上)
+                break;
+            case "105"://APP 分享微信群或QQ群(50人以上)
+                break;
+            case "106"://APP 分享微信群或QQ群(100人以上)
+                break;
+            case "107:"://APP 分享微信群或QQ群(100人以上)
+                break;
+            case "108:"://APP 分享微信群或QQ群(500人以上)
+                break;
+
+            case "201:"://百度市场好评
+                break;
+            case "202:"://华为市场好评
+                break;
+            case "203:"://小米市场好评
+                break;
+            case "204:"://vivo市场好评
+                break;
+            case "205:"://应用宝市场好评
+                break;
+            case "206:"://安智市场好评
+                break;
+
+
+            case "301:"://好友完成新手任务
+                break;
+            case "302:"://好友完成提现
+                break;
+            case "303:"://好友完成邀人
+                break;
+
+            case "1001"://任务 分享
+                break;
+            case "1002"://任务 分享QQ群或微信群
+                break;
+            case "1003"://任务 分享QQ群或微信群（10）
+                break;
+            case "1004"://任务 分享QQ群或微信群（30）
+                break;
+            case "1005"://任务 分享QQ群或微信群（50）
+                break;
+            case "1006"://任务 分享QQ群或微信群（100）
+                break;
+            case "1007"://任务 分享QQ群或微信群（200）
+                break;
+            case "1008"://任务 分享QQ群或微信群（500）
+                break;
+
+
+        }
     }
 }

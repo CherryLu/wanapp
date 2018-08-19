@@ -73,15 +73,77 @@
                     android:src="@mipmap/defaluthead" />
 
                 <TextView
-                    android:id="@+id/login_txt"
+                    android:id="@+id/login_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="17dp"
                     android:layout_toRightOf="@id/header_image"
-                    android:text="点击登录"
+                    android:text="矿工"
                     android:textColor="@color/color_black"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/login_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="邀请码 ：9527"
+                    android:textColor="@color/color_black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/login_name"
+                    android:id="@+id/login_lv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:layout_toRightOf="@id/header_image"
+                    android:text="等级：1级"
+                    android:textColor="@color/color_black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:background="@drawable/red_bac"
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_below="@+id/login_code"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/login_lv_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提升"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/login_name"
+                    android:id="@+id/login_quanyi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_toRightOf="@id/login_name"
+                    android:text="收益加成5%"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/login_lv"
+                    android:id="@+id/login_yaoqing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:layout_toRightOf="@id/header_image"
+                    android:text="已邀请矿友：20"
+                    android:textColor="@color/color_black"
+                    android:textSize="14sp" />
+
+
 
             </RelativeLayout>
             <View
@@ -92,88 +154,117 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="10dp">
-
+                android:paddingTop="5dp">
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/layout1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/mine_shouyi"
+                        android:id="@+id/icon_pic1"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="fitXY" />
 
                     <TextView
-                        android:id="@+id/user_level"
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@id/icon_pic1"
+                        android:text="我的收益"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/icon_txt1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="钻石等级：2级"
-                        android:textColor="@color/gray_text"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/level_add"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@id/user_level"
-                        android:text="已获得任务奖励加成 5%"
                         android:textColor="@color/gray_text"
                         android:textSize="12sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="30dp"
-                        android:src="@mipmap/file_defaullt" />
-
                 </RelativeLayout>
-
-                <ProgressBar
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_marginTop="10dp"
-                    android:max="100"
-                    android:progress="20"
-                    android:progressDrawable="@drawable/progressbar" />
-
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/layout2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <TextView
-                        android:id="@+id/txt3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="金币余额:"
-                        android:textColor="@color/gray_text"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@id/txt3"
-                        android:gravity="center"
-                        android:text="111111"
-                        android:textColor="@color/gray_text"
-                        android:textSize="18sp" />
+                    android:layout_weight="1"
+                    android:paddingBottom="4dp">
 
                     <ImageView
-                        android:id="@+id/get"
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/renwujilu"
+                        android:id="@+id/icon_pic2"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@id/icon_pic2"
+                        android:text="任务记录"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/icon_txt2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/tixian" />
+                        android:textColor="@color/gray_text"
+                        android:textSize="12sp" />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="4dp">
 
+                    <ImageView
+                        android:src="@mipmap/kuangyou"
+                        android:id="@+id/icon_pic3"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="fitXY"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
 
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@id/icon_pic3"
+                        android:text="邀请矿友"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/icon_txt3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_text"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/layout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="4dp">
+
+                    <ImageView
+                        android:src="@mipmap/xiaoxi"
+                        android:id="@+id/icon_pic4"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="fitXY"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@id/icon_pic4"
+                        android:text="我的消息"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/icon_txt4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_text"
+                        android:textSize="12sp" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -200,10 +291,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/renwujilu"/>
+                        android:src="@mipmap/sys_rule"/>
                     <TextView
                         android:layout_marginTop="5dp"
-                        android:text="任务记录"
+                        android:text="系统规则"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -223,10 +314,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/wodeshouyi"/>
+                        android:src="@mipmap/user_pinglun"/>
                     <TextView
                         android:layout_marginTop="5dp"
-                        android:text="我的收益"
+                        android:text="用户评论"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -252,10 +343,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/yonghufankui"/>
+                        android:src="@mipmap/nomal_answer"/>
                     <TextView
                         android:layout_marginTop="5dp"
-                        android:text="用户反馈"
+                        android:text="常见问题"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -275,10 +366,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/aboutus"/>
+                        android:src="@mipmap/wentifankui"/>
                     <TextView
                         android:layout_marginTop="5dp"
-                        android:text="关于我们"
+                        android:text="问题反馈"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -304,10 +395,10 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/xinshoubangzhu"/>
+                        android:src="@mipmap/lianxikefu"/>
                     <TextView
                         android:layout_marginTop="5dp"
-                        android:text="新手帮助"
+                        android:text="联系客服"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -329,17 +420,18 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/xiugaimima" />
+                        android:src="@mipmap/about" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="修改密码" />
+                        android:text="关于我们" />
 
                 </LinearLayout>
             </LinearLayout>
             <Button
+                android:visibility="gone"
                 android:id="@+id/login_out"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
