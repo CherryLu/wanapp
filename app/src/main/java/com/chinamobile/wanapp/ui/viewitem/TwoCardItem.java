@@ -46,7 +46,7 @@ public class TwoCardItem implements ItemViewDelegate<BaseItem> {
         cv_content1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Nagivator.startTaskShareActivity(view.getContext());
+                Nagivator.startWeeksPlan(view.getContext());
             }
         });
     }

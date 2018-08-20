@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
@@ -19,6 +20,7 @@ import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
 import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
+import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -26,24 +28,27 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by 95470 on 2018/7/30.
  */
 
-public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener  {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
 
     SwipeRefreshLayout refreshLayout;
+    @Bind(R.id.news_btn)
+    Button newsBtn;
 
     private MultiItemTypeAdapter adapter;
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     refreshLayout.setRefreshing(false);
                     break;
@@ -53,12 +58,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     };
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     ArrayList<BaseItem> baseItems;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,9 +77,9 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         return mRootView;
     }
 
-    private void setList(){
+    private void setList() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        adapter = new MultiItemTypeAdapter(getContext(),baseItems);
+        adapter = new MultiItemTypeAdapter(getContext(), baseItems);
         adapter.addItemViewDelegate(new BannerItem());
         adapter.addItemViewDelegate(new Icon4Item());
         adapter.addItemViewDelegate(new RollTextItem());
@@ -88,7 +94,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -97,8 +102,13 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        if (handler!=null){
-            handler.sendEmptyMessageDelayed(0,1000);
+        if (handler != null) {
+            handler.sendEmptyMessageDelayed(0, 1000);
         }
+    }
+
+    @OnClick(R.id.news_btn)
+    public void onClick() {
+        Nagivator.startRewardActivity(getContext());
     }
 }
