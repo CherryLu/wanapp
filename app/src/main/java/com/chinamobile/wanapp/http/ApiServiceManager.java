@@ -56,6 +56,16 @@ public class ApiServiceManager {
 
     private static final String SING_APP = "User/SignInInse";
 
+    private static final String TASK_COMPLETION = "User/TaskFinish";
+
+    private static final String USER_INVITECASE = "User/InviteCase";
+
+    private static final String USER_EVERY_WHEALTH = "User/EverydayWeal";
+
+    private static final String TASK_FINISH_DETAIL = "User/TaskFinishDetail";
+
+    private static final String TASK_FINISH_TOTAL = "User/TaskFinishTotal";
+
 
     /**
      * 登录注册接口
@@ -151,6 +161,73 @@ public class ApiServiceManager {
         stringStringMap.put("uid", UserManager.getInstance().getId());
         doGet(SING_APP,stringStringMap, new HttpCallBack(response));
     }
+
+    /**
+     * 任务完成
+     */
+    public static void getTaskCompletion(String jid,String jz_gain,String remark,String snap_url,String status,String eid,HttpResponse response){
+        Map<String,String> stringMap = new HashMap<>();
+        stringMap.put("uid",UserManager.getInstance().getId());
+        stringMap.put("jid",jid);
+        stringMap.put("jz_gain",jz_gain);
+        stringMap.put("remark",remark);
+        stringMap.put("snap_url",snap_url);
+        stringMap.put("status",status);//免审核1  需要审核0
+        stringMap.put("eid",eid);
+        doGet(TASK_COMPLETION,stringMap, new HttpCallBack(response));
+
+    }
+
+    /**
+     * 获取邀请人情况
+     */
+    private static void getUserInviteCase(HttpResponse response){
+        Map<String,String> map = new HashMap<>();
+        map.put("uid",UserManager.getInstance().getId());
+        doGet(USER_INVITECASE,map, new HttpCallBack(response));
+
+    }
+
+    /**
+     * 获取每日福利
+     */
+    private static void getEveryDay(HttpResponse response){
+        Map<String,String> map = new HashMap<>();
+        map.put("uid",UserManager.getInstance().getId());
+        doGet(USER_EVERY_WHEALTH,map, new HttpCallBack(response));
+    }
+
+    /**
+     * 任务完成详情
+     * @param eid
+     * @param submitTime
+     * @param approveTime
+     * @param response
+     */
+    private static void getTaskCompletionDetail(String eid, String submitTime,String approveTime,HttpResponse response){
+        Map<String,String> map = new HashMap<>();
+        map.put("uid",UserManager.getInstance().getId());
+        map.put("eid",eid);
+        map.put("submitTime",submitTime);
+        map.put("approveTime",approveTime);
+        doGet(TASK_FINISH_DETAIL,map, new HttpCallBack(response));
+
+    }
+
+    /**
+     * 任务完成统计
+     */
+    private static void getTaskFinishTotal(String eid, String submitTime,String approveTime,HttpResponse response){
+        Map<String,String> map = new HashMap<>();
+        map.put("uid",UserManager.getInstance().getId());
+        map.put("eid",eid);
+        map.put("submitTime",submitTime);
+        map.put("approveTime",approveTime);
+        doGet(TASK_FINISH_TOTAL,map, new HttpCallBack(response));
+    }
+
+
+
 
 
 
