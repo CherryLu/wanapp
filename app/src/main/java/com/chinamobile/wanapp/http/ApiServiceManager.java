@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -191,9 +192,14 @@ public class ApiServiceManager {
     /**
      * 获取每日福利
      */
-    private static void getEveryDay(HttpResponse response){
+    public static void getEveryDay(HttpResponse response){
+        long[] longs = getToday();
+
         Map<String,String> map = new HashMap<>();
         map.put("uid",UserManager.getInstance().getId());
+        map.put("ruleName","每日福利");
+        map.put("submitTime",longs[0]+"");
+        map.put("approveTime",longs[1]+"");
         doGet(USER_EVERY_WHEALTH,map, new HttpCallBack(response));
     }
 
@@ -266,6 +272,18 @@ public class ApiServiceManager {
         Date date = new Date();
         return date.getTime() + "";
     }
+
+    private static long[] getToday(){
+        long current=new Date().getTime();//当前时间毫秒数
+        long zero=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();//今天零点零分零秒的毫秒数
+        long twelve=zero+24*60*60*1000-1;//今天23点59分59秒的毫秒数
+
+        long[] longs = new long[]{zero,twelve};
+
+        return  longs;
+    }
+
+
 
     private static String getCode(String data) {
         String key = "yioye@sina.cn";

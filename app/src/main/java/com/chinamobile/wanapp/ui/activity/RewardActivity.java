@@ -12,17 +12,21 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.RewardTask;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/12.
@@ -87,6 +91,24 @@ public class RewardActivity extends BaseActivity {
     }
 
     private void getData() {
+        if (type==0){
+            ApiServiceManager.getEveryDay(new HttpResponse() {
+                @Override
+                public void onNext(ResponseBody body) {
+                    try {
+                        String json = new String(body.bytes());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+            });
+        }
         mDatas = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             BaseItem baseItem = new BaseItem();
