@@ -18,6 +18,15 @@ public class UserBean implements Serializable {
     @SerializedName("sno")
     private String sno;
 
+    private String ifnew;
+
+    public String getIfnew() {
+        return ifnew;
+    }
+
+    public void setIfnew(String ifnew) {
+        this.ifnew = ifnew;
+    }
 
     public String getId() {
         return id;

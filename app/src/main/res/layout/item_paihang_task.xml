@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
@@ -17,6 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="70dp" />
         <TextView
+            android:maxWidth="220dp"
+            android:layout_centerVertical="true"
             android:textColor="@color/gray_text"
             android:layout_marginTop="5dp"
             android:id="@+id/maintitle"
@@ -26,10 +26,11 @@
             android:layout_toRightOf="@id/item_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="标题标题标题标题"/>
+            android:text="标题标题标题标题标题标题标题标题标题标题标题标题"/>
 
 
             <TextView
+                android:visibility="gone"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@id/item_pic"
                 android:layout_below="@id/maintitle"
@@ -48,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:visibility="gone"
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
                 android:textSize="18sp"

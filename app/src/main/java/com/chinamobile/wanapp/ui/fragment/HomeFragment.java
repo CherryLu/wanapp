@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.baen.BaseWelfare;
+import com.chinamobile.wanapp.baen.UserBean;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
@@ -24,6 +25,7 @@ import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
 import com.chinamobile.wanapp.utils.Nagivator;
+import com.chinamobile.wanapp.utils.UserManager;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -98,6 +100,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         ButterKnife.bind(this, mRootView);
         baseItems = (ArrayList<BaseItem>) getArguments().getSerializable("LIST");
         setList();
+
+        if ("1".equals(UserManager.getInstance().getIfNew())){
+            newsBtn.setVisibility(View.VISIBLE);
+        }else {
+            newsBtn.setVisibility(View.GONE);
+        }
         return mRootView;
     }
 

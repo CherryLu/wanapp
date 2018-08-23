@@ -38,4 +38,16 @@ public class UserManager {
 
         return "";
     }
+
+    /**
+     * 获取是否新手
+     * @return
+     */
+    public String getIfNew(){
+        if (userBean!=null){
+            return userBean.getIfnew();
+        }
+
+        return "";
+    }
 }

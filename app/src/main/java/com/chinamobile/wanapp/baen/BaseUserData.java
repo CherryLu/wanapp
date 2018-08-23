@@ -8,12 +8,12 @@ public class BaseUserData extends BaseBean{
 
     //用户信息
     @SerializedName("userData")
-    private List<UserBean> userBeans;
+    private UserData userData;
 
     public UserBean getUserBeans() {
-        if (userBeans!=null&&userBeans.size()>0){
-
-            return userBeans.get(0);
+        if (userData!=null&&userData.getUserBeans()!=null&&userData.getUserBeans().size()>0){
+            userData.getUserBeans().get(0).setIfnew(userData.getIfnew());
+            return userData.getUserBeans().get(0);
         }
         return null;
     }

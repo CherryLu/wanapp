@@ -37,7 +37,7 @@ public class APP extends Application {
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
 
         // oss为全局变量，endpoint是一个OSS区域地址
-       // oss = new OSSClient(context, "", credentialProvider, conf);
+        oss = new OSSClient(context, "", credentialProvider, conf);
 
     }
 

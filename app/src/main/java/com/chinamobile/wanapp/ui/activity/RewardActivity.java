@@ -12,10 +12,13 @@ import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.BaseWelfare;
+import com.chinamobile.wanapp.baen.Welfare;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.RewardTask;
 import com.chinamobile.wanapp.utils.Nagivator;
+import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -49,7 +52,7 @@ public class RewardActivity extends BaseActivity {
     ImageView rightImage;
 
     private MultiItemTypeAdapter adapter;
-    private List<BaseItem> mDatas;
+    private List<Welfare> mDatas = new ArrayList<>();
 
     private Handler handler = new Handler() {
         @Override
@@ -75,7 +78,6 @@ public class RewardActivity extends BaseActivity {
         }
 
         getData();
-        setList();
     }
 
     private void setList() {
@@ -97,25 +99,25 @@ public class RewardActivity extends BaseActivity {
                 public void onNext(ResponseBody body) {
                     try {
                         String json = new String(body.bytes());
+                        Gson gson = new Gson();
+                        BaseWelfare baseWelfare = gson.fromJson(json,BaseWelfare.class);
+                        if (baseWelfare!=null){
+                            mDatas.addAll(baseWelfare.getWelfares());
+                        }
 
+                        setList();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        setList();
                     }
                 }
 
                 @Override
                 public void onError(Throwable e) {
+                    setList();
 
                 }
             });
-        }
-        mDatas = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            BaseItem baseItem = new BaseItem();
-            baseItem.setType(BaseItem.ITEM_REWARD_LIST);
-            mDatas.add(baseItem);
-
-
         }
     }
 
