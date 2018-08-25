@@ -8,6 +8,7 @@ import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.ui.activity.GuideActivity;
 import com.chinamobile.wanapp.ui.activity.H5ShareActivity;
+import com.chinamobile.wanapp.ui.activity.InvitationActivity;
 import com.chinamobile.wanapp.ui.activity.MainActivity;
 import com.chinamobile.wanapp.ui.activity.PersonSortActivity;
 import com.chinamobile.wanapp.ui.activity.RewardActivity;
@@ -155,6 +156,16 @@ public class Nagivator {
         Intent intent = new Intent(activity, UploadActivity.class);
         intent.putExtra("FT",taskData);
         activity.startActivityForResult(intent,100);
+    }
+
+    /**
+     *
+     * @param context
+     */
+    public static void startInvitationActivity(Context context){
+
+        Intent intent = new Intent(context, InvitationActivity.class);
+        context.startActivity(intent);
     }
 
 

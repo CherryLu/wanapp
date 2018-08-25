@@ -40,6 +40,7 @@
         <activity android:name=".ui.activity.SignActivity"/>
         <activity android:name=".ui.activity.WeeksPlanActivity"/>
         <activity android:name=".ui.activity.UploadActivity"/>
+        <activity android:name=".ui.activity.InvitationActivity"/>
     </application>
 
 </manifest>

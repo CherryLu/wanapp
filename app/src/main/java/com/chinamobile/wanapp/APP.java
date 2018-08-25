@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;
-import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.chinamobile.wanapp.utils.Constant;
@@ -37,7 +36,7 @@ public class APP extends Application {
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
 
         // oss为全局变量，endpoint是一个OSS区域地址
-        oss = new OSSClient(context, "", credentialProvider, conf);
+//        oss = new OSSClient(context, "", credentialProvider, conf);
 
     }
 

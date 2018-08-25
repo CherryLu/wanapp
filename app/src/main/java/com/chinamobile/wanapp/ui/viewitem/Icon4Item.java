@@ -5,7 +5,6 @@ import android.widget.RelativeLayout;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
-import com.chinamobile.wanapp.utils.AlertHelper;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -45,6 +44,14 @@ public class Icon4Item implements ItemViewDelegate<BaseItem> {
             @Override
             public void onClick(View view) {
                 Nagivator.startSignActivity(view.getContext());
+            }
+        });
+
+        RelativeLayout layout3= holder.getConvertView().findViewById(R.id.layout3);
+        layout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Nagivator.startInvitationActivity(view.getContext());
             }
         });
 
