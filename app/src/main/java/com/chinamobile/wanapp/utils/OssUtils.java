@@ -3,15 +3,10 @@ package com.chinamobile.wanapp.utils;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.OSS;
-import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
@@ -28,10 +23,10 @@ public class OssUtils {
 
     private ProgressCallback progressCallback;
 
-    public OssUtils(Context context, String endpoint, String bucketName) {
+    public OssUtils(Context context) {
         this.context = context;
-        this.endpoint = endpoint;
-        this.bucketName = bucketName;
+        this.endpoint = Constant.ENDPOINT;
+        this.bucketName = Constant.BUCKET;
     }
 
 
