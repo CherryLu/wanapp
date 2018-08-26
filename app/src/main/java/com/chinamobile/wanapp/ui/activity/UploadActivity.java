@@ -15,11 +15,17 @@ import android.widget.Toast;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.TaskData;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.ui.callback.UpLoadCallBack;
+import com.chinamobile.wanapp.ui.view.ProgressDialog;
+import com.chinamobile.wanapp.utils.AlertHelper;
+import com.chinamobile.wanapp.utils.Constant;
 import com.chinamobile.wanapp.utils.GlideUtil;
 import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.OssUtils;
 import com.chinamobile.wanapp.utils.ScreenUtil;
+import com.chinamobile.wanapp.utils.UserManager;
 import com.jph.takephoto.app.TakePhotoActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
@@ -33,12 +39,13 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Administrator on 2018/8/19.
  */
 
-public class UploadActivity extends TakePhotoActivity {
+public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack {
 
 
     @Bind(R.id.back_image)
@@ -71,7 +78,6 @@ public class UploadActivity extends TakePhotoActivity {
     LinearLayout imageYulanLayout;
 
     private TaskData currentData;
-    private OssUtils ossUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +88,7 @@ public class UploadActivity extends TakePhotoActivity {
         currentData = (TaskData) getIntent().getSerializableExtra("FT");
         ininTitleData(currentData);
         initUploadLayout(null);
+
     }
 
     private void ininTitleData(TaskData taskData) {
@@ -201,14 +208,23 @@ public class UploadActivity extends TakePhotoActivity {
 
         return imageUri;
     }
-
+    private int currentPosition = 0;
     @OnClick({R.id.back_image, R.id.download})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_image:
                 Nagivator.finishActivity(this);
                 break;
-            case R.id.download:
+            case R.id.download://上传
+                if (pics!=null&&pics.size()>0){
+                    currentPosition = 0;
+                    ProgressDialog   progressDialog = new ProgressDialog(this, pics,currentData.getId());
+                    progressDialog.setUpLoadCallBack(this);
+                    progressDialog.show();
+                }else {
+                    Toast.makeText(this,"请先选择图片",Toast.LENGTH_SHORT).show();
+                }
+
 
                 break;
         }
@@ -220,7 +236,6 @@ public class UploadActivity extends TakePhotoActivity {
         super.takeSuccess(result);
         if (pics==null){
             pics = new ArrayList<>();
-
         }else {
            // pics.clear();
         }
@@ -248,4 +263,33 @@ public class UploadActivity extends TakePhotoActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+    private  SweetAlertDialog mDialog;
+    @Override
+    public void onSuccessed(String name) {
+        LogUtils.e("ZX",name+"");
+
+        AlertHelper helper = new AlertHelper(this);
+        helper.showWaitDialog();
+
+
+
+    }
+
+    private void setTaskCompler(){
+        SweetAlertDialog mDialog =new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setContentText("同步中...").show();
+
+        //ApiServiceManager.getTaskCompletion();
+    }
+
+    @Override
+    public void onFail() {
+
+    }
+
+
+
 }

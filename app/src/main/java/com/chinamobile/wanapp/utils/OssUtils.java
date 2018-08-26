@@ -29,12 +29,13 @@ public class OssUtils {
         this.bucketName = Constant.BUCKET;
     }
 
-
-
+    public void setProgressCallback(ProgressCallback progressCallback) {
+        this.progressCallback = progressCallback;
+    }
 
     public void beginupload(Context context, String filename, String path) {
         //通过填写文件名形成objectname,通过这个名字指定上传和下载的文件
-        String objectname = filename;
+        final String objectname = filename;
         if (objectname == null || objectname.equals("")) {
             Toast.makeText(context,"文件名不能为空",Toast.LENGTH_SHORT).show();
             return;
@@ -65,9 +66,9 @@ public class OssUtils {
         OSSAsyncTask task = APP.getOss().asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                LogUtils.d("UploadFailure","上传成功");
+                LogUtils.d("onSuccess","上传成功");
                 if (progressCallback != null) {
-                    progressCallback.onSuccess();
+                    progressCallback.onSuccess(objectname);
                 }
             }
 
@@ -79,7 +80,6 @@ public class OssUtils {
                 // 请求异常
                 if (clientExcepion != null) {
                     // 本地异常如网络异常等
-                    LogUtils.e("UploadFailure","表示向OSS发送请求或解析来自OSS的响应时发生错误" + "  *例如，当网络不可用时，这个异常将被抛出");
                     clientExcepion.printStackTrace();
                 }
                 if (serviceException != null) {
@@ -101,7 +101,7 @@ public class OssUtils {
     public interface ProgressCallback {
         void onProgressCallback(double progress);
 
-        void onSuccess();
+        void onSuccess(String name);
         void onFails();
     }
 

@@ -44,7 +44,7 @@ public class AlertHelper {
     }
 
     /**
-     * 显示成功
+     * 显示签到成功
      */
     public void showSuccess(){
         SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
@@ -54,6 +54,31 @@ public class AlertHelper {
                 .setConfirmText("确定")
                 .show();
 
+    }
+
+    /**
+     * 显示上传成功
+     */
+    public void showWaitDialog(){
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setTitleText("提示")
+                .setContentText("上传成功")
+                .setConfirmText("确定")
+                .show();
+
+
+    }
+
+
+
+    public void showUploadSuccess(){
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setTitleText("提示")
+                .setContentText("上传成功")
+                .setConfirmText("确定")
+                .show();
     }
 
     /**
@@ -80,6 +105,13 @@ public class AlertHelper {
                 .setContentText(msg)
                 .setConfirmText("确定")
                 .show();
+
+    }
+
+
+
+    public void showProgress(){
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
 
     }
 
