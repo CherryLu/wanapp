@@ -10,9 +10,6 @@ import java.io.Serializable;
 
 public class Welfare implements Serializable {
 
-    @SerializedName("eid")
-    private String eid;
-
     @SerializedName("id")
     private String id;
 
@@ -20,7 +17,7 @@ public class Welfare implements Serializable {
     private String remark;
 
     @SerializedName("request")
-    private String request;
+    private int request;
 
     @SerializedName("ruleName")
     private String ruleName;
@@ -31,6 +28,23 @@ public class Welfare implements Serializable {
     @SerializedName("status")
     private String status;
 
+    @SerializedName("jujDc")
+    private int jujDc;
+
+    @SerializedName("jujEid")
+    private String jujEid;
+
+    @SerializedName("eid")
+    private String eid;
+
+
+    public int getJujDc() {
+        return jujDc;
+    }
+
+    public String getJujEid() {
+        return jujEid;
+    }
 
     public String getEid() {
         return eid;
@@ -44,7 +58,7 @@ public class Welfare implements Serializable {
         return remark;
     }
 
-    public String getRequest() {
+    public int getRequest() {
         return request;
     }
 

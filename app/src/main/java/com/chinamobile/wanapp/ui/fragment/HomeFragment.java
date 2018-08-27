@@ -69,24 +69,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ApiServiceManager.getEveryDay(new HttpResponse() {
-            @Override
-            public void onNext(ResponseBody body) {
-                try {
-                    String json = new String(body.bytes());
-                    Gson gson = new Gson();
-                    BaseWelfare welfare = gson.fromJson(json,BaseWelfare.class);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        });
     }
 
     ArrayList<BaseItem> baseItems;

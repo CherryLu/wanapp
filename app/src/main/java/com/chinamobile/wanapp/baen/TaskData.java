@@ -75,6 +75,10 @@ public class TaskData implements Serializable {
     private String sampleimgUrl;
 
 
+    @SerializedName("eid")
+    private String eid;
+
+
 
 
 
@@ -173,5 +177,9 @@ public class TaskData implements Serializable {
 
     public String getSampleimgUrl() {
         return sampleimgUrl;
+    }
+
+    public String getEid() {
+        return eid;
     }
 }

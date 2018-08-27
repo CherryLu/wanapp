@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.ui.callback.UpLoadCallBack;
 import com.chinamobile.wanapp.utils.AlertHelper;
+import com.chinamobile.wanapp.utils.Constant;
 import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.OssUtils;
 import com.chinamobile.wanapp.utils.UserManager;
@@ -39,13 +40,11 @@ public class ProgressDialog extends Dialog implements OssUtils.ProgressCallback 
                 case 200:
                     double progress = (double) msg.obj;
                     if (progressBar!=null){
-                        LogUtils.e("ZX",progress+"");
                         progressBar.setProgress((int) progress);
                     }
 
                     if (progress_txt!=null){
                         String pr = (int)progress+"";
-                        LogUtils.e("ZX",pr+"");
                         progress_txt.setText(pr);
                     }
 
@@ -59,7 +58,7 @@ public class ProgressDialog extends Dialog implements OssUtils.ProgressCallback 
                     }else {//上传结束 上报服务器
                         LogUtils.e("ZX","结束");
                         if (upLoadCallBack!=null){
-                            upLoadCallBack.onSuccessed("");
+                            upLoadCallBack.onSuccessed(sb.toString().substring(0,sb.toString().length() - 1));
                         }
                         dismiss();
                     }
@@ -128,10 +127,11 @@ public class ProgressDialog extends Dialog implements OssUtils.ProgressCallback 
         }
 
     }
-
+    private StringBuffer sb = new StringBuffer();
     @Override
     public void onSuccess(String name) {
-
+        sb.append(Constant.IMAGE_BASE_URL+name);
+        sb.append(";");
         if (handler!=null){
             handler.sendEmptyMessage(201);
         }

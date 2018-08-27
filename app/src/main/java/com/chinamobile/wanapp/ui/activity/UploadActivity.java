@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.callback.UpLoadCallBack;
 import com.chinamobile.wanapp.ui.view.ProgressDialog;
 import com.chinamobile.wanapp.utils.AlertHelper;
@@ -40,6 +41,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/19.
@@ -218,7 +220,7 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
             case R.id.download://上传
                 if (pics!=null&&pics.size()>0){
                     currentPosition = 0;
-                    ProgressDialog   progressDialog = new ProgressDialog(this, pics,currentData.getId());
+                    ProgressDialog  progressDialog = new ProgressDialog(this, pics,currentData.getId());
                     progressDialog.setUpLoadCallBack(this);
                     progressDialog.show();
                 }else {
@@ -270,19 +272,33 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
     public void onSuccessed(String name) {
         LogUtils.e("ZX",name+"");
 
-        AlertHelper helper = new AlertHelper(this);
-        helper.showWaitDialog();
-
+     /*   AlertHelper helper = new AlertHelper(this);
+        helper.showWaitDialog();*/
+        setTaskCompler(name);
 
 
     }
 
-    private void setTaskCompler(){
-        SweetAlertDialog mDialog =new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+    private void setTaskCompler(String urls){
+        final SweetAlertDialog mDialog =new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         mDialog.setCancelable(false);
-        mDialog.setContentText("同步中...").show();
+        mDialog.setTitleText("同步中...").show();
 
-        //ApiServiceManager.getTaskCompletion();
+        ApiServiceManager.getTaskCompletion(currentData.getId(), currentData.getJzGain()+"", "", urls, "1", currentData.getEid(), new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                if (mDialog!=null){
+                    mDialog.cancel();
+                }
+                Nagivator.finishActivity(UploadActivity.this);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     @Override
