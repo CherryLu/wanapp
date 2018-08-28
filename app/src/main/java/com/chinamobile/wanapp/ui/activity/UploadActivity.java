@@ -2,11 +2,9 @@ package com.chinamobile.wanapp.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,14 +17,10 @@ import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.callback.UpLoadCallBack;
 import com.chinamobile.wanapp.ui.view.ProgressDialog;
-import com.chinamobile.wanapp.utils.AlertHelper;
-import com.chinamobile.wanapp.utils.Constant;
 import com.chinamobile.wanapp.utils.GlideUtil;
 import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.Nagivator;
-import com.chinamobile.wanapp.utils.OssUtils;
 import com.chinamobile.wanapp.utils.ScreenUtil;
-import com.chinamobile.wanapp.utils.UserManager;
 import com.jph.takephoto.app.TakePhotoActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
@@ -278,6 +272,9 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
 
 
     }
+
+
+
 
     private void setTaskCompler(String urls){
         final SweetAlertDialog mDialog =new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);

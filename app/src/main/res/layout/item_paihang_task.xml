@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
+        android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_width="match_parent"
@@ -29,7 +30,7 @@
             android:text="标题标题标题标题标题标题标题标题标题标题标题标题"/>
 
 
-            <TextView
+        <TextView
                 android:visibility="gone"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@id/item_pic"
@@ -43,6 +44,7 @@
 
 
         <LinearLayout
+            android:layout_centerHorizontal="true"
             android:layout_below="@id/maintitle"
             android:layout_alignParentRight="true"
             android:orientation="horizontal"

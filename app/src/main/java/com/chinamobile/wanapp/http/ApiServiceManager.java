@@ -3,7 +3,6 @@ package com.chinamobile.wanapp.http;
 import android.os.Environment;
 
 import com.chinamobile.wanapp.BuildConfig;
-import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.MD5Util;
 import com.chinamobile.wanapp.utils.UserManager;
@@ -175,7 +174,7 @@ public class ApiServiceManager {
         stringMap.put("snap_url",snap_url);
         stringMap.put("status",status);//免审核1  需要审核0
         stringMap.put("eid",eid);
-        doGet(TASK_COMPLETION,stringMap, new HttpCallBack(response));
+        doPost(TASK_COMPLETION,stringMap, new HttpCallBack(response));
 
     }
 
@@ -268,6 +267,22 @@ public class ApiServiceManager {
 
     }
 
+
+
+
+    private static void doPost(String action,Map<String,String> stringMap,Observer<ResponseBody> consumer){
+        String data = getData();
+        stringMap.put("timestamp", data);
+        stringMap.put("code", getCode(data));
+
+        Observable<ResponseBody> observable = getHttpService().create(RetrofitService.class).getPostRequest(action,stringMap);
+
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer);
+
+    }
+
     private static String getData() {
         Date date = new Date();
         return date.getTime() + "";
@@ -298,16 +313,6 @@ public class ApiServiceManager {
 
     }
 
-    private static void doPost(String type, Observer<BaseItem> consumer) {
-        Map<String, String> map = new HashMap<>();
-        map.put("type", type);
-        map.put("key", "41f0c2e26ac4b3bf0b965fb8e70b6449");
-        Observable<BaseItem> observable = getHttpService().create(RetrofitService.class).getPostRequest(map);
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(consumer);
-
-    }
 
 
 

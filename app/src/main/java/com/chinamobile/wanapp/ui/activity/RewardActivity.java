@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
-import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.baen.BaseWelfare;
 import com.chinamobile.wanapp.baen.Welfare;
 import com.chinamobile.wanapp.http.ApiServiceManager;
@@ -104,7 +103,6 @@ public class RewardActivity extends BaseActivity {
                         if (baseWelfare!=null){
                             mDatas.addAll(baseWelfare.getWelfares());
                         }
-
                         setList();
                     } catch (IOException e) {
                         e.printStackTrace();

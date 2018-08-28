@@ -8,6 +8,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -25,21 +26,14 @@ public interface RetrofitService {
     @GET("User/register")
     Observable<BaseItem> getGetRequest(@Query("data") String data, @Query("key") String key);
 
-   /* @GET("User/register")*/
 
     @GET("{act}")
     Observable<ResponseBody> getGetRequest(@Path(value = "act",encoded =true ) String act, @QueryMap Map<String, String> map);
 
-    /*@GET("User/UserHomeSel")
-    Observable<BaseBean> getGetRequest(@QueryMap Map<String, String> map);
-*/
     @FormUrlEncoded
-    @POST("api/zt_user")
-    Observable<BaseItem> getPostRequest(@Query("data") String data, @Query("key") String key);
+    @POST("{act}")
+    Observable<ResponseBody> getPostRequest(@Path(value = "act",encoded =true ) String act, @FieldMap Map<String, String> map);
 
-    @FormUrlEncoded
-    @POST("api/zt_user")
-    Observable<BaseItem> getPostRequest(@QueryMap Map<String, String> map);
 
     /**
      * 获取文件下载
