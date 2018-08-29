@@ -3,6 +3,7 @@ package com.chinamobile.wanapp.ui.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,8 +19,17 @@ import com.chinamobile.wanapp.R;
 
 public class ShareDialog extends Dialog implements View.OnClickListener {
 
+
+    private String page;
+
     public ShareDialog(Context context) {
         super(context, R.style.MyDialog);
+    }
+
+
+    public ShareDialog(Context context,String page) {
+        super(context, R.style.MyDialog);
+        this.page = page;
     }
 
     private LinearLayout qq_share,qqzone_share,weixin_share,weixinsq_share,sina_share;
@@ -29,16 +39,27 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_dialog);
+
         qq_share = findViewById(R.id.qq_share);
         qq_share.setOnClickListener(this);
+        qq_share.setVisibility(View.GONE);
+
         qqzone_share = findViewById(R.id.qqzone_share);
         qqzone_share.setOnClickListener(this);
+        qqzone_share.setVisibility(View.GONE);
+
         weixin_share = findViewById(R.id.weixin_share);
         weixin_share.setOnClickListener(this);
+        weixin_share.setVisibility(View.GONE);
+
         weixinsq_share = findViewById(R.id.weixinsq_share);
         weixinsq_share.setOnClickListener(this);
+        weixinsq_share.setVisibility(View.GONE);
+
         sina_share = findViewById(R.id.sina_share);
         sina_share.setOnClickListener(this);
+        sina_share.setVisibility(View.GONE);
+
         cancle = findViewById(R.id.cancle);
         cancle.setOnClickListener(this);
 
@@ -50,6 +71,49 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
 
+        setShowIt();
+
+
+
+
+    }
+
+
+    private void setShowIt(){
+
+        if (TextUtils.isEmpty(page)){
+            return;
+        }
+
+        String endPage = page.substring(3,page.length());
+        if (TextUtils.isEmpty(endPage)){
+            qq_share.setVisibility(View.VISIBLE);
+            qqzone_share.setVisibility(View.VISIBLE);
+            weixin_share.setVisibility(View.VISIBLE);
+            weixinsq_share.setVisibility(View.VISIBLE);
+            sina_share.setVisibility(View.VISIBLE);
+
+        }
+
+        if (endPage.contains("1")){
+            qq_share.setVisibility(View.VISIBLE);
+        }
+
+        if (endPage.contains("2")){
+            qqzone_share.setVisibility(View.VISIBLE);
+        }
+
+        if (endPage.contains("3")){
+            weixin_share.setVisibility(View.VISIBLE);
+        }
+
+        if (endPage.contains("4")){
+            weixinsq_share.setVisibility(View.VISIBLE);
+        }
+
+        if (endPage.contains("5")){
+            weixinsq_share.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -13,9 +13,11 @@ import com.chinamobile.wanapp.baen.BaseTaskList;
 import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
+import com.chinamobile.wanapp.ui.view.ShareDialog;
 import com.chinamobile.wanapp.utils.GlideUtil;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.ScreenUtil;
+import com.chinamobile.wanapp.utils.SystemUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -210,32 +212,46 @@ public class TaskDetailsActivity extends BaseActivity {
             return;
         }
         switch (taskData.getAction()){
-            case "1":// 邀请好友
+            case "1":// 邀请好友   分享
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
 
                 break;
-            case "2"://下载
+            case "2"://下载       直接下载
 
                 break;
-            case "3"://注册任务
+            case "3"://注册任务   跳转APP
+                SystemUtil.openOtherAPP(this,taskData.getJobStr());
 
                 break;
 
-            case "4"://好评任务
+            case "4"://好评任务    跳转截图
+
+                Nagivator.startUploadActivity(this,taskData);
+
 
                 break;
-            case "5"://完成分享任务
+            case "5"://完成分享任务      分享
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+
+            }
+
 
                 break;
-            case "6"://完成试用任务
+            case "6"://完成试用任务       弹窗奖励
 
                 break;
-            case "7"://完成每日签到
+            case "7"://完成每日签到       弹窗奖励
 
                 break;
-            case "8"://完成成功提现
+            case "8"://完成成功提现       提现确定接口
 
                 break;
-            case "9"://完成新手任务
+            case "9"://完成新手任务       领取新手奖励
 
                 break;
             case "10"://完成每日福利
@@ -246,26 +262,60 @@ public class TaskDetailsActivity extends BaseActivity {
                 break;
             case "12"://完成晒单任务
 
+                Nagivator.startUploadActivity(this,taskData);
+
                 break;
             case "13"://分享呗有效点击
 
                 break;
 
             case "101"://APP 分享朋友圈
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "102"://APP 分享微信群或QQ群
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "103"://APP 分享微信群或QQ群(10人以上)
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "104"://APP 分享微信群或QQ群(30人以上)
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "105"://APP 分享微信群或QQ群(50人以上)
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "106"://APP 分享微信群或QQ群(100人以上)
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "107:"://APP 分享微信群或QQ群(100人以上)
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "108:"://APP 分享微信群或QQ群(500人以上)
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
 
             case "201:"://百度市场好评
@@ -290,20 +340,52 @@ public class TaskDetailsActivity extends BaseActivity {
                 break;
 
             case "1001"://任务 分享
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1002"://任务 分享QQ群或微信群
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1003"://任务 分享QQ群或微信群（10）
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1004"://任务 分享QQ群或微信群（30）
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1005"://任务 分享QQ群或微信群（50）
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1006"://任务 分享QQ群或微信群（100）
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1007"://任务 分享QQ群或微信群（200）
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
             case "1008"://任务 分享QQ群或微信群（500）
+            {
+                ShareDialog dialog = new ShareDialog(this);
+                dialog.show();
+            }
                 break;
 
 

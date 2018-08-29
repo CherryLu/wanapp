@@ -158,6 +158,17 @@ public class Nagivator {
         activity.startActivityForResult(intent,100);
     }
 
+
+    /**
+     * 跳转上传页面
+     * @param taskData
+     */
+    public static void startUploadActivity(Context context,TaskData taskData){
+        Intent intent = new Intent(context, UploadActivity.class);
+        intent.putExtra("FT",taskData);
+        context.startActivity(intent);
+    }
+
     /**
      *
      * @param context
@@ -184,17 +195,27 @@ public class Nagivator {
         if (strs.length>1){
             String page = strs[1];
             switch (page){
-                case "101"://分享
-                    ShareDialog dialog = new ShareDialog(context);
-                    dialog.show();
-                    break;
-                case "102":
-                    Nagivator.startTaskDetailShareActivity(context);
-                    break;
-                case "103":
+                case "100"://详情页面
                     Nagivator.startTaskDetailActivity(context,taskData);
                     break;
-                case "104":
+                case "101"://上传页面
+                    Nagivator.startUploadActivity(context,taskData);
+
+                    break;
+                case "102"://下载任务
+                    Nagivator.startTaskDetailActivity(context,taskData);
+                    break;
+                case "103"://打开APP
+                    SystemUtil.openOtherAPP(context,taskData.getJobStr());
+                    break;
+                case "104"://分享
+                    ShareDialog dialog = new ShareDialog(context,page);
+                    dialog.show();
+                    break;
+
+                case "105"://微信购买页面
+                    Nagivator.startH5TaskShareActivity(context);
+
                     break;
                 default:
                     helper.showError("数据异常，无法解析");
@@ -204,8 +225,6 @@ public class Nagivator {
             helper.showError("数据异常，无法解析");
 
         }
-
-
 
     }
 

@@ -28,6 +28,7 @@ import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -284,6 +285,12 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
         ApiServiceManager.getTaskCompletion(currentData.getId(), currentData.getJzGain()+"", "", urls, "1", currentData.getEid(), new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 if (mDialog!=null){
                     mDialog.cancel();
                 }

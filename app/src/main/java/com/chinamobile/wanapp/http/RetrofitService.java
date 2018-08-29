@@ -8,6 +8,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -34,6 +35,20 @@ public interface RetrofitService {
     @POST("{act}")
     Observable<ResponseBody> getPostRequest(@Path(value = "act",encoded =true ) String act, @FieldMap Map<String, String> map);
 
+
+
+    @FormUrlEncoded
+    @POST("{act}")
+    Observable<ResponseBody> getPostTestRequest(@Path(value = "act",encoded =true ) String act,
+                                                @Field("uid") String uid,
+                                                @Field("eid") String eid,
+                                                @Field("timestamp") String timestamp,
+                                                @Field("code") String code,
+                                                @Field("jid") String jid,
+                                                @Field("jz_gain") String jz_gain,
+                                                @Field("remark") String remark,
+                                                @Field("snap_url") String snap_url,
+                                                @Field("status") String status);
 
     /**
      * 获取文件下载

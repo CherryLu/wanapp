@@ -37,7 +37,7 @@
             android:background="@drawable/origin_noconner_bac"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="分享"/>
+            android:text="购买"/>
 
     </LinearLayout>
 

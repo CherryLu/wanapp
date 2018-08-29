@@ -174,7 +174,7 @@ public class ApiServiceManager {
         stringMap.put("snap_url",snap_url);
         stringMap.put("status",status);//免审核1  需要审核0
         stringMap.put("eid",eid);
-        doPost(TASK_COMPLETION,stringMap, new HttpCallBack(response));
+        doPostTest(TASK_COMPLETION,eid,jid,jz_gain,remark,snap_url,status, new HttpCallBack(response));
 
     }
 
@@ -276,6 +276,19 @@ public class ApiServiceManager {
         stringMap.put("code", getCode(data));
 
         Observable<ResponseBody> observable = getHttpService().create(RetrofitService.class).getPostRequest(action,stringMap);
+
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(consumer);
+
+    }
+
+    private static void doPostTest(String action,String eid,String jid,String jz_gain,String remark,String snap_url,String status,Observer<ResponseBody> consumer){
+        String data = getData();
+       // stringMap.put("timestamp", data);
+        //stringMap.put("code", getCode(data));
+
+        Observable<ResponseBody> observable = getHttpService().create(RetrofitService.class).getPostTestRequest(action,UserManager.getInstance().getId(),eid,data,getCode(data),jid,jz_gain,remark,snap_url,status);
 
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

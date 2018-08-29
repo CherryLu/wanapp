@@ -1,5 +1,10 @@
 package com.chinamobile.wanapp.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 public class SystemUtil {
 
     /**
@@ -28,6 +33,21 @@ public class SystemUtil {
     public static String getDeviceBrand() {
         return android.os.Build.BRAND;
 
+    }
+
+
+
+    public static void openOtherAPP(Context context,String packetName){
+        if (TextUtils.isEmpty(packetName)){
+            Toast.makeText(context,"APP不存在",Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage(packetName);
+            if (intent!=null){
+                context.startActivity(intent);
+            }else {
+                Toast.makeText(context,"APP未安装",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }

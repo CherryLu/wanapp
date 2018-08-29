@@ -35,7 +35,7 @@ public class H5ShareActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_h5_share);
         ButterKnife.bind(this);
-        setTitleBar("分享任务");
+        setTitleBar("微商购买");
         webview.setWebChromeClient(new WebChromeClient());
         webview.setWebViewClient(new WebViewClient());
         webview.loadUrl("https://www.baidu.com/");
