@@ -48,7 +48,9 @@ public interface RetrofitService {
                                                 @Field("jz_gain") String jz_gain,
                                                 @Field("remark") String remark,
                                                 @Field("snap_url") String snap_url,
-                                                @Field("status") String status);
+                                                @Field("status") String status,
+                                                @Field("submitTimeStr") String submitTimeStr,
+                                                @Field("approveTimesStr") String approveTimesStr);
 
     /**
      * 获取文件下载

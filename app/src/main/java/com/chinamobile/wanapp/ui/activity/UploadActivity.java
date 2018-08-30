@@ -27,6 +27,9 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -287,26 +290,39 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
             public void onNext(ResponseBody body) {
                 try {
                     String json = new String(body.bytes());
-
+                    JSONObject object = new JSONObject(json);
+                    JSONObject object1 = (JSONObject) object.get("userData");
+                    String str = object1.getString("flag");
+                    if ("True".equals(str)){
+                        if (mDialog!=null){
+                            mDialog.cancel();
+                        }
+                        Toast.makeText(UploadActivity.this,"提交成功",Toast.LENGTH_SHORT).show();
+                        Nagivator.finishActivity(UploadActivity.this);
+                    }else {
+                        Toast.makeText(UploadActivity.this,"提交失败",Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(UploadActivity.this,"提交失败",Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(UploadActivity.this,"提交失败",Toast.LENGTH_SHORT).show();
                 }
-                if (mDialog!=null){
-                    mDialog.cancel();
-                }
-                Nagivator.finishActivity(UploadActivity.this);
+
 
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Toast.makeText(UploadActivity.this,"提交失败",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void onFail() {
+        Toast.makeText(UploadActivity.this,"提交失败",Toast.LENGTH_SHORT).show();
 
     }
 
