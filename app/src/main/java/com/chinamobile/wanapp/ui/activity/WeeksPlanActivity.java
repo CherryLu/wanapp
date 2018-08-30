@@ -48,6 +48,11 @@ public class WeeksPlanActivity extends BaseActivity {
 
     }
 
+
+    private void getData(){
+        //ApiServiceManager.
+    }
+
     @OnClick({R.id.layout_1_pic, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4})
     public void onClick(View view) {
         switch (view.getId()) {

@@ -226,6 +226,10 @@ public class StartActivity extends BaseActivity {
         if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             permissions.add(Manifest.permission.READ_PHONE_STATE);
         }
+
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
         if (permissions != null && permissions.size() > 0) {
             String[] st = new String[permissions.size()];
             for (int i = 0; i < permissions.size(); i++) {

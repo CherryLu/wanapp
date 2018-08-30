@@ -21,8 +21,7 @@
             android:textColor="@color/gray_text"
             android:layout_marginTop="5dp"
             android:id="@+id/maintitle"
-            android:layout_marginLeft="15dp"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textSize="16sp"
             android:layout_toRightOf="@id/item_pic"
             android:layout_width="wrap_content"
@@ -44,9 +43,9 @@
 
 
         <LinearLayout
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/maintitle"
             android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -60,15 +59,17 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_red"/>
             <TextView
-                android:layout_marginLeft="10dp"
-                android:padding="5dp"
+                android:id="@+id/completion_btn"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
                 android:background="@color/blue_color"
-                android:layout_marginRight="10dp"
                 android:textColor="@color/white"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="完成"/>
+                android:text="已完成"/>
 
         </LinearLayout>
 

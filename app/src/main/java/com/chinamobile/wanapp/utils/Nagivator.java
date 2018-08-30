@@ -17,6 +17,7 @@ import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 import com.chinamobile.wanapp.ui.activity.UploadActivity;
 import com.chinamobile.wanapp.ui.activity.WeeksPlanActivity;
+import com.chinamobile.wanapp.ui.view.DownloadDialog;
 import com.chinamobile.wanapp.ui.view.ShareDialog;
 
 public class Nagivator {
@@ -202,8 +203,13 @@ public class Nagivator {
                     Nagivator.startUploadActivity(context,taskData);
 
                     break;
-                case "102"://下载任务
-                    Nagivator.startTaskDetailActivity(context,taskData);
+                case "102"://先检测是否安装，然后下载
+                    if (SystemUtil.hasInstanceApp(context,taskData.getJobStr())){//已安装
+                        SystemUtil.openOtherAPP(context,taskData.getJobStr());
+                    }else {
+                        DownloadDialog downloadDialog = new DownloadDialog(context,taskData);
+                        downloadDialog.show();
+                    }
                     break;
                 case "103"://打开APP
                     SystemUtil.openOtherAPP(context,taskData.getJobStr());

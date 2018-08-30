@@ -35,6 +35,7 @@ public class Icon4Item implements ItemViewDelegate<BaseItem> {
             @Override
             public void onClick(View view) {
                 Nagivator.startEveryRewardActivity(view.getContext());
+
             }
         });
 

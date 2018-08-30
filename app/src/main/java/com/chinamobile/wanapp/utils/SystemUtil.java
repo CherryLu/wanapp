@@ -2,6 +2,8 @@ package com.chinamobile.wanapp.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -36,7 +38,11 @@ public class SystemUtil {
     }
 
 
-
+    /**
+     * 打开第三方APP
+     * @param context
+     * @param packetName
+     */
     public static void openOtherAPP(Context context,String packetName){
         if (TextUtils.isEmpty(packetName)){
             Toast.makeText(context,"APP不存在",Toast.LENGTH_SHORT).show();
@@ -47,6 +53,21 @@ public class SystemUtil {
             }else {
                 Toast.makeText(context,"APP未安装",Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+
+    /**
+     *
+     */
+    public static boolean hasInstanceApp(Context context,String packName){
+        if (TextUtils.isEmpty(packName))
+            return false;
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packName, PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 

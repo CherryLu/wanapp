@@ -17,6 +17,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * Created by Administrator on 2018/8/6.
@@ -57,7 +58,7 @@ public interface RetrofitService {
      * @return
      */
     @Streaming
-    @GET("{path}")
-    Call<ResponseBody> getFile(@Path("path") String path);
+    @GET
+    Call<ResponseBody> getFile(@Url String url);
 
 }

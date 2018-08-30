@@ -269,12 +269,7 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
     @Override
     public void onSuccessed(String name) {
         LogUtils.e("ZX",name+"");
-
-     /*   AlertHelper helper = new AlertHelper(this);
-        helper.showWaitDialog();*/
         setTaskCompler(name);
-
-
     }
 
 
@@ -293,7 +288,7 @@ public class UploadActivity extends TakePhotoActivity implements UpLoadCallBack 
                     JSONObject object = new JSONObject(json);
                     JSONObject object1 = (JSONObject) object.get("userData");
                     String str = object1.getString("flag");
-                    if ("True".equals(str)){
+                    if ("Success".equals(str)){
                         if (mDialog!=null){
                             mDialog.cancel();
                         }

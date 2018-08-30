@@ -1,6 +1,8 @@
 package com.chinamobile.wanapp.http;
 
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 
 import com.chinamobile.wanapp.BuildConfig;
 import com.chinamobile.wanapp.utils.LogUtils;
@@ -169,7 +171,7 @@ public class ApiServiceManager {
         Map<String,String> stringMap = new HashMap<>();
         stringMap.put("uid",UserManager.getInstance().getId());
         stringMap.put("jid",jid);
-        stringMap.put("jz_gain",jz_gain);
+        stringMap.put("jzGain",jz_gain);
         stringMap.put("remark",remark);
         stringMap.put("snap_url",snap_url);
         stringMap.put("status","0");//免审核1  需要审核0
@@ -220,6 +222,8 @@ public class ApiServiceManager {
         doGet(TASK_FINISH_DETAIL,map, new HttpCallBack(response));
 
     }
+
+
 
     /**
      * 任务完成统计
@@ -313,6 +317,20 @@ public class ApiServiceManager {
         return  longs;
     }
 
+    /**
+     * 获取一周 内任务完成情况
+     * @return
+     */
+    private static long[] getThisWeek(){
+        long current=new Date().getTime();//当前时间毫秒数
+        long zero=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();//今天零点零分零秒的毫秒数
+        long twelve=zero+24*60*60*1000-1;//今天23点59分59秒的毫秒数
+
+        long[] longs = new long[]{zero,twelve};
+
+        return  longs;
+    }
+
 
 
     private static String getCode(String data) {
@@ -329,30 +347,19 @@ public class ApiServiceManager {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public static void fileDownLoad(final String url) {
-        int i = url.lastIndexOf("/");
-        final String title = url.substring(0, i + 1);
-        final String name = url.substring(i + 1, url.length());
+    /**
+     *
+     * @param url   完整的下载链接
+     * @param fileName   带后缀的文件名
+     */
+    public static void fileDownLoad(final String url, String fileName, final Handler handler) {
+       /* int i = url.lastIndexOf("/");
+        final String title = url.substring(0, i + 1);*/
+        final String name = fileName;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Retrofit.Builder builder = new Retrofit.Builder().baseUrl("http://s9.rr.itc.cn/r/wapChange/20165_5_23/");//传入服务器BaseUrl
+                final Retrofit.Builder builder = new Retrofit.Builder().baseUrl("https://codeload.github.com/");//传入服务器BaseUrl
                 okhttp3.OkHttpClient client = new okhttp3.OkHttpClient.Builder().addNetworkInterceptor(new okhttp3.Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -360,13 +367,21 @@ public class ApiServiceManager {
                         return response.newBuilder().body(new ProgressResponseBody(response.body(), new ProgressListener() {
                             @Override
                             public void onProgress(long progress, long total, boolean done) {
+                                LogUtils.e("Download","progress : "+progress+"         total : "+total);
+
+                                if (handler!=null){
+                                    Message message = Message.obtain();
+                                    message.what = 200;
+                                    message.obj = (progress/total);
+                                    handler.sendMessage(message);
+                                }
 
                             }
                         })).build();
                     }
                 }).build();
                 RetrofitService apiService = builder.client(client).build().create(RetrofitService.class);
-                Call<ResponseBody> call = apiService.getFile(name);
+                Call<ResponseBody> call = apiService.getFile(url);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, final retrofit2.Response<ResponseBody> response) {
@@ -375,7 +390,11 @@ public class ApiServiceManager {
                             public void run() {
                                 try {
                                     if (response == null || response.body() == null) {//空地址
-
+                                        if (handler!=null){
+                                            Message message = Message.obtain();
+                                            message.what = 201;//
+                                            handler.sendMessage(message);
+                                        }
                                         return;
                                     }
                                     InputStream is = response.body().byteStream();
@@ -393,6 +412,11 @@ public class ApiServiceManager {
                                     is.close();
                                 } catch (IOException e) {
                                     e.printStackTrace();//下载失败
+                                    if (handler!=null){
+                                        Message message = Message.obtain();
+                                        message.what = 201;
+                                        handler.sendMessage(message);
+                                    }
                                 }
 
                             }
@@ -402,6 +426,11 @@ public class ApiServiceManager {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.printStackTrace();//下载失败
+                        if (handler!=null){
+                            Message message = Message.obtain();
+                            message.what = 201;
+                            handler.sendMessage(message);
+                        }
                     }
                 });
             }
