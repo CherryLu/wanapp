@@ -26,6 +26,10 @@ public class DownloadDialog extends Dialog {
         this.taskData = taskData;
     }
 
+    public DownloadDialog(@NonNull Context context) {
+        super(context, R.style.normal_dialog);
+    }
+
 
     private TextView title,progress_txt;
     private ProgressBar progressBar;
@@ -89,6 +93,6 @@ public class DownloadDialog extends Dialog {
 
 
     private void downloadAPK(){
-        ApiServiceManager.fileDownLoad("http://183.222.103.13/cache/imtt.dd.qq.com/16891/758F982E62B220A8D1AB507C6877B306.apk?fsname=com.tencent.weishi_4.6.0.588_460.apk&csr=1bbd&ich_args2=317-30101712037112_531cd4b6e26b76a59962aaa0df29fad5_10004302_9c896729d2caf4d5923c518939a83798_29b123687c4ef48198846bedc81d10ba","downloaddemo.apk",handler);
+        ApiServiceManager.fileDownLoad("http://imtt.dd.qq.com/16891/010A36E0CE3DCDB3FB4811F606CDFE18.apk?fsname=com.tencent.tmgp.dkmhjqy_2.1.22_72.apk&csr=1bbd","downloaddemo.apk",handler);
     }
 }

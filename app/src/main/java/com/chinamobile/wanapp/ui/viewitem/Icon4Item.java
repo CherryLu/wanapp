@@ -5,6 +5,7 @@ import android.widget.RelativeLayout;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.ui.view.DownloadDialog;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -34,7 +35,9 @@ public class Icon4Item implements ItemViewDelegate<BaseItem> {
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Nagivator.startEveryRewardActivity(view.getContext());
+               // Nagivator.startEveryRewardActivity(view.getContext());
+                DownloadDialog downloadDialog = new DownloadDialog(view.getContext());
+                downloadDialog.show();
 
             }
         });

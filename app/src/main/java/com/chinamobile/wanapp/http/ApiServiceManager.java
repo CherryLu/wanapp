@@ -369,12 +369,12 @@ public class ApiServiceManager {
                             public void onProgress(long progress, long total, boolean done) {
                                 LogUtils.e("Download","progress : "+progress+"         total : "+total);
 
-                                if (handler!=null){
+                               /* if (handler!=null){
                                     Message message = Message.obtain();
                                     message.what = 200;
                                     message.obj = (progress/total);
                                     handler.sendMessage(message);
-                                }
+                                }*/
 
                             }
                         })).build();
@@ -390,6 +390,7 @@ public class ApiServiceManager {
                             public void run() {
                                 try {
                                     if (response == null || response.body() == null) {//空地址
+                                        LogUtils.e("Download","空地址");
                                         if (handler!=null){
                                             Message message = Message.obtain();
                                             message.what = 201;//
@@ -412,6 +413,7 @@ public class ApiServiceManager {
                                     is.close();
                                 } catch (IOException e) {
                                     e.printStackTrace();//下载失败
+                                    LogUtils.e("Download","下载失败 ："+e.getMessage());
                                     if (handler!=null){
                                         Message message = Message.obtain();
                                         message.what = 201;
@@ -426,6 +428,7 @@ public class ApiServiceManager {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         t.printStackTrace();//下载失败
+                        LogUtils.e("Download","onFailure ："+t.getMessage());
                         if (handler!=null){
                             Message message = Message.obtain();
                             message.what = 201;
