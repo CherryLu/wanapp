@@ -369,12 +369,16 @@ public class ApiServiceManager {
                             public void onProgress(long progress, long total, boolean done) {
                                 LogUtils.e("Download","progress : "+progress+"         total : "+total);
 
-                               /* if (handler!=null){
+                                if (handler!=null){
                                     Message message = Message.obtain();
                                     message.what = 200;
-                                    message.obj = (progress/total);
+                                    double to = total;
+                                    double pr = progress;
+                                    float pro = (float) (pr/to);
+                                    LogUtils.e("Download","pro : "+pro);
+                                    message.obj = pro;
                                     handler.sendMessage(message);
-                                }*/
+                                }
 
                             }
                         })).build();

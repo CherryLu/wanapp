@@ -41,6 +41,17 @@
         <activity android:name=".ui.activity.WeeksPlanActivity"/>
         <activity android:name=".ui.activity.UploadActivity"/>
         <activity android:name=".ui.activity.InvitationActivity"/>
+
+        <provider
+            android:name=".utils.WanFileProvider"
+            android:authorities="com.chinamobile.wanapp"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+    </provider>
     </application>
 
 </manifest>
