@@ -19,9 +19,11 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -135,9 +137,10 @@ public class ApiServiceManager {
     /**
      * 获取任务详情
      */
-    public static void getTaskDetail(String mid,HttpResponse response){
+    public static void getTaskDetail(String fid,HttpResponse response){
         Map<String, String> stringMap = new HashMap<>();
-        stringMap.put("uid", mid);
+        stringMap.put("uid", UserManager.getInstance().getId());
+        stringMap.put("fid", fid);
         stringMap.put("count_end", "20");
         doGet(GET_TASK_DETAIL,stringMap, new HttpCallBack(response));
     }
@@ -173,7 +176,7 @@ public class ApiServiceManager {
         stringMap.put("jid",jid);
         stringMap.put("jzGain",jz_gain);
         stringMap.put("remark",remark);
-        stringMap.put("snap_url",snap_url);
+        stringMap.put("snapUrl",snap_url);
         stringMap.put("status","0");//免审核1  需要审核0
         stringMap.put("eid",eid);
         stringMap.put("submitTimeStr",getData());
@@ -209,16 +212,14 @@ public class ApiServiceManager {
     /**
      * 任务完成详情
      * @param eid
-     * @param submitTime
-     * @param approveTime
      * @param response
      */
-    private static void getTaskCompletionDetail(String eid, String submitTime,String approveTime,HttpResponse response){
+    private static void getTaskCompletionDetail(String eid,HttpResponse response){
         Map<String,String> map = new HashMap<>();
         map.put("uid",UserManager.getInstance().getId());
         map.put("eid",eid);
-        map.put("submitTime",submitTime);
-        map.put("approveTime",approveTime);
+        map.put("submitTime",getThisWeekStart());
+        map.put("approveTime",getThisWeekStart());
         doGet(TASK_FINISH_DETAIL,map, new HttpCallBack(response));
 
     }
@@ -228,12 +229,12 @@ public class ApiServiceManager {
     /**
      * 任务完成统计
      */
-    private static void getTaskFinishTotal(String eid, String submitTime,String approveTime,HttpResponse response){
+    private static void getTaskFinishTotal(String eid,HttpResponse response){
         Map<String,String> map = new HashMap<>();
         map.put("uid",UserManager.getInstance().getId());
         map.put("eid",eid);
-        map.put("submitTime",submitTime);
-        map.put("approveTime",approveTime);
+        map.put("submitTime",getThisWeekStart());
+        map.put("approveTime",getThisWeekEnd());
         doGet(TASK_FINISH_TOTAL,map, new HttpCallBack(response));
     }
 
@@ -318,17 +319,38 @@ public class ApiServiceManager {
     }
 
     /**
-     * 获取一周 内任务完成情况
+     * 获取一周 起始时间
      * @return
      */
-    private static long[] getThisWeek(){
-        long current=new Date().getTime();//当前时间毫秒数
-        long zero=current/(1000*3600*24)*(1000*3600*24)- TimeZone.getDefault().getRawOffset();//今天零点零分零秒的毫秒数
-        long twelve=zero+24*60*60*1000-1;//今天23点59分59秒的毫秒数
+    private static String getThisWeekStart(){
 
-        long[] longs = new long[]{zero,twelve};
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyyMMdd", Locale. getDefault());
+        Calendar cal = Calendar.getInstance();
+        int day_of_week = cal.get(Calendar. DAY_OF_WEEK) - 1;
+        if (day_of_week == 0 ) {
+            day_of_week = 7 ;
+        }
+        cal.add(Calendar.DATE , -day_of_week + 1 );
 
-        return  longs;
+
+        return  simpleDateFormat.format(cal.getTime()) + "000000000";
+    }
+
+    /**
+     * 获取一周结束时间
+     * @return
+     */
+
+    private static String getThisWeekEnd(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyyMMdd", Locale. getDefault());
+        Calendar cal = Calendar.getInstance();
+        int day_of_week = cal.get(Calendar. DAY_OF_WEEK) - 1;
+        if (day_of_week == 0 ) {
+            day_of_week = 7 ;
+        }
+        cal.add(Calendar.DATE , -day_of_week + 7 );
+        return simpleDateFormat.format(cal.getTime()) + "235959999";
+
     }
 
 

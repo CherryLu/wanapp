@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.utils.Nagivator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,8 +46,10 @@ public class H5ShareActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_image:
+                Nagivator.finishActivity(this);
                 break;
             case R.id.share:
+                alertHelper.showConfirm();
                 break;
         }
     }

@@ -3,6 +3,9 @@ package com.chinamobile.wanapp.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.TaskData;
@@ -16,6 +19,7 @@ import com.chinamobile.wanapp.ui.activity.SignActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 import com.chinamobile.wanapp.ui.activity.UploadActivity;
+import com.chinamobile.wanapp.ui.activity.WeSaleActivity;
 import com.chinamobile.wanapp.ui.activity.WeeksPlanActivity;
 import com.chinamobile.wanapp.ui.view.DownloadDialog;
 import com.chinamobile.wanapp.ui.view.ShareDialog;
@@ -86,6 +90,17 @@ public class Nagivator {
      */
     public static void startEveryRewardActivity(Context context){
         Intent intent = new Intent(context, RewardActivity.class);
+        intent.putExtra("TYPE",1);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 微商任务
+     * @param context
+     */
+    public static void startWeSaleActivityActivity(Context context){
+        Intent intent = new Intent(context, WeSaleActivity.class);
         intent.putExtra("TYPE",1);
         context.startActivity(intent);
     }
@@ -192,6 +207,15 @@ public class Nagivator {
             helper.showError("数据异常，无法解析");
             return;
         }
+
+
+        if (taskData.getAction().equals(1)){//原生
+            Intent intent = new Intent();
+            intent.setData(Uri.parse("www.baidu.com"));//Url 就是你要打开的网址
+            intent.setAction(Intent.ACTION_VIEW);
+            context.startActivity(intent); //启动浏览器
+            return;
+        }
       String[] strs =  taskData.getParam().split("=");
         if (strs.length>1){
             String page = strs[1];
@@ -204,18 +228,29 @@ public class Nagivator {
 
                     break;
                 case "102"://先检测是否安装，然后下载
-                    if (SystemUtil.hasInstanceApp(context,taskData.getJobStr())){//已安装
-                        SystemUtil.openOtherAPP(context,taskData.getJobStr());
+                    String packetName ="";
+                    if ("0".equals(taskData.getJobStr().getMarket())){
+                        packetName = taskData.getJobStr().getMarketApk();
+                    }else {
+                        packetName = taskData.getJobStr().getAppApk();
+                    }
+                    if (TextUtils.isEmpty(packetName)){
+                        Toast.makeText(context,"包名为空",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (SystemUtil.hasInstanceApp(context,taskData.getJobStr().getAppApk())){//已安装
+                        SystemUtil.openOtherAPP(context,taskData.getJobStr().getAppApk());
                     }else {
                         DownloadDialog downloadDialog = new DownloadDialog(context,taskData);
                         downloadDialog.show();
                     }
                     break;
                 case "103"://打开APP
-                    SystemUtil.openOtherAPP(context,taskData.getJobStr());
+                    SystemUtil.openOtherAPP(context,taskData.getJobStr().getAppApk());
                     break;
                 case "104"://分享
                     ShareDialog dialog = new ShareDialog(context,page);
+                    dialog.setTaskData(taskData);
                     dialog.show();
                     break;
 

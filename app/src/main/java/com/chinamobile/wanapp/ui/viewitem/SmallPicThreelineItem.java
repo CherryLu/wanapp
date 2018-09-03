@@ -34,15 +34,19 @@ public class SmallPicThreelineItem implements ItemViewDelegate<TaskData> {
     @Override
     public void convert(ViewHolder holder, final TaskData taskData, int position) {
         holder.setText(R.id.maintitle,taskData.getTitle());
-        holder.setText(R.id.lable1,taskData.getJobTags().split(";")[0]);
-        holder.setText(R.id.lable2,taskData.getJobTags().split(";")[1]);
+        if (taskData.getJobTags()!=null){
+            holder.setText(R.id.lable1,taskData.getJobTags().split(";")[0]);
+            holder.setText(R.id.lable2,taskData.getJobTags().split(";")[1]);
+        }
         holder.setText(R.id.fanxian,taskData.getJzGain()+"%");
         ImageView item_pic = holder.getConvertView().findViewById(R.id.item_pic);
         GlideUtil.loadImageView(APP.getContext(),taskData.getIconUrl(),item_pic);
         holder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nagivator.startTaskOClick(v.getContext(),taskData);
+               // Nagivator.startTaskOClick(v.getContext(),taskData);
+                Nagivator.startH5TaskShareActivity(v.getContext());
+               // Nagivator.startTaskOClick(v.getContext(),taskData);
             }
         });
     }

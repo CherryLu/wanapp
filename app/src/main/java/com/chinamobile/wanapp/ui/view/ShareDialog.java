@@ -10,8 +10,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.baen.TaskData;
 
 /**
  * Created by Administrator on 2018/8/16.
@@ -21,6 +23,12 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
 
 
     private String page;
+
+    private TaskData taskData;
+
+    public void setTaskData(TaskData taskData) {
+        this.taskData = taskData;
+    }
 
     public ShareDialog(Context context) {
         super(context, R.style.MyDialog);
@@ -116,23 +124,32 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+
+    private void share(Context context){
+        if (taskData==null||taskData.getJobStr()==null){
+            Toast.makeText(context,"数据为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Toast.makeText(context,"url : "+taskData.getJobStr().getShareData().get(0).getShareUrl()+"     image : "+taskData.getJobStr().getShareData().get(0).getShareImage()+"      txt :"+taskData.getJobStr().getShareData().get(0).getShareTxt(),Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.qq_share:
-
+                share(view.getContext());
                 break;
             case R.id.qqzone_share:
-
+                share(view.getContext());
                 break;
             case R.id.weixin_share:
-
+                share(view.getContext());
                 break;
             case R.id.weixinsq_share:
-
+                share(view.getContext());
                 break;
             case R.id.sina_share:
-
+                share(view.getContext());
                 break;
             case R.id.cancle:
                 dismiss();

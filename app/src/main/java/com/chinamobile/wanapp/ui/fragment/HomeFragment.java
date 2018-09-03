@@ -14,10 +14,6 @@ import android.widget.Button;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
-import com.chinamobile.wanapp.baen.BaseWelfare;
-import com.chinamobile.wanapp.baen.UserBean;
-import com.chinamobile.wanapp.http.ApiServiceManager;
-import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
@@ -26,17 +22,14 @@ import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.UserManager;
-import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 
 /**
  * Created by 95470 on 2018/7/30.
@@ -121,8 +114,10 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         }
     }
 
+
     @OnClick(R.id.news_btn)
     public void onClick() {
         Nagivator.startRewardActivity(getContext());
+
     }
 }

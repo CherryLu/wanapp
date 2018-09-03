@@ -110,6 +110,18 @@ public class AlertHelper {
 
 
 
+    public void showConfirm(){
+        SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
+        mDialog.setCancelable(false);
+        mDialog.setTitleText("提示")
+                .setContentText("本订单消费30钻石，是否购买？")
+                .setConfirmText("确定")
+                .setCancelText("取消")
+                .show();
+    }
+
+
+
     public void showProgress(){
         SweetAlertDialog mDialog =new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
 

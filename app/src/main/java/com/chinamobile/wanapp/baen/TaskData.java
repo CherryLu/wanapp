@@ -1,6 +1,8 @@
 package com.chinamobile.wanapp.baen;
 
+import com.chinamobile.wanapp.utils.LogUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -163,8 +165,12 @@ public class TaskData implements Serializable {
         return fid;
     }
 
-    public String getJobStr() {
-        return jobStr;
+    public JobStr getJobStr() {
+        Gson gson = new Gson();
+        //jobStr = jobStr.substring(1,jobStr.length()-1);
+        LogUtils.e("ZX",jobStr);
+        JobStr jobs = gson.fromJson(jobStr,JobStr.class);
+        return jobs;
     }
 
     public String getNotice() {

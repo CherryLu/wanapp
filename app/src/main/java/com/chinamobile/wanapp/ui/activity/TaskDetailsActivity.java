@@ -86,7 +86,7 @@ public class TaskDetailsActivity extends BaseActivity {
     private void getDetails() {
 
 
-        ApiServiceManager.getTaskDetail(taskData.getId(), new HttpResponse() {
+        ApiServiceManager.getTaskDetail(taskData.getFid(), new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
@@ -197,7 +197,8 @@ public class TaskDetailsActivity extends BaseActivity {
         step_completion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Nagivator.startUploadActivity(TaskDetailsActivity.this,taskData);
+                Nagivator.startTaskOClick(TaskDetailsActivity.this,taskData);
+              // Nagivator.startUploadActivity(TaskDetailsActivity.this,taskData);
 
             }
         });
@@ -223,7 +224,7 @@ public class TaskDetailsActivity extends BaseActivity {
 
                 break;
             case "3"://注册任务   跳转APP
-                SystemUtil.openOtherAPP(this,taskData.getJobStr());
+                SystemUtil.openOtherAPP(this,taskData.getJobStr().getAppApk());
 
                 break;
 

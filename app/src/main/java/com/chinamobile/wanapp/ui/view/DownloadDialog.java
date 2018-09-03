@@ -10,13 +10,17 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.TaskData;
@@ -55,7 +59,7 @@ public class DownloadDialog extends Dialog {
 
                     if (progress>=1){//下载完成
                         title.setText("下载完成");//跳转安装页面
-                        File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", "downloaddemo.apk");
+                        File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", name);
                         installApk(loadFile);
                         dismiss();
                     }
@@ -75,20 +79,43 @@ public class DownloadDialog extends Dialog {
 
 
     /**
-     * 跳转APP安装页面   7.0以下系统
+     * 跳转APP安装页面
      * @param file
      */
     public void installApk(File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // 7.0+以上版本
-            Uri apkUri = FileProvider.getUriForFile(getContext(), "com.chinamobile.wanapp", file);  //包名.fileprovider
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+                if (getContext().getPackageManager().canRequestPackageInstalls()){
+                    Uri apkUri = FileProvider.getUriForFile(getContext(), "com.chinamobile.wanapp", file);  //包名.fileprovider
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+
+                }else {
+                    startInstallPermissionSettingActivity(getContext());
+                }
+            }else {
+                Uri apkUri = FileProvider.getUriForFile(getContext(), "com.chinamobile.wanapp", file);  //包名.fileprovider
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            }
+
+
         } else {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
         }
         getContext().startActivity(intent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startInstallPermissionSettingActivity(Context context) {
+        Uri packageURI = Uri.parse("package:" + context.getPackageName());
+        //注意这个是8.0新API
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+        context.startActivity(intent);
     }
 
 
@@ -134,11 +161,29 @@ public class DownloadDialog extends Dialog {
     }
 
 
-
+    String downloadurl = "";
+    String name = "";
     private void downloadAPK(){
-        File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", "downloaddemo.apk");
-        installApk(loadFile);
-        //fileDownLoad("http://imtt.dd.qq.com/16891/010A36E0CE3DCDB3FB4811F606CDFE18.apk?fsname=com.tencent.tmgp.dkmhjqy_2.1.22_72.apk&csr=1bbd","downloaddemo.apk",handler);
+       /* File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", "downloaddemo.apk");
+        installApk(loadFile);*/
+       if (taskData!=null){
+           if ("0".equals(taskData.getJobStr().getMarket())){
+               downloadurl = taskData.getJobStr().getMarketUrl();
+               name = taskData.getJobStr().getMarketApk()+".apk";
+           }else {
+               downloadurl = taskData.getJobStr().getAppUrl();
+               name = taskData.getJobStr().getAppApk()+".apk";
+           }
+
+       }
+
+       if (TextUtils.isEmpty(downloadurl)||TextUtils.isEmpty(name)){
+           Toast.makeText(getContext(),"数据为空",Toast.LENGTH_SHORT).show();
+       }else {
+           LogUtils.e("Download","下载链接  ： "+downloadurl);
+           fileDownLoad(downloadurl,name,handler);
+       }
+
     }
 
 
@@ -155,7 +200,7 @@ public class DownloadDialog extends Dialog {
             @Override
             public void run() {
                 final Retrofit.Builder builder = new Retrofit.Builder().baseUrl("https://codeload.github.com/");//传入服务器BaseUrl
-                okhttp3.OkHttpClient client = new okhttp3.OkHttpClient.Builder().addNetworkInterceptor(new okhttp3.Interceptor() {
+                okhttp3.OkHttpClient client = new okhttp3.OkHttpClient.Builder().retryOnConnectionFailure(true).addNetworkInterceptor(new okhttp3.Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Response response = chain.proceed(chain.request());
