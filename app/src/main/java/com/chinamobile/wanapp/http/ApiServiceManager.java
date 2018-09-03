@@ -214,7 +214,7 @@ public class ApiServiceManager {
      * @param eid
      * @param response
      */
-    private static void getTaskCompletionDetail(String eid,HttpResponse response){
+    public static void getTaskCompletionDetail(String eid,HttpResponse response){
         Map<String,String> map = new HashMap<>();
         map.put("uid",UserManager.getInstance().getId());
         map.put("eid",eid);
@@ -333,7 +333,7 @@ public class ApiServiceManager {
         cal.add(Calendar.DATE , -day_of_week + 1 );
 
 
-        return  simpleDateFormat.format(cal.getTime()) + "000000000";
+        return  simpleDateFormat.format(cal.getTime()) + "000000";
     }
 
     /**
@@ -349,7 +349,7 @@ public class ApiServiceManager {
             day_of_week = 7 ;
         }
         cal.add(Calendar.DATE , -day_of_week + 7 );
-        return simpleDateFormat.format(cal.getTime()) + "235959999";
+        return simpleDateFormat.format(cal.getTime()) + "235959";
 
     }
 

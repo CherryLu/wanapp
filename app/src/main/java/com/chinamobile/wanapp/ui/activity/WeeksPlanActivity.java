@@ -7,10 +7,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class WeeksPlanActivity extends BaseActivity {
 
@@ -45,12 +48,23 @@ public class WeeksPlanActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_everday);
         ButterKnife.bind(this);
+        getData();
 
     }
 
 
     private void getData(){
-        //ApiServiceManager.
+        ApiServiceManager.getTaskCompletionDetail("10", new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
     }
 
     @OnClick({R.id.layout_1_pic, R.id.layout_1, R.id.layout_2, R.id.layout_3, R.id.layout_4})
