@@ -67,5 +67,7 @@ dependencies {
     //阿里云服务器上传
     compile 'com.aliyun.dpa:oss-android-sdk:+'
 
+    compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
+
 
 }

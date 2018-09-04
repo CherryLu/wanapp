@@ -229,7 +229,7 @@ public class ApiServiceManager {
     /**
      * 任务完成统计
      */
-    private static void getTaskFinishTotal(String eid,HttpResponse response){
+    public static void getTaskFinishTotal(String eid,HttpResponse response){
         Map<String,String> map = new HashMap<>();
         map.put("uid",UserManager.getInstance().getId());
         map.put("eid",eid);

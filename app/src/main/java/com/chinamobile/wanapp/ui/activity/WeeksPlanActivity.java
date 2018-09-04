@@ -54,7 +54,7 @@ public class WeeksPlanActivity extends BaseActivity {
 
 
     private void getData(){
-        ApiServiceManager.getTaskCompletionDetail("10", new HttpResponse() {
+        ApiServiceManager.getTaskFinishTotal("10", new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
 
