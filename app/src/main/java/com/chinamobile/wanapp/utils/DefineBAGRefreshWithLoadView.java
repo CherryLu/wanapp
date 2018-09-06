@@ -142,7 +142,10 @@ public class DefineBAGRefreshWithLoadView extends BGARefreshViewHolder {
      * 设置加载
      */
     public void updateLoadingMoreText(String text) {
-        this.mFooterStatusTv.setText(text);
+        if (mFooterStatusTv!=null){
+            this.mFooterStatusTv.setText(text);
+        }
+
     }
 
     /**

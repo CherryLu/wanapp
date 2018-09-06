@@ -24,6 +24,7 @@ import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
 import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
+import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.UserManager;
 import com.google.gson.Gson;
@@ -107,7 +108,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     }
 
     private void setBgaRefreshLayout() {
-        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), false, true);
+        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), true, true);
         bga.setRefreshViewHolder(defineBAGRefreshWithLoadView);
         bga.setDelegate(this);
         defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
@@ -239,6 +240,10 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         }
     }
 
+    private void loadMore(){
+
+    }
+
 
 
     @Override
@@ -248,7 +253,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-
-        return false;
+       // defineBAGRefreshWithLoadView.showLoadingMoreImg();
+        return true;
     }
 }
