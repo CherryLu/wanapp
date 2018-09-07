@@ -2,6 +2,7 @@ package com.chinamobile.wanapp.ui.viewitem;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.TitleMessage;
 import com.chinamobile.wanapp.ui.view.TitleList;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -30,17 +31,23 @@ public class TabListItem implements ItemViewDelegate<BaseItem> {
     @Override
     public void convert(ViewHolder holder, BaseItem baseItem, int position) {
         TitleList titleList = holder.getConvertView().findViewById(R.id.titleList);
-        List<String> titleArrary = new ArrayList<>();
-        List<String> midList = new ArrayList<>();
+        List<TitleMessage> messages = new ArrayList<>();
+
         for (int i=0;i<baseItem.getDataList().size();i++){
             if ("1".equals(baseItem.getDataList().get(i).getPid())){
-                titleArrary.add(baseItem.getDataList().get(i).getMname());
-                midList.add(baseItem.getDataList().get(i).getId());
+
+                TitleMessage message = new TitleMessage();
+                message.setMid(baseItem.getDataList().get(i).getId());
+                message.setTitle(baseItem.getDataList().get(i).getMname());
+
+                messages.add(message);
+
             }
         }
-        titleList.addTitle(titleArrary);
-        titleList.setMids(midList);
+        titleList.setMessages(messages);
         titleList.setDefaultData(baseItem.getFirstData());
+
+
 
     }
 }

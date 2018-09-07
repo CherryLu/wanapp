@@ -11,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.chinamobile.wanapp.APP;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseHomeData;
 import com.chinamobile.wanapp.baen.BaseItem;
+import com.chinamobile.wanapp.baen.BaseTaskList;
 import com.chinamobile.wanapp.baen.HomeBean;
+import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
@@ -24,7 +27,6 @@ import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
 import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
-import com.chinamobile.wanapp.utils.LogUtils;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.UserManager;
 import com.google.gson.Gson;
@@ -33,6 +35,7 @@ import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,8 +77,19 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     break;
                 case LOAD_MORE_SUCCESS:
 
+                    if (bga!=null){
+                        bga.endLoadingMore();
+                    }
+
+                    //adapter.notifyItemChanged();
+
+
                     break;
                 case LOAD_MORE_ERROR:
+
+                    if (bga!=null){
+                        bga.endLoadingMore();
+                    }
 
                     break;
             }
@@ -108,7 +122,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     }
 
     private void setBgaRefreshLayout() {
-        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), true, true);
+        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), false, true);
         bga.setRefreshViewHolder(defineBAGRefreshWithLoadView);
         bga.setDelegate(this);
         defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
@@ -143,11 +157,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         Nagivator.startRewardActivity(getContext());
 
     }
-    private static final int WAITE_TIME = 500;
-    private static final int REFRESH_SUCCESS = 200;
-    private static final int REFRESH_ERROR = 201;
-    private static final int LOAD_MORE_SUCCESS = 202;
-    private static final int LOAD_MORE_ERROR = 203;
+
 
 
     private void getRefresh(){
@@ -239,9 +249,42 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             }
         }
     }
-
+    private List<TaskData> dataList;
     private void loadMore(){
+        ApiServiceManager.getDataList(APP.currentTitle.getMid(), APP.currentTitle.getCurrentPage(), new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseTaskList baseTaskList = gson.fromJson(json,BaseTaskList.class);
 
+                    if (baseTaskList!=null&&baseTaskList.getTaskDatas()!=null&&baseTaskList.getTaskDatas().size()>0){//成功
+                        dataList = baseTaskList.getTaskDatas();
+                        if (handler!=null){
+                            handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
+                        }
+                    }else {
+                        if (handler!=null){
+                            handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if (handler!=null){
+                        handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (handler!=null){
+                    handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
+                }
+            }
+        });
     }
 
 
@@ -253,7 +296,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        //loadMore();
        // defineBAGRefreshWithLoadView.showLoadingMoreImg();
-        return true;
+        return false;
     }
 }

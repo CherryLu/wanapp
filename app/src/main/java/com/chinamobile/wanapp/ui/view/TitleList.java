@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chinamobile.wanapp.APP;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
 import com.chinamobile.wanapp.baen.BaseTaskList;
 import com.chinamobile.wanapp.baen.TaskData;
+import com.chinamobile.wanapp.baen.TitleMessage;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
@@ -25,13 +27,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.ResponseBody;
 
 /**
  * Created by 95470 on 2018/7/28.
  */
 
-public class TitleList extends LinearLayout {
+public class TitleList extends LinearLayout implements BGARefreshLayout.BGARefreshLayoutDelegate  {
 
     public TitleList(Context context) {
         super(context);
@@ -55,30 +58,34 @@ public class TitleList extends LinearLayout {
         View view = View.inflate(context, R.layout.title_list,this);
         title_area = findViewById(R.id.title_area);
         contain_list = findViewById(R.id.contain_list);
-        //setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        //addView(view);
+
     }
 
-    List<String> mids;
 
-    public void setMids(List<String> mids) {
-        this.mids = mids;
+
+    List<TitleMessage> messages;
+
+    public void setMessages(List<TitleMessage> messages) {
+        this.messages = messages;
+        APP.currentTitle = messages.get(0);
+        addTitle();
     }
 
-    public void addTitle(List<String> strings){
+
+
+    public void addTitle(){
         if (title_area!=null){
             title_area.removeAllViews();
         }
-
-        if (strings==null||strings.size()<=0){
+        if (messages==null||messages.size()<=0){
             return;
         }
 
-        for (int i =0;i<strings.size();i++){
+        for (int i =0;i<messages.size();i++){
             final int position = i;
             TextView textView = (TextView) View.inflate(getContext(),R.layout.module_textview,null);
             textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
-            textView.setText(strings.get(i));
+            textView.setText(messages.get(i).getTitle());
             if (i==0){
                 textView.setTextSize(sp2px(50));
             }
@@ -93,7 +100,7 @@ public class TitleList extends LinearLayout {
     }
 
     private void setSelection(int position){
-
+        APP.currentTitle = messages.get(position);
         for (int i=0;i< title_area.getChildCount();i++){
             TextView textView = (TextView) title_area.getChildAt(i);
             if (i==position){
@@ -102,7 +109,7 @@ public class TitleList extends LinearLayout {
                 textView.setTextSize(sp2px(40));
             }
         }
-        String mid = mids.get(position);
+        String mid = messages.get(position).getMid();
         ApiServiceManager.getDataList(mid, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
@@ -164,6 +171,13 @@ public class TitleList extends LinearLayout {
     }
 
 
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
 
+    }
 
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
+    }
 }

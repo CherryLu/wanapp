@@ -130,7 +130,23 @@ public class ApiServiceManager {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("mid", mid);
         stringMap.put("uid", "");
-        stringMap.put("count_end", "20");
+        stringMap.put("count", "20");
+        stringMap.put("count_page", "");
+        doGet(GET_TASKLIST,stringMap, new HttpCallBack(response));
+    }
+
+
+    /**
+     *获取列表
+     * @param mid 列表标志
+     * @param response
+     */
+    public static void getDataList(String mid,int page,HttpResponse response){
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("mid", mid);
+        stringMap.put("uid", "");
+        stringMap.put("count_page", page+"");
+        stringMap.put("count", "20");
         doGet(GET_TASKLIST,stringMap, new HttpCallBack(response));
     }
 

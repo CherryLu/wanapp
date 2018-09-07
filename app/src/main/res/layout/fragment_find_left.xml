@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swiplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,14 +17,22 @@
                  android:layout_width="1dp"
                  android:layout_height="match_parent"
                  android:background="#f4f4f4"/>
+
+         <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+             android:id="@+id/bga"
+             android:layout_weight="0.2"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
              <android.support.v7.widget.RecyclerView
-                 android:layout_weight="0.2"
+                 android:layout_weight="1"
                  android:id="@+id/recyclerview"
                  android:layout_width="match_parent"
-                 android:layout_height="match_parent"/>
+                 android:layout_height="0dp"/>
+         </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
 
      </LinearLayout>
 
 
 
-</android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

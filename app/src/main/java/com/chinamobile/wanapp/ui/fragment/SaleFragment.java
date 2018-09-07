@@ -2,10 +2,9 @@ package com.chinamobile.wanapp.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,8 +20,8 @@ import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.adapter.LeftAdapter;
 import com.chinamobile.wanapp.ui.callback.LeftCallBack;
-import com.chinamobile.wanapp.ui.callback.TaskCallBack;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
+import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -33,26 +32,46 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.ResponseBody;
 
-public class SaleFragment extends BaseFragment implements OnRefreshListener,LeftCallBack {
+public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefreshLayout.BGARefreshLayoutDelegate {
 
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.swiplayout)
-    SwipeRefreshLayout swiplayout;
     @Bind(R.id.left_list)
     RecyclerView leftList;
+    @Bind(R.id.bga)
+    BGARefreshLayout bga;
 
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 100:
-                    if (swiplayout != null) {
-                        swiplayout.setRefreshing(false);
+                case REFRESH_SUCCESS:
+                    if (bga!=null){
+                        bga.endRefreshing();
                     }
+                    break;
+                case REFRESH_ERROR:
+                    if (bga!=null){
+                        bga.endRefreshing();
+                    }
+                    break;
+                case LOAD_MORE_SUCCESS:
+
+                    if (bga!=null){
+                        bga.endLoadingMore();
+                    }
+
+                    break;
+                case LOAD_MORE_ERROR:
+
+                    if (bga!=null){
+                        bga.endLoadingMore();
+                    }
+
                     break;
             }
             super.handleMessage(msg);
@@ -64,14 +83,24 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
         super.onCreate(savedInstanceState);
     }
 
+    DefineBAGRefreshWithLoadView defineBAGRefreshWithLoadView;
+
+    private void setBgaRefreshLayout() {
+        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), true, true);
+        bga.setRefreshViewHolder(defineBAGRefreshWithLoadView);
+        bga.setDelegate(this);
+        defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
+    }
+
     ArrayList<TaskData> dataList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_find_left, null);
         ButterKnife.bind(this, mRootView);
         dataList = (ArrayList<TaskData>) getArguments().getSerializable("LIST");
-        swiplayout.setOnRefreshListener(this);
+        setBgaRefreshLayout();
         setLeft();
         getData(0);
         return mRootView;
@@ -89,20 +118,20 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
 
     private List<TitleBean> titles;
     private List<String> mids;
+
     private List<TitleBean> getStrings() {
         titles = new ArrayList<>();
         mids = new ArrayList<>();
-        for (int i =0;i<dataList.size();i++){
-            if ("2".equals(dataList.get(i).getPid())){
-                TitleBean titleBean = new TitleBean(dataList.get(i).getMname(),false);
+        for (int i = 0; i < dataList.size(); i++) {
+            if ("2".equals(dataList.get(i).getPid())) {
+                TitleBean titleBean = new TitleBean(dataList.get(i).getMname(), false);
                 titles.add(titleBean);
                 mids.add(dataList.get(i).getId());
             }
         }
-        if (titles.get(0)!=null){
+        if (titles.get(0) != null) {
             titles.get(0).setSelect(true);
         }
-
 
 
         return titles;
@@ -112,15 +141,17 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
     private MultiItemTypeAdapter adapter;
     private List<TaskData> mDatas;
 
+    private int currentPos;
+
     private void getData(int position) {
 
-        ApiServiceManager.getDataList(mids.get(position), new HttpResponse() {
+        ApiServiceManager.getDataList(mids.get(position),0, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
-                    String  json = new String(body.bytes());
+                    String json = new String(body.bytes());
                     Gson gson = new Gson();
-                    BaseTaskList baseTaskList = gson.fromJson(json,BaseTaskList.class);
+                    BaseTaskList baseTaskList = gson.fromJson(json, BaseTaskList.class);
                     mDatas = new ArrayList<>();
                     mDatas.addAll(baseTaskList.getTaskDatas());
                     setListData();
@@ -139,9 +170,81 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
     }
 
 
-    private void setListData(){
-        if (mDatas!=null){
-            for (int i =0;i<mDatas.size();i++){
+    private void refreshData(int position) {
+
+        ApiServiceManager.getDataList(mids.get(position),0, new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseTaskList baseTaskList = gson.fromJson(json, BaseTaskList.class);
+                    mDatas = new ArrayList<>();
+                    mDatas.addAll(baseTaskList.getTaskDatas());
+                    setListData();
+                    setList();
+                    if (handler!=null){
+                        handler.sendEmptyMessageDelayed(REFRESH_SUCCESS,WAITE_TIME);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if (handler!=null){
+                        handler.sendEmptyMessageDelayed(REFRESH_ERROR,WAITE_TIME);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (handler!=null){
+                    handler.sendEmptyMessageDelayed(REFRESH_ERROR,WAITE_TIME);
+                }
+            }
+        });
+    }
+
+    private int currentPage = 1;
+    private void loadMoreData(int position) {
+
+        ApiServiceManager.getDataList(mids.get(position), currentPage,new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+                try {
+                    String json = new String(body.bytes());
+                    Gson gson = new Gson();
+                    BaseTaskList baseTaskList = gson.fromJson(json, BaseTaskList.class);
+                    mDatas = new ArrayList<>();
+                    mDatas.addAll(baseTaskList.getTaskDatas());
+                    setListData();
+                    //setList();
+                    adapter.notifyDataSetChanged();
+                    currentPage++;
+                    if (handler!=null){
+                        handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if (handler!=null){
+                        handler.sendEmptyMessageDelayed(LOAD_MORE_ERROR,WAITE_TIME);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (handler!=null){
+                    handler.sendEmptyMessageDelayed(LOAD_MORE_ERROR,WAITE_TIME);
+                }
+            }
+        });
+    }
+
+
+    private void setListData() {
+        if (mDatas != null) {
+            for (int i = 0; i < mDatas.size(); i++) {
                 mDatas.get(i).setType(BaseItem.ITEM_SMALL_PIC_THREE);
             }
         }
@@ -156,8 +259,6 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
 
         recyclerview.setLayoutManager(manager);
         recyclerview.setAdapter(wrapper);
-
-
     }
 
     @Override
@@ -167,15 +268,22 @@ public class SaleFragment extends BaseFragment implements OnRefreshListener,Left
     }
 
     @Override
-    public void onRefresh() {
-        handler.sendEmptyMessageDelayed(100, 1000);
+    public void leftItemClick(int position) {
+        currentPos = position;
+        getData(position);
+    }
+
+
+
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        refreshData(currentPos);
     }
 
     @Override
-    public void leftItemClick(int position) {
-
-        getData(position);
-
-
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        loadMoreData(currentPos);
+        return true;
     }
 }

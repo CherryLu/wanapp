@@ -1,5 +1,7 @@
 package com.chinamobile.wanapp.ui.viewitem;
 
+import android.view.View;
+
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.Welfare;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
@@ -30,6 +32,14 @@ public class RewardTask implements ItemViewDelegate<Welfare> {
         }
 
         holder.setText(R.id.maintitle,welfare.getRemark()+"   ("+welfare.getJujEid()+"/"+welfare.getRequest()+")");
+
+        holder.setOnClickListener(R.id.completion_btn, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
 }

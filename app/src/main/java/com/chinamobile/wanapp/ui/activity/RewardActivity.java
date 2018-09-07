@@ -1,8 +1,6 @@
 package com.chinamobile.wanapp.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +14,7 @@ import com.chinamobile.wanapp.baen.Welfare;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.viewitem.RewardTask;
+import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
@@ -28,13 +27,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/12.
  */
 
-public class RewardActivity extends BaseActivity {
+public class RewardActivity extends BaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
 
     @Bind(R.id.recyclerview)
@@ -49,34 +49,38 @@ public class RewardActivity extends BaseActivity {
     TextView rightTxt;
     @Bind(R.id.right_image)
     ImageView rightImage;
+    @Bind(R.id.bag)
+    BGARefreshLayout bag;
 
     private MultiItemTypeAdapter adapter;
     private List<Welfare> mDatas = new ArrayList<>();
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
     int type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward);
         ButterKnife.bind(this);
-        type = getIntent().getIntExtra("TYPE",0);
-        if (type==0){
+        type = getIntent().getIntExtra("TYPE", 0);
+        setBgaRefreshLayout();
+        if (type == 0) {
             setTitleBar("每日任务");
-        }else {
+        } else {
             setTitleBar("新手任务");
         }
 
         getData();
+    }
+
+
+    DefineBAGRefreshWithLoadView defineBAGRefreshWithLoadView;
+
+    private void setBgaRefreshLayout() {
+        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(this, false, true);
+        bag.setRefreshViewHolder(defineBAGRefreshWithLoadView);
+        bag.setDelegate(this);
+        defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
     }
 
     private void setList() {
@@ -92,16 +96,20 @@ public class RewardActivity extends BaseActivity {
     }
 
     private void getData() {
-        if (type==0){
+        if (type == 0) {
             ApiServiceManager.getEveryDay(new HttpResponse() {
                 @Override
                 public void onNext(ResponseBody body) {
                     try {
                         String json = new String(body.bytes());
                         Gson gson = new Gson();
-                        BaseWelfare baseWelfare = gson.fromJson(json,BaseWelfare.class);
-                        if (baseWelfare!=null){
+                        BaseWelfare baseWelfare = gson.fromJson(json, BaseWelfare.class);
+                        if (baseWelfare != null) {
+                            mDatas.clear();
                             mDatas.addAll(baseWelfare.getWelfares());
+                        }
+                        if (bag!=null){
+                            bag.endRefreshing();
                         }
                         setList();
                     } catch (IOException e) {
@@ -129,5 +137,15 @@ public class RewardActivity extends BaseActivity {
             case R.id.get_reward:
                 break;
         }
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        getData();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
     }
 }

@@ -8,7 +8,7 @@ import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.chinamobile.wanapp.baen.TitleMessage;
 import com.chinamobile.wanapp.utils.Constant;
 
 /**
@@ -18,6 +18,8 @@ import com.chinamobile.wanapp.utils.Constant;
 public class APP extends Application {
     private static OSS oss;
     private static Context context;
+
+    public static TitleMessage currentTitle;
     @Override
     public void onCreate() {
         super.onCreate();
