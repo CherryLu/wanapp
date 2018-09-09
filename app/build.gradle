@@ -66,8 +66,10 @@ dependencies {
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     //阿里云服务器上传
     compile 'com.aliyun.dpa:oss-android-sdk:+'
-
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+
 
 
 }

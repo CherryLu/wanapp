@@ -5,19 +5,20 @@
     android:layout_height="match_parent">
     <include layout="@layout/title_layout"/>
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/bag"
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_weight="1"
-            android:id="@+id/recyclerview"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshlayout"
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="match_parent">
 
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_weight="1"
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
 
 
 

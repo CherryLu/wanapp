@@ -5,11 +5,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.BaseItem;
@@ -21,7 +24,6 @@ import com.chinamobile.wanapp.http.HttpResponse;
 import com.chinamobile.wanapp.ui.adapter.LeftAdapter;
 import com.chinamobile.wanapp.ui.callback.LeftCallBack;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
-import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
 import com.google.gson.Gson;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -38,39 +40,27 @@ import okhttp3.ResponseBody;
 public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefreshLayout.BGARefreshLayoutDelegate {
 
 
-    @Bind(R.id.recyclerview)
-    RecyclerView recyclerview;
     @Bind(R.id.left_list)
     RecyclerView leftList;
-    @Bind(R.id.bga)
-    BGARefreshLayout bga;
+    @Bind(R.id.fragment_container)
+    FrameLayout fragmentContainer;
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REFRESH_SUCCESS:
-                    if (bga!=null){
-                        bga.endRefreshing();
-                    }
+
                     break;
                 case REFRESH_ERROR:
-                    if (bga!=null){
-                        bga.endRefreshing();
-                    }
+
                     break;
                 case LOAD_MORE_SUCCESS:
 
-                    if (bga!=null){
-                        bga.endLoadingMore();
-                    }
 
                     break;
                 case LOAD_MORE_ERROR:
 
-                    if (bga!=null){
-                        bga.endLoadingMore();
-                    }
 
                     break;
             }
@@ -83,14 +73,6 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
         super.onCreate(savedInstanceState);
     }
 
-    DefineBAGRefreshWithLoadView defineBAGRefreshWithLoadView;
-
-    private void setBgaRefreshLayout() {
-        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), true, true);
-        bga.setRefreshViewHolder(defineBAGRefreshWithLoadView);
-        bga.setDelegate(this);
-        defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
-    }
 
     ArrayList<TaskData> dataList;
 
@@ -100,9 +82,9 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
         mRootView = inflater.inflate(R.layout.fragment_find_left, null);
         ButterKnife.bind(this, mRootView);
         dataList = (ArrayList<TaskData>) getArguments().getSerializable("LIST");
-        setBgaRefreshLayout();
         setLeft();
-        getData(0);
+       // getData(0);
+        getFragment(0);
         return mRootView;
     }
 
@@ -112,6 +94,7 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
         leftAdapter = new LeftAdapter(getContext(), getStrings());
         leftAdapter.setCallBack(this);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
         leftList.setLayoutManager(manager);
         leftList.setAdapter(leftAdapter);
     }
@@ -145,7 +128,7 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
 
     private void getData(int position) {
 
-        ApiServiceManager.getDataList(mids.get(position),0, new HttpResponse() {
+        ApiServiceManager.getDataList(mids.get(position), 0, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
@@ -155,7 +138,6 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
                     mDatas = new ArrayList<>();
                     mDatas.addAll(baseTaskList.getTaskDatas());
                     setListData();
-                    setList();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -172,7 +154,7 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
 
     private void refreshData(int position) {
 
-        ApiServiceManager.getDataList(mids.get(position),0, new HttpResponse() {
+        ApiServiceManager.getDataList(mids.get(position), 0, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
@@ -182,14 +164,13 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
                     mDatas = new ArrayList<>();
                     mDatas.addAll(baseTaskList.getTaskDatas());
                     setListData();
-                    setList();
-                    if (handler!=null){
-                        handler.sendEmptyMessageDelayed(REFRESH_SUCCESS,WAITE_TIME);
+                    if (handler != null) {
+                        handler.sendEmptyMessageDelayed(REFRESH_SUCCESS, WAITE_TIME);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    if (handler!=null){
-                        handler.sendEmptyMessageDelayed(REFRESH_ERROR,WAITE_TIME);
+                    if (handler != null) {
+                        handler.sendEmptyMessageDelayed(REFRESH_ERROR, WAITE_TIME);
                     }
                 }
 
@@ -197,17 +178,18 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
 
             @Override
             public void onError(Throwable e) {
-                if (handler!=null){
-                    handler.sendEmptyMessageDelayed(REFRESH_ERROR,WAITE_TIME);
+                if (handler != null) {
+                    handler.sendEmptyMessageDelayed(REFRESH_ERROR, WAITE_TIME);
                 }
             }
         });
     }
 
     private int currentPage = 1;
+
     private void loadMoreData(int position) {
 
-        ApiServiceManager.getDataList(mids.get(position), currentPage,new HttpResponse() {
+        ApiServiceManager.getDataList(mids.get(position), currentPage, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
@@ -220,13 +202,13 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
                     //setList();
                     adapter.notifyDataSetChanged();
                     currentPage++;
-                    if (handler!=null){
-                        handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
+                    if (handler != null) {
+                        handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS, WAITE_TIME);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    if (handler!=null){
-                        handler.sendEmptyMessageDelayed(LOAD_MORE_ERROR,WAITE_TIME);
+                    if (handler != null) {
+                        handler.sendEmptyMessageDelayed(LOAD_MORE_ERROR, WAITE_TIME);
                     }
                 }
 
@@ -234,8 +216,8 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
 
             @Override
             public void onError(Throwable e) {
-                if (handler!=null){
-                    handler.sendEmptyMessageDelayed(LOAD_MORE_ERROR,WAITE_TIME);
+                if (handler != null) {
+                    handler.sendEmptyMessageDelayed(LOAD_MORE_ERROR, WAITE_TIME);
                 }
             }
         });
@@ -250,16 +232,6 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
         }
     }
 
-    private void setList() {
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        adapter = new MultiItemTypeAdapter(getContext(), mDatas);
-        adapter.addItemViewDelegate(new SmallPicThreelineItem());
-        EmptyWrapper wrapper = new EmptyWrapper(adapter);
-        wrapper.setEmptyView(R.layout.empty_view);
-
-        recyclerview.setLayoutManager(manager);
-        recyclerview.setAdapter(wrapper);
-    }
 
     @Override
     public void onDestroyView() {
@@ -269,11 +241,24 @@ public class SaleFragment extends BaseFragment implements LeftCallBack, BGARefre
 
     @Override
     public void leftItemClick(int position) {
-        currentPos = position;
-        getData(position);
+        getFragment(position);
+
+      /*  currentPos = position;
+        getData(position);*/
     }
 
+    private void getFragment(int position){
+        TwoLineListFragment twoLineListFragment = new TwoLineListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("MID",mids.get(position));
+        twoLineListFragment.setArguments(bundle);
 
+        FragmentManager manager =  getChildFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.replace(R.id.fragment_container,twoLineListFragment);
+
+        ft.commit();
+    }
 
 
     @Override

@@ -9,6 +9,23 @@
     </style>
 
 
+    <style name="_item_click">
+        <item name="android:background">@drawable/selector_color_list</item>
+    </style>
+
+    <!-- 文本 - 滑动标签标题 -->
+    <style name="text_slidingTabTitle" parent="_item_click">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_color_list</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/selector_slide_title</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+
 
     <style name="normal_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@color/transparent</item>

@@ -50,8 +50,6 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
             holder.title.setTextColor(context.getResources().getColor(R.color.gray_text));
             holder.re_view.setVisibility(View.GONE);
         }
-
-
         holder.title.setText(recommends.get(position).getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +86,7 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.LViewHolder> {
         View re_view;
         public LViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
+            title = itemView.findViewById(R.id.title);
             re_view = itemView.findViewById(R.id.re_view);
         }
 

@@ -67,7 +67,7 @@ public class DefineBAGRefreshWithLoadView extends BGARefreshViewHolder {
      */
     public View getRefreshHeaderView() {
         if (this.mRefreshHeaderView == null) {
-            this.mRefreshHeaderView = View.inflate(this.mContext, R.layout.header_bga_dodo, (ViewGroup) null);
+            this.mRefreshHeaderView = View.inflate(this.mContext, R.layout.header_bga_dodo, (ViewGroup) null);//设置头部动画
             this.mRefreshHeaderView.setBackgroundColor(0);
             if (this.mRefreshViewBackgroundColorRes != -1) {
                 this.mRefreshHeaderView.setBackgroundResource(this.mRefreshViewBackgroundColorRes);
@@ -172,7 +172,7 @@ public class DefineBAGRefreshWithLoadView extends BGARefreshViewHolder {
             return null;
         }
         if (this.mLoadMoreFooterView == null) {
-            this.mLoadMoreFooterView = View.inflate(this.mContext, R.layout.footer_bga_dodo, null);
+            this.mLoadMoreFooterView = View.inflate(this.mContext, R.layout.footer_bga_dodo, null);//设置尾部部动画
             this.mLoadMoreFooterView.setBackgroundColor(Color.TRANSPARENT);
             this.mFooterStatusTv = (TextView) this.mLoadMoreFooterView.findViewById(R.id.tv_normal_refresh_footer_status);
             this.mFooterChrysanthemumIv = (ImageView) this.mLoadMoreFooterView.findViewById(R.id.iv_normal_refresh_footer_chrysanthemum);

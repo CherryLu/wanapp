@@ -1,7 +1,11 @@
 package com.chinamobile.wanapp.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -18,8 +22,14 @@ import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.baen.TitleMessage;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
+import com.chinamobile.wanapp.ui.activity.BaseActivity;
+import com.chinamobile.wanapp.ui.fragment.SortFragment;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
+import com.chinamobile.wanapp.utils.LogUtils;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -34,7 +44,9 @@ import okhttp3.ResponseBody;
  * Created by 95470 on 2018/7/28.
  */
 
-public class TitleList extends LinearLayout implements BGARefreshLayout.BGARefreshLayoutDelegate  {
+public class TitleList extends LinearLayout  {
+
+
 
     public TitleList(Context context) {
         super(context);
@@ -53,11 +65,14 @@ public class TitleList extends LinearLayout implements BGARefreshLayout.BGARefre
 
     LinearLayout title_area;
     RecyclerView contain_list;
+    SmartRefreshLayout refreshlayout;
 
     private void inttView(Context context){
         View view = View.inflate(context, R.layout.title_list,this);
         title_area = findViewById(R.id.title_area);
         contain_list = findViewById(R.id.contain_list);
+
+
 
     }
 
@@ -110,6 +125,7 @@ public class TitleList extends LinearLayout implements BGARefreshLayout.BGARefre
             }
         }
         String mid = messages.get(position).getMid();
+
         ApiServiceManager.getDataList(mid, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
@@ -171,13 +187,4 @@ public class TitleList extends LinearLayout implements BGARefreshLayout.BGARefre
     }
 
 
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-
-    }
-
-    @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        return false;
-    }
 }

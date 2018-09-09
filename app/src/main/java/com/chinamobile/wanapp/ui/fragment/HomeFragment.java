@@ -3,12 +3,14 @@ package com.chinamobile.wanapp.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 
 import com.chinamobile.wanapp.APP;
@@ -20,16 +22,20 @@ import com.chinamobile.wanapp.baen.HomeBean;
 import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
+import com.chinamobile.wanapp.ui.activity.BaseActivity;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
 import com.chinamobile.wanapp.ui.viewitem.TabListItem;
 import com.chinamobile.wanapp.ui.viewitem.TopMessageItem;
 import com.chinamobile.wanapp.ui.viewitem.TwoCardItem;
-import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.chinamobile.wanapp.utils.UserManager;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -40,62 +46,25 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.ResponseBody;
 
 /**
  * Created by 95470 on 2018/7/30.
  */
 
-public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class HomeFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
 
     @Bind(R.id.news_btn)
     Button newsBtn;
-    @Bind(R.id.bga)
-    BGARefreshLayout bga;
-    private DefineBAGRefreshWithLoadView defineBAGRefreshWithLoadView;
+    @Bind(R.id.refreshlayout)
+    SmartRefreshLayout refreshlayout;
 
     private MultiItemTypeAdapter adapter;
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case REFRESH_SUCCESS:
-                    if (bga!=null){
-                        bga.endRefreshing();
-                    }
-                    setList();
-                    break;
-                case REFRESH_ERROR:
-                    if (bga!=null){
-                        bga.endRefreshing();
-                    }
-                    break;
-                case LOAD_MORE_SUCCESS:
 
-                    if (bga!=null){
-                        bga.endLoadingMore();
-                    }
-
-                    //adapter.notifyItemChanged();
-
-
-                    break;
-                case LOAD_MORE_ERROR:
-
-                    if (bga!=null){
-                        bga.endLoadingMore();
-                    }
-
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
 
 
     @Override
@@ -109,7 +78,22 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_home, null);
         ButterKnife.bind(this, mRootView);
-        setBgaRefreshLayout();
+
+        refreshlayout.setEnableLoadMore(false);
+        refreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getRefresh();
+            }
+        });
+
+        /*refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                loadMore();
+            }
+        });*/
+
         baseItems = (ArrayList<BaseItem>) getArguments().getSerializable("LIST");
         setList();
 
@@ -121,12 +105,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         return mRootView;
     }
 
-    private void setBgaRefreshLayout() {
-        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getContext(), false, true);
-        bga.setRefreshViewHolder(defineBAGRefreshWithLoadView);
-        bga.setDelegate(this);
-        defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
-    }
 
     private void setList() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -142,6 +120,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
         recyclerview.setLayoutManager(manager);
         recyclerview.setAdapter(wrapper);
+
+
     }
 
 
@@ -159,48 +139,42 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     }
 
 
-
-    private void getRefresh(){
+    private void getRefresh() {
         ApiServiceManager.getHomeData(UserManager.getInstance().getId(), new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
                     String json = new String(body.bytes());
                     Gson gson = new Gson();
-                    BaseHomeData data = gson.fromJson(json,BaseHomeData.class);
-                    if (data!=null){
+                    BaseHomeData data = gson.fromJson(json, BaseHomeData.class);
+                    if (data != null) {
                         getListData(data.getHomeBean());
-                        if (handler!=null){
-                            handler.sendEmptyMessageDelayed(REFRESH_SUCCESS,WAITE_TIME);
-                        }
+                        refreshlayout.finishRefresh(WAITE_TIME);
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    if (handler!=null){
-                        handler.sendEmptyMessageDelayed(REFRESH_ERROR,WAITE_TIME);
-                    }
+                    refreshlayout.finishRefresh(WAITE_TIME);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                if (handler!=null){
-                    handler.sendEmptyMessageDelayed(REFRESH_ERROR,WAITE_TIME);
-                }
+                refreshlayout.finishRefresh(WAITE_TIME);
             }
         });
     }
 
     private ArrayList<BaseItem> baseItems;
-    private void getListData(HomeBean homeBean){
+
+    private void getListData(HomeBean homeBean) {
         baseItems = new ArrayList<>();
-        if (homeBean==null){
+        if (homeBean == null) {
             return;
         }
-        for (int i=0;i<6;i++){
-            switch (i){
+        for (int i = 0; i < 6; i++) {
+            switch (i) {
                 case 0: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_LOGO_MEASSAGE);
@@ -214,7 +188,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     baseItems.add(item);
                 }
                 break;
-                case 2:{
+                case 2: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_BANNER);
                     item.setDataList(homeBean.getJabm_res());
@@ -222,14 +196,14 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 }
                 break;
 
-                case 3:{
+                case 3: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_TWO_CARD);
                     baseItems.add(item);
                 }
                 break;
 
-                case 4:{
+                case 4: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_ROLL);
                     item.setTopMessage(homeBean.getJanm_res().get(0));
@@ -237,7 +211,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
                 }
                 break;
-                case 5:{
+                case 5: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_TAB_LIST);
                     item.setFirstData(homeBean.getJjp_res());
@@ -249,55 +223,37 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             }
         }
     }
+
     private List<TaskData> dataList;
-    private void loadMore(){
+
+    private void loadMore() {
         ApiServiceManager.getDataList(APP.currentTitle.getMid(), APP.currentTitle.getCurrentPage(), new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
                     String json = new String(body.bytes());
                     Gson gson = new Gson();
-                    BaseTaskList baseTaskList = gson.fromJson(json,BaseTaskList.class);
+                    BaseTaskList baseTaskList = gson.fromJson(json, BaseTaskList.class);
 
-                    if (baseTaskList!=null&&baseTaskList.getTaskDatas()!=null&&baseTaskList.getTaskDatas().size()>0){//成功
+                    if (baseTaskList != null && baseTaskList.getTaskDatas() != null && baseTaskList.getTaskDatas().size() > 0) {//成功
                         dataList = baseTaskList.getTaskDatas();
-                        if (handler!=null){
-                            handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
-                        }
-                    }else {
-                        if (handler!=null){
-                            handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
-                        }
+                        refreshlayout.finishLoadMore(WAITE_TIME);//传入false表示加载失败
+                    } else {
+                        refreshlayout.finishLoadMore(WAITE_TIME);//传入false表示加载失败
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    if (handler!=null){
-                        handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
-                    }
+                    refreshlayout.finishLoadMore(WAITE_TIME);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                if (handler!=null){
-                    handler.sendEmptyMessageDelayed(LOAD_MORE_SUCCESS,WAITE_TIME);
-                }
+                refreshlayout.finishLoadMore(WAITE_TIME);
             }
         });
     }
 
 
-
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        getRefresh();
-    }
-
-    @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        //loadMore();
-       // defineBAGRefreshWithLoadView.showLoadingMoreImg();
-        return false;
-    }
 }

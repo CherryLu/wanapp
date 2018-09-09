@@ -1,6 +1,7 @@
 package com.chinamobile.wanapp.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,10 +14,13 @@ import com.chinamobile.wanapp.baen.BaseWelfare;
 import com.chinamobile.wanapp.baen.Welfare;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
+import com.chinamobile.wanapp.ui.fragment.BaseFragment;
 import com.chinamobile.wanapp.ui.viewitem.RewardTask;
-import com.chinamobile.wanapp.utils.DefineBAGRefreshWithLoadView;
 import com.chinamobile.wanapp.utils.Nagivator;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -27,14 +31,13 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.ResponseBody;
 
 /**
  * Created by Administrator on 2018/8/12.
  */
 
-public class RewardActivity extends BaseActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class RewardActivity extends BaseActivity {
 
 
     @Bind(R.id.recyclerview)
@@ -49,8 +52,8 @@ public class RewardActivity extends BaseActivity implements BGARefreshLayout.BGA
     TextView rightTxt;
     @Bind(R.id.right_image)
     ImageView rightImage;
-    @Bind(R.id.bag)
-    BGARefreshLayout bag;
+    @Bind(R.id.refreshlayout)
+    SmartRefreshLayout refreshlayout;
 
     private MultiItemTypeAdapter adapter;
     private List<Welfare> mDatas = new ArrayList<>();
@@ -63,25 +66,22 @@ public class RewardActivity extends BaseActivity implements BGARefreshLayout.BGA
         setContentView(R.layout.activity_reward);
         ButterKnife.bind(this);
         type = getIntent().getIntExtra("TYPE", 0);
-        setBgaRefreshLayout();
         if (type == 0) {
             setTitleBar("每日任务");
         } else {
             setTitleBar("新手任务");
         }
 
+        refreshlayout.setEnableLoadMore(false);
+        refreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getData();
+            }
+        });
         getData();
     }
 
-
-    DefineBAGRefreshWithLoadView defineBAGRefreshWithLoadView;
-
-    private void setBgaRefreshLayout() {
-        defineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(this, false, true);
-        bag.setRefreshViewHolder(defineBAGRefreshWithLoadView);
-        bag.setDelegate(this);
-        defineBAGRefreshWithLoadView.updateLoadingMoreText("加载更多");
-    }
 
     private void setList() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -108,10 +108,10 @@ public class RewardActivity extends BaseActivity implements BGARefreshLayout.BGA
                             mDatas.clear();
                             mDatas.addAll(baseWelfare.getWelfares());
                         }
-                        if (bag!=null){
-                            bag.endRefreshing();
-                        }
                         setList();
+                        if (refreshlayout!=null){
+                            refreshlayout.finishRefresh(BaseFragment.WAITE_TIME);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                         setList();
@@ -139,13 +139,4 @@ public class RewardActivity extends BaseActivity implements BGARefreshLayout.BGA
         }
     }
 
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        getData();
-    }
-
-    @Override
-    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-        return false;
-    }
 }

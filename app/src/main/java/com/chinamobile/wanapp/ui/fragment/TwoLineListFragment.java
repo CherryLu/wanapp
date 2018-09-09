@@ -15,7 +15,7 @@ import com.chinamobile.wanapp.baen.BaseTaskList;
 import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
-import com.chinamobile.wanapp.ui.viewitem.BigPicItem;
+import com.chinamobile.wanapp.ui.viewitem.SmallPicThreelineItem;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -32,7 +32,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 
-public class ActivityFragment extends BaseFragment {
+/**
+ * Created by Administrator on 2018/9/9.
+ */
+
+public class TwoLineListFragment extends BaseFragment {
 
 
     @Bind(R.id.recyclerview)
@@ -45,43 +49,49 @@ public class ActivityFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
+    private String mid;
+    private int count = 1;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_find, null);
+        mRootView = View.inflate(getContext(), R.layout.fragment_sale, null);
         ButterKnife.bind(this, mRootView);
+        mid = getArguments().getString("MID");
+        refreshData();
         refreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getData();
+                refreshData();
             }
         });
-
         refreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMore();
+                loadMoreData();
             }
         });
-        getData();
         return mRootView;
     }
 
+
     private MultiItemTypeAdapter adapter;
     private List<TaskData> mDatas;
-    private int count = 1;
-    private void getData() {
-        ApiServiceManager.getDataList("1000",0, new HttpResponse() {
+
+
+    private void refreshData() {
+
+        ApiServiceManager.getDataList(mid, 0, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
                     String json = new String(body.bytes());
                     Gson gson = new Gson();
-                    BaseTaskList taskList = gson.fromJson(json, BaseTaskList.class);
-                    mDatas = new ArrayList<TaskData>();
-                    mDatas.addAll(taskList.getTaskDatas());
-                    setData();
+                    BaseTaskList baseTaskList = gson.fromJson(json, BaseTaskList.class);
+                    mDatas = new ArrayList<>();
+                    mDatas.addAll(baseTaskList.getTaskDatas());
+                    setListData();
                     setList();
                     count = 1;
                     if (refreshlayout!=null){
@@ -93,6 +103,7 @@ public class ActivityFragment extends BaseFragment {
                         refreshlayout.finishRefresh(WAITE_TIME);
                     }
                 }
+
             }
 
             @Override
@@ -103,66 +114,61 @@ public class ActivityFragment extends BaseFragment {
                 }
             }
         });
-
     }
 
-
-    private void loadMore(){
-        ApiServiceManager.getDataList("1000",count, new HttpResponse() {
+    private void loadMoreData(){
+        ApiServiceManager.getDataList(mid, count, new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
                 try {
                     String json = new String(body.bytes());
                     Gson gson = new Gson();
-                    BaseTaskList taskList = gson.fromJson(json, BaseTaskList.class);
+                    BaseTaskList baseTaskList = gson.fromJson(json, BaseTaskList.class);
                     if (mDatas==null){
                         mDatas = new ArrayList<>();
                     }
-                    mDatas.addAll(taskList.getTaskDatas());
-                    setData();
+                    mDatas.addAll(baseTaskList.getTaskDatas());
+                    setListData();
                     adapter.notifyDataSetChanged();
                     count++;
+
                     if (refreshlayout!=null){
                         refreshlayout.finishLoadMore(WAITE_TIME);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     if (refreshlayout!=null){
                         refreshlayout.finishLoadMore(WAITE_TIME);
                     }
                 }
+
             }
 
             @Override
             public void onError(Throwable e) {
-                e.printStackTrace();
                 if (refreshlayout!=null){
                     refreshlayout.finishLoadMore(WAITE_TIME);
                 }
             }
         });
-    };
+    }
 
-
-    private void setData() {
-        if (mDatas == null) {
-            return;
+    private void setListData() {
+        if (mDatas != null) {
+            for (int i = 0; i < mDatas.size(); i++) {
+                mDatas.get(i).setType(BaseItem.ITEM_SMALL_PIC_THREE);
+            }
         }
-        for (int i = 0; i < mDatas.size(); i++) {
-            mDatas.get(i).setType(BaseItem.ITEM_BIG_PIC);
-        }
-
-
     }
 
     private void setList() {
+
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
         adapter = new MultiItemTypeAdapter(getContext(), mDatas);
-        adapter.addItemViewDelegate(new BigPicItem());
+        adapter.addItemViewDelegate(new SmallPicThreelineItem());
         EmptyWrapper wrapper = new EmptyWrapper(adapter);
         wrapper.setEmptyView(R.layout.empty_view);
+
         recyclerview.setLayoutManager(manager);
         recyclerview.setAdapter(wrapper);
     }
@@ -172,5 +178,4 @@ public class ActivityFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
 }
