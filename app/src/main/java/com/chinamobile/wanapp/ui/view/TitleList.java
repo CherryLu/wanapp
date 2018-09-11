@@ -1,11 +1,7 @@
 package com.chinamobile.wanapp.ui.view;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -22,14 +18,8 @@ import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.baen.TitleMessage;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
-import com.chinamobile.wanapp.ui.activity.BaseActivity;
-import com.chinamobile.wanapp.ui.fragment.SortFragment;
 import com.chinamobile.wanapp.ui.viewitem.SmallPicItem;
-import com.chinamobile.wanapp.utils.LogUtils;
 import com.google.gson.Gson;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
@@ -37,7 +27,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import okhttp3.ResponseBody;
 
 /**
@@ -65,7 +54,6 @@ public class TitleList extends LinearLayout  {
 
     LinearLayout title_area;
     RecyclerView contain_list;
-    SmartRefreshLayout refreshlayout;
 
     private void inttView(Context context){
         View view = View.inflate(context, R.layout.title_list,this);
@@ -82,7 +70,7 @@ public class TitleList extends LinearLayout  {
 
     public void setMessages(List<TitleMessage> messages) {
         this.messages = messages;
-        APP.currentTitle = messages.get(0);
+        APP.titleMessages = messages;
         addTitle();
     }
 

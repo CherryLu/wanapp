@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.Welfare;
+import com.chinamobile.wanapp.utils.Nagivator;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -23,7 +24,7 @@ public class RewardTask implements ItemViewDelegate<Welfare> {
     }
 
     @Override
-    public void convert(ViewHolder holder, Welfare welfare, int position) {
+    public void convert(ViewHolder holder, Welfare welfare, final int position) {
 
         if ((welfare.getJujDc()/welfare.getRequest())>=1){//任务完场
             holder.setText(R.id.completion_btn,"已完成");
@@ -36,7 +37,7 @@ public class RewardTask implements ItemViewDelegate<Welfare> {
         holder.setOnClickListener(R.id.completion_btn, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Nagivator.startSortActivity(v.getContext(),position);
             }
         });
 

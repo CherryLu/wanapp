@@ -37,8 +37,8 @@ public class Icon4Item implements ItemViewDelegate<BaseItem> {
         layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Nagivator.startWeSaleActivityActivity(view.getContext());
-
+               // Nagivator.startWeSaleActivityActivity(view.getContext());
+                Nagivator.startSortActivity(view.getContext());
             }
         });
 

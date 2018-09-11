@@ -25,6 +25,7 @@
 #-renamesourcefileattribute SourceFile
 #-------------------------------------------定制化区域----------------------------------------------
 #---------------------------------1.实体类---------------------------------
+-keep class com.google.gson.stream.** { *; }
 -keep class com.chinabrowser.bean.**{*;}
 
 
@@ -82,6 +83,49 @@
 }
 #VideoPlayer end
 
+
+# banner 的混淆代码start
+-keep class com.youth.banner.** {
+    *;
+ }
+# banner 的混淆代码end
+
+
+# Retrofit  start
+-dontnote retrofit2.Platform
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+-dontwarn retrofit2.Platform$Java8
+-keepattributes Signature
+-keepattributes Exceptions
+# okhttp
+-dontwarn okhttp3.logging.**
+-keep class okhttp3.internal.**{*;}
+-dontwarn okio.**
+# Retrofit  end
+
+# SweetAlert start
+-keep class cn.pedant.SweetAlert.Rotate3dAnimation {
+  public <init>(...);
+}
+# SweetAlert end
+
+# TakePhoto start
+-keep class com.jph.takephoto.** { *; }
+-dontwarn com.jph.takephoto.**
+
+-keep class com.darsh.multipleimageselect.** { *; }
+-dontwarn com.darsh.multipleimageselect.**
+
+-keep class com.soundcloud.android.crop.** { *; }
+-dontwarn com.soundcloud.android.crop.**
+# TakePhoto end
+
+
+#阿里云OOS start
+-keep class com.alibaba.sdk.android.oss.** { *; }
+-dontwarn okio.**
+-dontwarn org.apache.commons.codec.binary.**
+#阿里云OOS end
 #-------------------------------------------------------------------------
 
 #---------------------------------3.与js互相调用的类------------------------

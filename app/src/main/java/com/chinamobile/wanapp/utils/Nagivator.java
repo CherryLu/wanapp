@@ -16,6 +16,7 @@ import com.chinamobile.wanapp.ui.activity.MainActivity;
 import com.chinamobile.wanapp.ui.activity.PersonSortActivity;
 import com.chinamobile.wanapp.ui.activity.RewardActivity;
 import com.chinamobile.wanapp.ui.activity.SignActivity;
+import com.chinamobile.wanapp.ui.activity.SortActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsActivity;
 import com.chinamobile.wanapp.ui.activity.TaskDetailsShareActivity;
 import com.chinamobile.wanapp.ui.activity.UploadActivity;
@@ -192,6 +193,27 @@ public class Nagivator {
     public static void startInvitationActivity(Context context){
 
         Intent intent = new Intent(context, InvitationActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 跳转分类页面
+     * @param context
+     */
+    public static void startSortActivity(Context context){
+        Intent intent = new Intent(context, SortActivity.class);
+        context.startActivity(intent);
+    }
+
+
+    /**
+     * 跳转分类页面
+     * @param context
+     */
+    public static void startSortActivity(Context context,int position){
+        Intent intent = new Intent(context, SortActivity.class);
+        intent.putExtra("POS",position);
         context.startActivity(intent);
     }
 

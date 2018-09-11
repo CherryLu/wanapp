@@ -4,10 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/title_layout"/>
     <com.chinamobile.wanapp.ui.view.PagerSlidingTabStrip
+        android:id="@+id/pagerSlidingTabStrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        app:allowWidthFull="true"
         app:slidingBlock="@drawable/image_sliding_block">
 
         <LinearLayout

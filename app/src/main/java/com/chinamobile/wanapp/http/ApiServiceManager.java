@@ -193,7 +193,7 @@ public class ApiServiceManager {
         stringMap.put("jzGain",jz_gain);
         stringMap.put("remark",remark);
         stringMap.put("snapUrl",snap_url);
-        stringMap.put("status","0");//免审核1  需要审核0
+        stringMap.put("status",status);//免审核1  需要审核0
         stringMap.put("eid",eid);
         stringMap.put("submitTimeStr",getData());
         stringMap.put("approveTimesStr",getData());
@@ -204,7 +204,7 @@ public class ApiServiceManager {
     /**
      * 获取邀请人情况
      */
-    private static void getUserInviteCase(HttpResponse response){
+    public static void getUserInviteCase(HttpResponse response){
         Map<String,String> map = new HashMap<>();
         map.put("uid",UserManager.getInstance().getId());
         doGet(USER_INVITECASE,map, new HttpCallBack(response));

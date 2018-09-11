@@ -19,6 +19,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2018/8/10.
  */
@@ -48,6 +50,7 @@ public class APP extends Application {
     }
 
     public static TitleMessage currentTitle;
+    public static List<TitleMessage> titleMessages;
     @Override
     public void onCreate() {
         super.onCreate();

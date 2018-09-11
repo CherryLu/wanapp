@@ -8,10 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chinamobile.wanapp.R;
+import com.chinamobile.wanapp.http.ApiServiceManager;
+import com.chinamobile.wanapp.http.HttpResponse;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 public class InvitationActivity extends BaseActivity {
 
@@ -59,6 +62,26 @@ public class InvitationActivity extends BaseActivity {
 
         setTitleBar("邀请详情");
     }
+
+    /**
+     * 获取邀请人
+     */
+    private void getData(){
+        ApiServiceManager.getUserInviteCase(new HttpResponse() {
+            @Override
+            public void onNext(ResponseBody body) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });
+    }
+
+
+
 
     @OnClick({R.id.back_image, R.id.qq_share, R.id.qqzone_share, R.id.weixin_share, R.id.weixinsq_share, R.id.sina_share})
     public void onClick(View view) {

@@ -43,6 +43,7 @@
         <activity android:name=".ui.activity.UploadActivity"/>
         <activity android:name=".ui.activity.InvitationActivity"/>
         <activity android:name=".ui.activity.WeSaleActivity"/>
+        <activity android:name=".ui.activity.SortActivity"/>
 
         <provider
             android:name=".utils.WanFileProvider"

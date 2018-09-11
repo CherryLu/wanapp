@@ -16,6 +16,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -41,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class DownloadDialog extends Dialog {
+public class DownloadDialog extends Dialog implements View.OnClickListener {
 
     public Handler  handler = new Handler(Looper.getMainLooper()){
         @Override
@@ -59,9 +60,7 @@ public class DownloadDialog extends Dialog {
 
                     if (progress>=1){//下载完成
                         title.setText("下载完成");//跳转安装页面
-                        File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", name);
-                        installApk(loadFile);
-                        dismiss();
+                        download_install.setVisibility(View.VISIBLE);
                     }
 
                     break;
@@ -92,7 +91,9 @@ public class DownloadDialog extends Dialog {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                     intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-
+                    getContext().startActivity(intent);
+                    dismiss();
+                    return;
                 }else {
                     startInstallPermissionSettingActivity(getContext());
                 }
@@ -101,13 +102,17 @@ public class DownloadDialog extends Dialog {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                getContext().startActivity(intent);
+                dismiss();
+                return;
             }
-
-
         } else {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            getContext().startActivity(intent);
+            dismiss();
+            return;
         }
-        getContext().startActivity(intent);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -125,7 +130,6 @@ public class DownloadDialog extends Dialog {
         super(context, R.style.normal_dialog);
         this.taskData = taskData;
 
-
     }
 
     public DownloadDialog(@NonNull Context context) {
@@ -134,6 +138,8 @@ public class DownloadDialog extends Dialog {
 
     private TextView title,progress_txt;
     private ProgressBar progressBar;
+    private TextView download_cancle,download_install;
+
 
     private TaskData taskData;
 
@@ -141,10 +147,18 @@ public class DownloadDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.dialog_progress);
+        setContentView(R.layout.dialog_download_progress);
         title = findViewById(R.id.title);
         progress_txt = findViewById(R.id.progress_txt);
         progressBar = findViewById(R.id.progress);
+
+        download_cancle = findViewById(R.id.download_cancle);
+        download_install = findViewById(R.id.download_install);
+
+        download_cancle.setOnClickListener(this);
+        download_install.setOnClickListener(this);
+
+        download_install.setVisibility(View.GONE);
 
         title.setText("下载中...");
         setCancelable(false);
@@ -164,8 +178,6 @@ public class DownloadDialog extends Dialog {
     String downloadurl = "";
     String name = "";
     private void downloadAPK(){
-       /* File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", "downloaddemo.apk");
-        installApk(loadFile);*/
        if (taskData!=null){
            if ("0".equals(taskData.getJobStr().getMarket())){
                downloadurl = taskData.getJobStr().getMarketUrl();
@@ -183,10 +195,9 @@ public class DownloadDialog extends Dialog {
            LogUtils.e("Download","下载链接  ： "+downloadurl);
            fileDownLoad(downloadurl,name,handler);
        }
-
     }
 
-
+   public static Call<ResponseBody> call;
     /**
      *
      * @param url   完整的下载链接
@@ -224,7 +235,7 @@ public class DownloadDialog extends Dialog {
                     }
                 }).build();
                 RetrofitService apiService = builder.client(client).build().create(RetrofitService.class);
-                Call<ResponseBody> call = apiService.getFile(url);
+                call = apiService.getFile(url);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, final retrofit2.Response<ResponseBody> response) {
@@ -287,5 +298,26 @@ public class DownloadDialog extends Dialog {
             }
         }).start();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.download_cancle:
+
+                if (call!=null){
+                    call.cancel();
+                }
+                dismiss();
+
+                break;
+            case R.id.download_install:
+
+                File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", name);
+                installApk(loadFile);
+
+                break;
+
+        }
     }
 }
