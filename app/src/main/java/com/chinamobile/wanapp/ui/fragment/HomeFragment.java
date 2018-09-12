@@ -1,8 +1,6 @@
 package com.chinamobile.wanapp.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 
 import com.chinamobile.wanapp.APP;
@@ -22,7 +19,6 @@ import com.chinamobile.wanapp.baen.HomeBean;
 import com.chinamobile.wanapp.baen.TaskData;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
-import com.chinamobile.wanapp.ui.activity.BaseActivity;
 import com.chinamobile.wanapp.ui.viewitem.BannerItem;
 import com.chinamobile.wanapp.ui.viewitem.Icon4Item;
 import com.chinamobile.wanapp.ui.viewitem.RollTextItem;
@@ -34,7 +30,6 @@ import com.chinamobile.wanapp.utils.UserManager;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -178,7 +173,9 @@ public class HomeFragment extends BaseFragment {
                 case 0: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_LOGO_MEASSAGE);
-                    item.setTopMessage(homeBean.getMbm_res().get(0));
+                    if (homeBean!=null&&homeBean.getMbm_res()!=null&&homeBean.getMbm_res().size()>0){
+                        item.setTopMessage(homeBean.getMbm_res().get(0));
+                    }
                     baseItems.add(item);
                 }
                 break;
@@ -206,7 +203,9 @@ public class HomeFragment extends BaseFragment {
                 case 4: {
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_ROLL);
-                    item.setTopMessage(homeBean.getJanm_res().get(0));
+                    if (homeBean!=null&&homeBean.getJanm_res()!=null&&homeBean.getJanm_res().size()>0){
+                        item.setTopMessage(homeBean.getJanm_res().get(0));
+                    }
                     baseItems.add(item);
 
                 }

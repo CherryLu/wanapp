@@ -137,7 +137,9 @@ public class MainActivity extends BaseActivity {
                 case 4:{
                     BaseItem item = new BaseItem();
                     item.setType(BaseItem.ITEM_ROLL);
-                    item.setTopMessage(homeBean.getJanm_res().get(0));
+                    if (homeBean!=null&&homeBean.getJanm_res().size()>0){
+                        item.setTopMessage(homeBean.getJanm_res().get(0));
+                    }
                     baseItems.add(item);
 
                 }
