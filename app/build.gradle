@@ -21,12 +21,12 @@ android {
             storeFile file('../wanapp.jks')
             storePassword '4374619zx'
         }
-        debug {
+       /* debug {
             keyAlias 'wanapp'
             keyPassword '4374619zx'
             storeFile file('../wanapp.jks')
             storePassword '4374619zx'
-        }
+        }*/
     }
 
     buildTypes {

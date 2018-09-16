@@ -1,6 +1,8 @@
 package com.chinamobile.wanapp.ui.view;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -138,7 +140,7 @@ public class DownloadDialog extends Dialog implements View.OnClickListener {
 
     private TextView title,progress_txt;
     private ProgressBar progressBar;
-    private TextView download_cancle,download_install;
+    private TextView download_cancle,download_install,copy_name;
 
 
     private TaskData taskData;
@@ -155,10 +157,15 @@ public class DownloadDialog extends Dialog implements View.OnClickListener {
         download_cancle = findViewById(R.id.download_cancle);
         download_install = findViewById(R.id.download_install);
 
+        copy_name = findViewById(R.id.copy_name);
+
+        copy_name.setOnClickListener(this);
+
         download_cancle.setOnClickListener(this);
         download_install.setOnClickListener(this);
 
         download_install.setVisibility(View.GONE);
+
 
         title.setText("下载中...");
         setCancelable(false);
@@ -316,6 +323,17 @@ public class DownloadDialog extends Dialog implements View.OnClickListener {
                 File loadFile = new File(Environment.getExternalStorageDirectory()+"/wandownload", name);
                 installApk(loadFile);
 
+                break;
+
+            case R.id.copy_name:
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label",copy_name.getText().toString());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+
+                Toast.makeText(getContext(),"已复制至剪切板",Toast.LENGTH_SHORT).show();
                 break;
 
         }

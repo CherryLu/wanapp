@@ -11,6 +11,8 @@ import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.http.ApiServiceManager;
 import com.chinamobile.wanapp.http.HttpResponse;
 
+import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,6 +63,7 @@ public class InvitationActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         setTitleBar("邀请详情");
+        //getData();
     }
 
     /**
@@ -70,6 +73,13 @@ public class InvitationActivity extends BaseActivity {
         ApiServiceManager.getUserInviteCase(new HttpResponse() {
             @Override
             public void onNext(ResponseBody body) {
+                try {
+                    String str = new String(body.bytes());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
             }
 
