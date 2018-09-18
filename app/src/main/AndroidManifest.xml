@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNotitleBar"
-        tools:replace="android:icon">
+        tools:replace="android:icon,android:name">
         <activity android:name=".ui.activity.StartActivity"
             android:theme="@style/Launcher">
             <intent-filter>

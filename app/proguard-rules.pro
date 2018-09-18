@@ -126,6 +126,19 @@
 -dontwarn okio.**
 -dontwarn org.apache.commons.codec.binary.**
 #阿里云OOS end
+
+#ShareSDK start
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class **.R$* {*;}
+-keep class **.R{*;}
+-keep class com.mob.**{*;}
+-keep class m.framework.**{*;}
+-dontwarn cn.sharesdk.**
+-dontwarn com.sina.**
+-dontwarn com.mob.**
+-dontwarn **.R$*
+#ShareSDK end
 #-------------------------------------------------------------------------
 
 #---------------------------------3.与js互相调用的类------------------------

@@ -15,6 +15,14 @@ import android.widget.Toast;
 import com.chinamobile.wanapp.R;
 import com.chinamobile.wanapp.baen.TaskData;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
+
 /**
  * Created by Administrator on 2018/8/16.
  */
@@ -133,23 +141,89 @@ public class ShareDialog extends Dialog implements View.OnClickListener {
         Toast.makeText(context,"url : "+taskData.getJobStr().getShareData().get(0).getShareUrl()+"     image : "+taskData.getJobStr().getShareData().get(0).getShareImage()+"      txt :"+taskData.getJobStr().getShareData().get(0).getShareTxt(),Toast.LENGTH_SHORT).show();
     }
 
+    private static final int QQ = 0;
+    private static final int QQ_ZONE = 1;
+    private static final int WECHAT = 2;
+    private static final int WECHAT_MENT = 3;
+    private static final int SINA = 4;
+
+    private void share(Context context,int which){
+        if (taskData==null||taskData.getJobStr()==null){
+            Toast.makeText(context,"数据为空",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        switch (which){
+            case QQ: {
+                cn.sharesdk.tencent.qq.QQ.ShareParams shareParams = new QQ.ShareParams();
+                shareParams.setImageUrl(taskData.getJobStr().getShareData().get(0).getShareImage());
+                shareParams.setTitleUrl(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                shareParams.setTitle(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                shareParams.setText(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                Platform platform = ShareSDK.getPlatform(cn.sharesdk.tencent.qq.QQ.NAME);
+                platform.share(shareParams);
+            }
+                break;
+            case QQ_ZONE: {
+                cn.sharesdk.tencent.qzone.QZone.ShareParams shareParams = new QZone.ShareParams();
+                shareParams.setImageUrl(taskData.getJobStr().getShareData().get(0).getShareImage());
+                shareParams.setTitleUrl(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                shareParams.setTitle(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                shareParams.setText(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                Platform platform = ShareSDK.getPlatform(QZone.NAME);
+                platform.share(shareParams);
+            }
+                break;
+            case WECHAT:{
+                Wechat.ShareParams shareParams = new Wechat.ShareParams();
+                shareParams.setTitle(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                shareParams.setUrl(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                shareParams.setImageUrl(taskData.getJobStr().getShareData().get(0).getShareImage());
+                shareParams.setShareType(Platform.SHARE_WEBPAGE);
+                Platform platform = ShareSDK.getPlatform(Wechat.NAME);
+                platform.share(shareParams);
+            }
+                break;
+            case WECHAT_MENT: {
+                WechatMoments.ShareParams shareParams = new WechatMoments.ShareParams();
+                shareParams.setTitle(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                shareParams.setUrl(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                shareParams.setImageUrl(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                shareParams.setShareType(Platform.SHARE_WEBPAGE);
+                Platform platform = ShareSDK.getPlatform(WechatMoments.NAME);
+                platform.share(shareParams);
+            }
+                break;
+            case SINA:
+                SinaWeibo.ShareParams shareParams = new SinaWeibo.ShareParams();
+                shareParams.setTitle(taskData.getJobStr().getShareData().get(0).getShareTxt());
+                shareParams.setText(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                shareParams.setImageUrl(taskData.getJobStr().getShareData().get(0).getShareUrl());
+                Platform platform = ShareSDK.getPlatform(SinaWeibo.NAME);
+                platform.share(shareParams);
+                break;
+        }
+
+        Toast.makeText(context,"url : "+taskData.getJobStr().getShareData().get(0).getShareUrl()+"     image : "+taskData.getJobStr().getShareData().get(0).getShareImage()+"      txt :"+taskData.getJobStr().getShareData().get(0).getShareTxt(),Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.qq_share:
-                share(view.getContext());
+                share(view.getContext(),QQ);
                 break;
             case R.id.qqzone_share:
-                share(view.getContext());
+                share(view.getContext(),QQ_ZONE);
                 break;
             case R.id.weixin_share:
-                share(view.getContext());
+                share(view.getContext(),WECHAT);
                 break;
             case R.id.weixinsq_share:
-                share(view.getContext());
+                share(view.getContext(),WECHAT_MENT);
                 break;
             case R.id.sina_share:
-                share(view.getContext());
+                share(view.getContext(),SINA);
                 break;
             case R.id.cancle:
                 dismiss();
